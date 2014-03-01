@@ -3,9 +3,8 @@
 
 It's like the 3D Game Engine, except in C++
 
-================================
 BUILD INSTRUCTIONS
-================================
+==================
 
 Windows:
 
