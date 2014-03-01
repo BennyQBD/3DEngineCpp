@@ -49,6 +49,12 @@
 		<Unit filename="camera.h">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
+		<Unit filename="coreEngine.cpp">
+			<Option virtualFolder="Engine/Core/" />
+		</Unit>
+		<Unit filename="coreEngine.h">
+			<Option virtualFolder="Engine/Core/" />
+		</Unit>
 		<Unit filename="game.cpp">
 			<Option virtualFolder="Game/" />
 		</Unit>
@@ -65,10 +71,7 @@
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
 		<Unit filename="main.cpp">
-			<Option virtualFolder="Engine/Core/" />
-		</Unit>
-		<Unit filename="main.h">
-			<Option virtualFolder="Engine/Core/" />
+			<Option virtualFolder="Game/" />
 		</Unit>
 		<Unit filename="material.h">
 			<Option virtualFolder="Engine/Rendering/" />
