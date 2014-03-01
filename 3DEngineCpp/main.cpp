@@ -94,7 +94,7 @@ void Main::Run()
 		}
 		else
 		{
-			Util::sleep(1);
+			Util::Sleep(1);
 		}
 	}
 }

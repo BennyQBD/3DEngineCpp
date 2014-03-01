@@ -35,7 +35,7 @@
 
 namespace Util
 {
-	void sleep(int milliseconds);
+	void Sleep(int milliseconds);
 };
 
 #endif
