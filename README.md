@@ -3,8 +3,7 @@
 
 It's like the 3D Game Engine, except in C++
 
-Build Instructions
-=================
+#Build Instructions#
 
 Windows
 -------
