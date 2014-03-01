@@ -18,8 +18,8 @@ Mac
 I do not have a Mac, and therefore cannot write effective step by step instructions for building on a Mac. However, there are a few things that must be considered:
 - Make sure you are building with C++11. If you are not, the OS dependent code in time.cpp will fall back on an inefficient default timer. While technically working, it does not produce smooth results.
 
-HELP WANTED: 
-- If anyone would like to provide an XCode project that's set up to build, that'd be great!
+####HELP WANTED:####
+- If anyone can provide an XCode project that's set up to build, that'd be great!
 - If anyone can provide high resolution timing code for Mac, that would make Mac build considerations significantly simpler! (See time.cpp for reference)
 
 Linux
