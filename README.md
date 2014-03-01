@@ -7,7 +7,7 @@ Build Instructions
 ==================
 
 Windows:
-- Open the solution file in Microsoft Visual Studio 2012 or newer.
+- Open 3DGameEngineCpp.sln in Microsoft Visual Studio 2012 or newer.
 - Select build target (Debug or Release), and either click "Build" or hit 'F7'
 - Click "Run" or hit 'Ctrl-F5'.
 - Everything should work from that. If not, see section on reporting a build error.
