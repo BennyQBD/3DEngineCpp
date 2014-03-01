@@ -22,7 +22,7 @@ I do not have a Mac, and therefore cannot write effective step by step instructi
 ###Linux###
 - Open a Terminal and install the build dependencies (GLEW, SDL2). Syntax on Ubuntu Linux: sudo apt-get install libglew-dev libsdl2-dev
   
-    - NOTE: The syntax for this depends on both your package manager and your Linux distribution. If you're not sure how to install the depenencies, check with your distribution and package manager for details.
+    - NOTE: The syntax for this depends on both your package manager and your Linux distribution. If you're not sure how to install the dependencies, check with your distribution and package manager for details.
 
 - For building/running, there are two possible options:
 
