@@ -49,7 +49,6 @@ PhongShader::PhongShader()
 		AddUniform(pointLightName + ".atten.linear");
 		AddUniform(pointLightName + ".atten.exponent");
 		AddUniform(pointLightName + ".position");
-		AddUniform(pointLightName + ".range");
 	}
 
 	for(int i = 0; i < MAX_SPOT_LIGHTS; i++)
@@ -65,7 +64,6 @@ PhongShader::PhongShader()
 		AddUniform(spotLightName + ".pointLight.atten.linear");
 		AddUniform(spotLightName + ".pointLight.atten.exponent");
 		AddUniform(spotLightName + ".pointLight.position");
-		AddUniform(spotLightName + ".pointLight.range");
 		AddUniform(spotLightName + ".direction");
 		AddUniform(spotLightName + ".cutoff");
 	}
@@ -96,7 +94,6 @@ void PhongShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& pr
 		SetUniformf(pointLightName + ".atten.linear", s_pointLights[i].atten.linear);
 		SetUniformf(pointLightName + ".atten.exponent", s_pointLights[i].atten.exponent);
 		SetUniform(pointLightName + ".position", s_pointLights[i].position);
-		SetUniformf(pointLightName + ".range", s_pointLights[i].range);
 	}
 
 	for(int i = 0; i < s_numSpotLights; i++)
@@ -112,7 +109,6 @@ void PhongShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& pr
 		SetUniformf(spotLightName + ".pointLight.atten.linear", s_spotLights[i].pointLight.atten.linear);
 		SetUniformf(spotLightName + ".pointLight.atten.exponent", s_spotLights[i].pointLight.atten.exponent);
 		SetUniform(spotLightName + ".pointLight.position", s_spotLights[i].pointLight.position);
-		SetUniformf(spotLightName + ".pointLight.range", s_spotLights[i].pointLight.range);
 		SetUniform(spotLightName + ".direction", s_spotLights[i].direction);
 		SetUniformf(spotLightName + ".cutoff", s_spotLights[i].cutoff);
 	}

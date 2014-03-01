@@ -31,7 +31,6 @@ struct PointLight
     BaseLight base;
     Attenuation atten;
     vec3 position;
-    float range;
 };
 
 struct SpotLight

@@ -23,15 +23,14 @@
 #define SNPRINTF snprintf
 #endif
 
-#include <math.h>
-
 //#define ZERO_MEM(a) memset(a,0,sizeof(a))
 //#define SAFE_DELETE(p) if(p) {delete p; p = NULL;}
 #define ARRAY_SIZE_IN_ELEMENTS(a) (sizeof(a)/sizeof(a[0]))
 #define INVALID_VALUE 0xFFFFFFFF
 
-#define ToRadian(x) (float)(((x) * M_PI / 180.0f))
-#define ToDegree(x) (float)(((x) * 180.0f / M_PI))
+#define MATH_PI 3.1415926535897932384626433832795
+#define ToRadian(x) (float)(((x) * MATH_PI / 180.0f))
+#define ToDegree(x) (float)(((x) * 180.0f / MATH_PI))
 
 namespace Util
 {
