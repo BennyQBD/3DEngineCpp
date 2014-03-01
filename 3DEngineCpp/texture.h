@@ -20,7 +20,6 @@ private:
 
 	GLenum m_textureTarget;
 	GLuint m_textureID;
-	bool m_freeTexture;
 
 	void InitTexture(int width, int height, unsigned char* data, GLenum textureTarget, GLfloat filter);
 };

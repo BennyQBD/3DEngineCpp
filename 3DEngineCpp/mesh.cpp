@@ -3,19 +3,23 @@
 
 Mesh::Mesh()
 {
-	glGenBuffers(1, &m_vbo);
-	glGenBuffers(1, &m_ibo);
+	//glGenBuffers(1, &m_vbo);
+	//glGenBuffers(1, &m_ibo);
+	m_vbo = 0;
+	m_ibo = 0;
 	m_size = 0;
 }
 
 Mesh::~Mesh()
 {
-	glDeleteBuffers(1, &m_vbo);
-	glDeleteBuffers(1, &m_ibo);
+	if(m_vbo) glDeleteBuffers(1, &m_vbo);
+	if(m_ibo) glDeleteBuffers(1, &m_ibo);
 }
 
 void Mesh::AddVertices(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals)
 {
+	if(!m_vbo) glGenBuffers(1, &m_vbo);
+	if(!m_ibo) glGenBuffers(1, &m_ibo);
 	m_size = indexSize;
 
 	if(calcNormals)

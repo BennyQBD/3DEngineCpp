@@ -27,7 +27,6 @@ Texture::Texture(int width, int height, unsigned char* data, GLenum textureTarge
 void Texture::InitTexture(int width, int height, unsigned char* data, GLenum textureTarget, GLfloat filter)
 {
 	m_textureTarget = textureTarget;
-	m_freeTexture = true;
 	
 	if(width > 0 && height > 0 && data != 0)
 	{
@@ -45,8 +44,7 @@ void Texture::InitTexture(int width, int height, unsigned char* data, GLenum tex
 
 Texture::~Texture()
 {
-	if(m_freeTexture)
-		glDeleteTextures(1, &m_textureID);
+	glDeleteTextures(1, &m_textureID);
 }
 
 void Texture::Bind(unsigned int unit) const

@@ -1,7 +1,7 @@
 #include "time.h"
 #include <time.h>
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(WIN64)
 	#define OS_WINDOWS
 #else
 	#ifdef __linux__
@@ -25,6 +25,10 @@
 #ifdef OS_LINUX
 	#include <sys/time.h>
 	static const long NANOSECONDS_PER_SECOND = 1000000000L;
+#endif
+
+#ifdef OS_OTHER
+	#include <SDL2/SDL.h>
 #endif
 
 #ifdef OS_OTHER_CPP11
@@ -65,7 +69,7 @@ double Time::GetTime()
 	#endif
 
 	#ifdef OS_OTHER
-		return (clock())/((double)(CLOCKS_PER_SEC));//std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - m_epoch).count() / 1000000000.0;
+		return (double)SDL_GetTicks()/1000.0;
 	#endif
 }
 

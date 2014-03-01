@@ -1,5 +1,6 @@
 #include "sdl_backend.h"
 #include <SDL2/SDL.h>
+#include <iostream>
 
 static SDL_Window* window;
 static SDL_GLContext glContext;
@@ -26,6 +27,7 @@ void SDLCreateWindow(const char* title, int x, int y, int width, int height, boo
 	glContext = SDL_GL_CreateContext(window);
 
 	//SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
+	SDL_GL_SetSwapInterval(1);
 }
 
 void SDLSetWindowFullscreen(bool value)
@@ -46,6 +48,9 @@ void SDLSwapBuffers()
 
 void SDLDestroyWindow()
 {
+	if(!window)
+		return;
+
 	SDL_GL_DeleteContext(glContext);
 	SDL_DestroyWindow(window);
 }

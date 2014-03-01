@@ -11,13 +11,13 @@
 class Game
 {
 public:
-	Game();
+	Game() {}
 	virtual ~Game();
 
+	void Init();
 	void Input();
 	void Update();
 	void Render();
-
 protected:
 private:
 	Game(Game& game) {}
@@ -29,7 +29,7 @@ private:
 	Transform m_transform;
 	Camera m_camera;
 	Material m_material;
-	Texture m_texture;
+	Texture* m_texture;
 	PointLight* m_pLights;
 	SpotLight* m_sLights;
 };

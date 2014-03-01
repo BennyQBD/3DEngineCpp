@@ -7,8 +7,7 @@
 #include "basicShader.h"
 #include "phongShader.h"
 
-Game::Game() :
-	m_texture("test.png")
+void Game::Init()
 {
 	//Vertex data[3] = {Vertex(Vector3f(-1,-1,0)),
 	//				 Vertex(Vector3f(0,1,0)),
@@ -42,7 +41,8 @@ Game::Game() :
 	m_color.Set(1,1,1);
 
 	//m_texture = Texture("test.png");
-	m_material = Material(&m_texture, m_color, 1, 8);
+	m_texture = new Texture("test.png");
+	m_material = Material(m_texture, m_color, 1, 8);
 
 	m_shader = PhongShader::GetInstance();
 	//PhongShader::SetAmbientLight(Vector3f(0.1f,0.1f,0.1f));
@@ -66,8 +66,9 @@ Game::Game() :
 
 Game::~Game()
 {
-	delete[] m_pLights;
-	delete[] m_sLights;
+	if(m_texture) delete m_texture;
+	if(m_pLights) delete[] m_pLights;
+	if(m_sLights) delete[] m_sLights;
 }
 
 void Game::Input()
