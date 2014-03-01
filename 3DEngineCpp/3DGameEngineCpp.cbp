@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="3DGameEngine" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/OpenGLTest" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/OpenGLTest" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Linker>
+			<Add library="SDL2" />
+			<Add library="GLEW" />
+			<Add library="GL" />
+		</Linker>
+		<Unit filename="basicShader.cpp" />
+		<Unit filename="basicShader.h" />
+		<Unit filename="camera.cpp" />
+		<Unit filename="camera.h" />
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
+		<Unit filename="input.cpp" />
+		<Unit filename="input.h" />
+		<Unit filename="lighting.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
+		<Unit filename="material.h" />
+		<Unit filename="matrix4f.cpp" />
+		<Unit filename="matrix4f.h" />
+		<Unit filename="mesh.cpp" />
+		<Unit filename="mesh.h" />
+		<Unit filename="phongShader.cpp" />
+		<Unit filename="phongShader.h" />
+		<Unit filename="quaternion.h" />
+		<Unit filename="renderUtil.cpp" />
+		<Unit filename="renderUtil.h" />
+		<Unit filename="sdl_backend.cpp" />
+		<Unit filename="sdl_backend.h" />
+		<Unit filename="shader.cpp" />
+		<Unit filename="shader.h" />
+		<Unit filename="stb_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stb_image.h" />
+		<Unit filename="texture.cpp" />
+		<Unit filename="texture.h" />
+		<Unit filename="time.cpp" />
+		<Unit filename="time.h" />
+		<Unit filename="transform.cpp" />
+		<Unit filename="transform.h" />
+		<Unit filename="util.cpp" />
+		<Unit filename="util.h" />
+		<Unit filename="vector2f.h" />
+		<Unit filename="vector3f.cpp" />
+		<Unit filename="vector3f.h" />
+		<Unit filename="vertex.h" />
+		<Unit filename="window.cpp" />
+		<Unit filename="window.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

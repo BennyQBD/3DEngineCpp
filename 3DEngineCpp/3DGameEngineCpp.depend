@@ -1,0 +1,199 @@
+# depslib dependency file v1.0
+1393632706 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/basicShader.cpp
+	"basicShader.h"
+	"util.h"
+
+1393632714 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/basicShader.h
+	"shader.h"
+
+1393632317 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.h
+	<map>
+	<vector>
+	<string>
+	"vector3f.h"
+	"matrix4f.h"
+	"material.h"
+
+1393636822 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vector3f.h
+	<math.h>
+
+1393625077 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/matrix4f.h
+	"vector3f.h"
+
+1393624873 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/material.h
+	"texture.h"
+	"vector3f.h"
+
+1393634385 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.h
+	<GL/glew.h>
+	<string>
+
+1393635451 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/util.h
+	<unistd.h>
+	<math.h>
+
+1393637111 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/camera.cpp
+	"camera.h"
+	"input.h"
+	"time.h"
+	"util.h"
+	"window.h"
+
+1393635947 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/camera.h
+	"vector3f.h"
+
+1393628935 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/input.h
+	"vector2f.h"
+
+1393636679 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vector2f.h
+
+1393634363 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/time.h
+
+1393637205 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/window.h
+	<string>
+
+1393637125 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.cpp
+	"game.h"
+	"input.h"
+	"util.h"
+	<iostream>
+	"window.h"
+	"basicShader.h"
+	"phongShader.h"
+	"time.h"
+	<math.h>
+
+1393623938 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
+	"mesh.h"
+	"shader.h"
+	"basicShader.h"
+	"transform.h"
+	"camera.h"
+	"lighting.h"
+
+1393629230 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.h
+	"vertex.h"
+
+1393636974 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vertex.h
+	"vector3f.h"
+	"vector2f.h"
+
+1393634086 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.h
+	"matrix4f.h"
+	"vector3f.h"
+	"camera.h"
+
+1393629125 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.h
+	"vector3f.h"
+
+1393634448 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/phongShader.h
+	"shader.h"
+	"lighting.h"
+
+1393636712 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/input.cpp
+	"input.h"
+	<SDL2/SDL.h>
+	"sdl_backend.h"
+
+1377314990 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/sdl_backend.h
+
+1393637142 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.cpp
+	"main.h"
+	<stdio.h>
+	"window.h"
+	"time.h"
+	"input.h"
+	"renderUtil.h"
+	"util.h"
+
+1393624696 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.h
+	"game.h"
+
+1393631588 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderUtil.h
+
+1393636873 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/matrix4f.cpp
+	"matrix4f.h"
+	<math.h>
+	"util.h"
+
+1393636099 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.cpp
+	"mesh.h"
+	<GL/glew.h>
+
+1393634516 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/phongShader.cpp
+	"phongShader.h"
+	"transform.h"
+	<iostream>
+	<sstream>
+	"util.h"
+
+1393635154 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/quaternion.cpp
+	"quaternion.h"
+
+1393635163 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/quaternion.h
+	"vector3f.h"
+	<math.h>
+
+1393631605 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderUtil.cpp
+	"renderUtil.h"
+	<GL/glew.h>
+
+1393621014 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/sdl_backend.cpp
+	"sdl_backend.h"
+	<SDL2/SDL.h>
+
+1393636886 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.cpp
+	"shader.h"
+	<cassert>
+	<fstream>
+	<iostream>
+	<GL/glew.h>
+	<cstdlib>
+	"util.h"
+
+1377314990 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/stb_image.c
+	"stb_image.h"
+	<math.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<memory.h>
+	<assert.h>
+	<stdarg.h>
+
+1377314990 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/stb_image.h
+	<stdio.h>
+
+1393634398 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.cpp
+	"texture.h"
+	"stb_image.h"
+	<iostream>
+	<cassert>
+
+1393634373 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/time.cpp
+	"time.h"
+	<time.h>
+	<Windows.h>
+	<iostream>
+	<sys/time.h>
+	<chrono>
+
+1393636943 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.cpp
+	"transform.h"
+
+1393621359 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/util.cpp
+	"util.h"
+	<SDL2/SDL.h>
+
+1393634989 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vector2f.cpp
+	"vector2f.h"
+
+1393636512 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vector3f.cpp
+	"vector3f.h"
+
+1393637097 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/window.cpp
+	"window.h"
+	<SDL2/SDL.h>
+	<GL/glew.h>
+	"sdl_backend.h"
+
