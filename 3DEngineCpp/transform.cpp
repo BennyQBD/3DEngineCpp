@@ -27,10 +27,12 @@ Matrix4f Transform::GetTransformation()
 	Matrix4f scaleMatrix;
 
 	translationMatrix.InitTranslationTransform(Vector3f(m_pos.GetX(), m_pos.GetY(), m_pos.GetZ()));
-	rotationMatrix.InitRotateTransform(ToRadian(m_rot.GetX()), ToRadian(m_rot.GetY()), ToRadian(m_rot.GetZ()));
+	rotationMatrix.InitRotateTransform(ToRadians(m_rot.GetX()), ToRadians(m_rot.GetY()), ToRadians(m_rot.GetZ()));
 	scaleMatrix.InitScaleTransform(Vector3f(m_scale.GetX(), m_scale.GetY(), m_scale.GetZ()));
 
-	return translationMatrix * rotationMatrix * scaleMatrix;
+	Matrix4f result = translationMatrix * rotationMatrix * scaleMatrix;
+
+	return result;
 }
 
 Matrix4f Transform::GetProjectedTransformation()
@@ -40,11 +42,13 @@ Matrix4f Transform::GetProjectedTransformation()
 	Matrix4f cameraRotation;
 	Matrix4f cameraTranslation;
 
-	projectionMatrix.InitPersProjTransform(ToRadian(m_fov),(float)m_width/(float)m_height,m_zNear,m_zFar);
+	projectionMatrix.InitPersProjTransform(ToRadians(m_fov),(float)m_width/(float)m_height,m_zNear,m_zFar);
 	cameraRotation.InitCameraTransform(s_camera->GetForward(),s_camera->GetUp());
 	cameraTranslation.InitTranslationTransform(Vector3f(-s_camera->GetPos().GetX(), -s_camera->GetPos().GetY(), -s_camera->GetPos().GetZ()));
 
-	return projectionMatrix * cameraRotation * cameraTranslation * transformationMatrix;
+	Matrix4f result = projectionMatrix * cameraRotation * cameraTranslation * transformationMatrix;
+	
+	return result;
 }
 
 void Transform::SetProjection(float fov, float width, float height, float zNear, float zFar)

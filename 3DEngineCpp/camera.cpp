@@ -32,9 +32,9 @@ void Camera::Input()
 		bool rotX = deltaPos.GetY() != 0;
 			
 		if(rotY)
-			RotateY(ToRadian(deltaPos.GetX() * sensitivity));
+			RotateY(ToRadians(deltaPos.GetX() * sensitivity));
 		if(rotX)
-			RotateX(ToRadian(deltaPos.GetY() * sensitivity));
+			RotateX(ToRadians(deltaPos.GetY() * sensitivity));
 			
 		if(rotY || rotX)
 			Input::SetMousePosition(centerPosition);

@@ -76,7 +76,9 @@
 		<Unit filename="material.h">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
-		<Unit filename="math3d.h" />
+		<Unit filename="math3d.h">
+			<Option virtualFolder="Engine/Core/" />
+		</Unit>
 		<Unit filename="mesh.cpp">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
@@ -88,9 +90,6 @@
 		</Unit>
 		<Unit filename="phongShader.h">
 			<Option virtualFolder="Engine/Rendering/" />
-		</Unit>
-		<Unit filename="quaternion.h">
-			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="renderUtil.cpp">
 			<Option virtualFolder="Engine/Rendering/" />

@@ -158,7 +158,7 @@ void Shader::SetUniform(const std::string& name, const Vector3f& value)
 
 void Shader::SetUniform(const std::string& name, const Matrix4f& value)
 {
-	glUniformMatrix4fv(m_uniforms.at(name), 1, GL_TRUE, &(value[0][0]));
+	glUniformMatrix4fv(m_uniforms.at(name), 1, GL_FALSE, &(value[0][0]));
 }
 
 void Shader::SetAttribLocation(const std::string& attributeName, int location)
