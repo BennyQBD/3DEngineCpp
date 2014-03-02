@@ -13,15 +13,14 @@
   <ItemGroup>
     <ClInclude Include="basicShader.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="coreEngine.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="lighting.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="material.h" />
-    <ClInclude Include="matrix4f.h" />
+    <ClInclude Include="math3d.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="phongShader.h" />
-    <ClInclude Include="quaternion.h" />
     <ClInclude Include="renderUtil.h" />
     <ClInclude Include="sdl_backend.h" />
     <ClInclude Include="shader.h" />
@@ -30,18 +29,16 @@
     <ClInclude Include="time.h" />
     <ClInclude Include="transform.h" />
     <ClInclude Include="util.h" />
-    <ClInclude Include="vector2f.h" />
-    <ClInclude Include="vector3f.h" />
     <ClInclude Include="vertex.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="basicShader.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="coreEngine.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="matrix4f.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="phongShader.cpp" />
     <ClCompile Include="renderUtil.cpp" />
@@ -52,7 +49,6 @@
     <ClCompile Include="time.cpp" />
     <ClCompile Include="transform.cpp" />
     <ClCompile Include="util.cpp" />
-    <ClCompile Include="vector3f.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
