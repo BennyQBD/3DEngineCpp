@@ -7,8 +7,6 @@
 
 #include <stdio.h>
 
-#define IGNORE_FRAME_CAP true
-
 CoreEngine::CoreEngine(int width, int height, double frameRate, Game* game) :
 	m_isRunning(false),
 	m_width(width),
@@ -88,7 +86,7 @@ void CoreEngine::Run()
 			unprocessedTime -= m_frameTime;
 		}
 
-		if(render || IGNORE_FRAME_CAP)
+		if(render)
 		{
 			RenderUtil::ClearScreen();
 			m_game->Render();

@@ -2,7 +2,7 @@
 #define MATERIAL_H
 
 #include "texture.h"
-#include "vector3f.h"
+#include "math3d.h"
 
 struct Material
 {

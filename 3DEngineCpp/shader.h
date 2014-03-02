@@ -5,8 +5,7 @@
 #include <vector>
 #include <string>
 
-#include "vector3f.h"
-#include "matrix4f.h"
+#include "math3d.h"
 #include "material.h"
 
 class Shader
@@ -30,8 +29,8 @@ public:
 	void SetAttribLocation(const std::string& attributeName, int location);
 	void SetUniformi(const std::string& name, int value);
 	void SetUniformf(const std::string& name, float value);
-	void SetUniform(const std::string& name, const Vector3f& value);
 	void SetUniform(const std::string& name, const Matrix4f& value);
+	void SetUniform(const std::string& name, const Vector3f& value);
 protected:
 private:
 	int m_program;

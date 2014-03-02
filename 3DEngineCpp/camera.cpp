@@ -75,15 +75,18 @@ void Camera::Move(const Vector3f& direction, float amt)
 
 void Camera::RotateY(float angle)
 {
-	Vector3f hAxis = Vector3f::UP.Cross(m_forward).Normalized();
+//	Vector3f hAxis = Vector3f::UP.Cross(m_forward).Normalized();
+	Vector3f hAxis = Vector3f(0,1,0).Cross(m_forward).Normalized();
 
-	m_forward = m_forward.Rotate(angle, Vector3f::UP).Normalized();
+//	m_forward = m_forward.Rotate(angle, Vector3f::UP).Normalized();
+	m_forward = m_forward.Rotate(angle, Vector3f(0,1,0)).Normalized();
 	m_up = m_forward.Cross(hAxis).Normalized();
 }
 
 void Camera::RotateX(float angle)
 {
-	Vector3f hAxis = Vector3f::UP.Cross(m_forward).Normalized();
+//	Vector3f hAxis = Vector3f::UP.Cross(m_forward).Normalized();
+	Vector3f hAxis = Vector3f(0,1,0).Cross(m_forward).Normalized();
 
 	m_forward = m_forward.Rotate(angle, hAxis).Normalized();
 	m_up = m_forward.Cross(hAxis).Normalized();

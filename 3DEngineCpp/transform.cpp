@@ -1,6 +1,5 @@
 #include "transform.h"
 
-
 //TODO: This will need to be changed later to avoid memory issues!
 Camera* Transform::s_camera = new Camera();//&Camera();
 float Transform::m_zFar = 0;
@@ -27,9 +26,9 @@ Matrix4f Transform::GetTransformation()
 	Matrix4f rotationMatrix;
 	Matrix4f scaleMatrix;
 
-	translationMatrix.InitTranslationTransform(m_pos.GetX(), m_pos.GetY(), m_pos.GetZ());
-	rotationMatrix.InitRotateTransform(m_rot.GetX(), m_rot.GetY(), m_rot.GetZ());
-	scaleMatrix.InitScaleTransform(m_scale.GetX(), m_scale.GetY(), m_scale.GetZ());
+	translationMatrix.InitTranslationTransform(Vector3f(m_pos.GetX(), m_pos.GetY(), m_pos.GetZ()));
+	rotationMatrix.InitRotateTransform(ToRadian(m_rot.GetX()), ToRadian(m_rot.GetY()), ToRadian(m_rot.GetZ()));
+	scaleMatrix.InitScaleTransform(Vector3f(m_scale.GetX(), m_scale.GetY(), m_scale.GetZ()));
 
 	return translationMatrix * rotationMatrix * scaleMatrix;
 }
@@ -41,9 +40,9 @@ Matrix4f Transform::GetProjectedTransformation()
 	Matrix4f cameraRotation;
 	Matrix4f cameraTranslation;
 
-	projectionMatrix.InitPersProjTransform(m_fov,m_width,m_height,m_zNear,m_zFar);
+	projectionMatrix.InitPersProjTransform(ToRadian(m_fov),(float)m_width/(float)m_height,m_zNear,m_zFar);
 	cameraRotation.InitCameraTransform(s_camera->GetForward(),s_camera->GetUp());
-	cameraTranslation.InitTranslationTransform(-s_camera->GetPos().GetX(), -s_camera->GetPos().GetY(), -s_camera->GetPos().GetZ());
+	cameraTranslation.InitTranslationTransform(Vector3f(-s_camera->GetPos().GetX(), -s_camera->GetPos().GetY(), -s_camera->GetPos().GetZ()));
 
 	return projectionMatrix * cameraRotation * cameraTranslation * transformationMatrix;
 }

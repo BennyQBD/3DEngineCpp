@@ -76,12 +76,7 @@
 		<Unit filename="material.h">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
-		<Unit filename="matrix4f.cpp">
-			<Option virtualFolder="Engine/Core/" />
-		</Unit>
-		<Unit filename="matrix4f.h">
-			<Option virtualFolder="Engine/Core/" />
-		</Unit>
+		<Unit filename="math3d.h" />
 		<Unit filename="mesh.cpp">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
@@ -144,15 +139,6 @@
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="util.h">
-			<Option virtualFolder="Engine/Core/" />
-		</Unit>
-		<Unit filename="vector2f.h">
-			<Option virtualFolder="Engine/Core/" />
-		</Unit>
-		<Unit filename="vector3f.cpp">
-			<Option virtualFolder="Engine/Core/" />
-		</Unit>
-		<Unit filename="vector3f.h">
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="vertex.h">

@@ -1,7 +1,7 @@
 #ifndef LIGHTING_H
 #define LIGHTING_H
 
-#include "vector3f.h"
+#include "math3d.h"
 
 struct BaseLight
 {

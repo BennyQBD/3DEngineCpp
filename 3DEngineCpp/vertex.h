@@ -1,8 +1,7 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
-#include "vector3f.h"
-#include "vector2f.h"
+#include "math3d.h"
 
 struct Vertex
 {

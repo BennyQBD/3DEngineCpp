@@ -1,8 +1,7 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
 
-#include "matrix4f.h"
-#include "vector3f.h"
+#include "math3d.h"
 #include "camera.h"
 
 class Transform

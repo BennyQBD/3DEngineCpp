@@ -1,7 +1,7 @@
 #ifndef MYINPUT_H
 #define MYINPUT_H
 //#include <SDL.h>
-#include "vector2f.h"
+#include "math3d.h"
 
 namespace MOUSE
 {
