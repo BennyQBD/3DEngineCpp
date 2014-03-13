@@ -5,7 +5,7 @@
 		<Option title="3DGameEngine" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Engine/;Engine/Core/;Engine/Rendering/;Engine/Static Libraries/;Game/;" />
+		<Option virtualFolders="Engine/;Engine/Core/;Engine/Rendering/;Engine/Static Libraries/;Game/;Engine/Components/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/3DGameEngine" prefix_auto="1" extension_auto="1" />
@@ -61,6 +61,11 @@
 		<Unit filename="game.h">
 			<Option virtualFolder="Game/" />
 		</Unit>
+		<Unit filename="gameComponent.h">
+			<Option virtualFolder="Engine/Components/" />
+		</Unit>
+		<Unit filename="gameObject.cpp" />
+		<Unit filename="gameObject.h" />
 		<Unit filename="input.cpp">
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
@@ -85,6 +90,7 @@
 		<Unit filename="mesh.h">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
+		<Unit filename="meshRenderer.h" />
 		<Unit filename="obj_loader.cpp">
 			<Option virtualFolder="Engine/Static Libraries/" />
 		</Unit>

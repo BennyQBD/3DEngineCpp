@@ -2,6 +2,7 @@
 #define COREENGINE_H
 
 #include "game.h"
+#include "renderingEngine.h"
 #include <string>
 
 class CoreEngine
@@ -27,6 +28,7 @@ private:
 	int m_height;
 	double m_frameTime;
 	Game* m_game;
+	RenderingEngine* m_renderingEngine;
 };
 
 #endif // COREENGINE_H

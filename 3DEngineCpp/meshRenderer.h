@@ -14,9 +14,8 @@ public:
 		m_material = &material;
 	}
 
-	virtual void Render(const Transform& transform) 
+	virtual void Render(const Transform& transform, Shader* shader) 
 	{
-		Shader* shader = BasicShader::GetInstance();
 		shader->Bind();
 		shader->UpdateUniforms(transform.GetTransformation(), transform.GetProjectedTransformation(), *m_material);
 		m_mesh->Draw();

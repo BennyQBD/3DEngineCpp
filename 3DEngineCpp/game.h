@@ -19,7 +19,8 @@ public:
 	void Init();
 	void Input();
 	void Update();
-	void Render();
+	
+	inline GameObject& GetRoot() { return m_root; }
 protected:
 private:
 	Game(Game& game) {}
@@ -28,15 +29,10 @@ private:
 	GameObject m_root;
 
 	Mesh* m_mesh;
-//	Shader* m_shader;
-//	Vector3f m_color;
-//	Transform m_transform;
 	Camera m_camera;
 	Material m_material;
 	Texture* m_texture;
 	MeshRenderer* m_meshRenderer;
-//	PointLight* m_pLights;
-//	SpotLight* m_sLights;
 };
 
 #endif

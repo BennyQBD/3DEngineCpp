@@ -12,17 +12,20 @@ CoreEngine::CoreEngine(int width, int height, double frameRate, Game* game) :
 	m_width(width),
 	m_height(height),
 	m_frameTime(1.0/frameRate),
-	m_game(game) {}
+	m_game(game),
+	m_renderingEngine(NULL) {}
 	
 CoreEngine::~CoreEngine()
 {
 	Window::Dispose();
+	if(m_renderingEngine) delete m_renderingEngine;
 }
 
 void CoreEngine::CreateWindow(const std::string& title)
 {
 	Window::Create(m_width, m_height, title);
 	RenderUtil::InitGraphics();
+	m_renderingEngine = new RenderingEngine();
 }
 
 void CoreEngine::Start()
@@ -88,8 +91,7 @@ void CoreEngine::Run()
 
 		if(render)
 		{
-			RenderUtil::ClearScreen();
-			m_game->Render();
+			m_renderingEngine->Render(&m_game->GetRoot());
 			Window::Render();
 			frames++;
 		}
