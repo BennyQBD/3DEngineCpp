@@ -8,19 +8,14 @@ float Transform::m_fov = 0;
 float Transform::m_width = 0;
 float Transform::m_height = 0;
 
-Transform::Transform(Vector3f pos, Vector3f rot, Vector3f scale)
+Transform::Transform(Vector3f pos, Vector3f rot, float scale)
 {
 	m_pos = pos;
 	m_rot = rot;
 	m_scale = scale;
 }
 
-Transform::~Transform()
-{
-
-}
-
-Matrix4f Transform::GetTransformation()
+Matrix4f Transform::GetTransformation() const
 {
 	Matrix4f translationMatrix;
 	Matrix4f rotationMatrix;
@@ -28,14 +23,14 @@ Matrix4f Transform::GetTransformation()
 
 	translationMatrix.InitTranslationTransform(Vector3f(m_pos.GetX(), m_pos.GetY(), m_pos.GetZ()));
 	rotationMatrix.InitRotateTransform(ToRadians(m_rot.GetX()), ToRadians(m_rot.GetY()), ToRadians(m_rot.GetZ()));
-	scaleMatrix.InitScaleTransform(Vector3f(m_scale.GetX(), m_scale.GetY(), m_scale.GetZ()));
+	scaleMatrix.InitScaleTransform(Vector3f(m_scale, m_scale, m_scale));
 
 	Matrix4f result = translationMatrix * rotationMatrix * scaleMatrix;
 
 	return result;
 }
 
-Matrix4f Transform::GetProjectedTransformation()
+Matrix4f Transform::GetProjectedTransformation() const
 {
 	Matrix4f transformationMatrix = GetTransformation();
 	Matrix4f projectionMatrix;

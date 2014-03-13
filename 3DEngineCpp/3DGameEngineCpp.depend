@@ -52,7 +52,7 @@
 1393637205 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/window.h
 	<string>
 
-1393727608 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.cpp
+1394673404 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.cpp
 	"game.h"
 	"input.h"
 	"util.h"
@@ -60,24 +60,25 @@
 	"window.h"
 	"basicShader.h"
 	"phongShader.h"
-	"time.h"
-	<math.h>
 
-1393697939 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
+1394673051 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
 	"mesh.h"
 	"shader.h"
 	"basicShader.h"
 	"transform.h"
 	"camera.h"
 	"lighting.h"
+	"gameObject.h"
+	"meshRenderer.h"
 
-1393629230 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.h
+1394389253 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.h
 	"vertex.h"
+	<string>
 
 1393716772 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vertex.h
 	"math3d.h"
 
-1393722860 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.h
+1394673029 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.h
 	"math3d.h"
 	"camera.h"
 
@@ -105,11 +106,13 @@
 
 1393719725 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/matrix4f.cpp
 
-1393697063 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.cpp
+1394417359 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.cpp
 	"mesh.h"
 	<GL/glew.h>
+	"obj_loader.h"
+	<iostream>
 
-1393640407 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/phongShader.cpp
+1394391294 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/phongShader.cpp
 	"phongShader.h"
 	"transform.h"
 	<iostream>
@@ -169,7 +172,7 @@
 	<SDL2/SDL.h>
 	<chrono>
 
-1393727419 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.cpp
+1394673037 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.cpp
 	"transform.h"
 
 1393721963 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/util.cpp
@@ -201,6 +204,33 @@
 	"game.h"
 	<string>
 
-1393727743 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.h
+1394390241 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.h
 	<math.h>
+
+1393792608 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/obj_loader.h
+	"math3d.h"
+	<vector>
+	<string>
+
+1394416801 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/obj_loader.cpp
+	"obj_loader.h"
+	<fstream>
+	<iostream>
+	<algorithm>
+	<map>
+
+1394673199 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.cpp
+	"gameObject.h"
+
+1394673192 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.h
+	<vector>
+	"transform.h"
+	"gameComponent.h"
+
+1394672373 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameComponent.h
+
+1394673371 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/meshRenderer.h
+	"gameComponent.h"
+	"mesh.h"
+	"basicShader.h"
 

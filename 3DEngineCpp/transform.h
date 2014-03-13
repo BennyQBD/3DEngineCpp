@@ -11,19 +11,19 @@ public:
 	static inline void SetCamera(Camera& camera) { s_camera = &camera; }
 	static void SetProjection(float fov, float width, float height, float zNear, float zFar);
 	
-	Transform(Vector3f pos = Vector3f(0,0,0), Vector3f rot = Vector3f(0,0,0), Vector3f scale = Vector3f(1,1,1));
-	~Transform();
+	Transform(Vector3f pos = Vector3f(0,0,0), Vector3f rot = Vector3f(0,0,0), float scale = 1.0f);
 
-	Matrix4f GetTransformation();
-	Matrix4f GetProjectedTransformation();
+	Matrix4f GetTransformation() const;
+	Matrix4f GetProjectedTransformation()const ;
 
 	inline Vector3f& GetPos() { return m_pos; }
 	inline Vector3f& GetRot() { return m_rot; }
-	inline Vector3f& GetScale() { return m_scale; }
+	inline float GetScale() const { return m_scale; }
+	//inline Vector3f& GetScale() { return m_scale; }
 
 	inline void SetPos(const Vector3f& pos) { m_pos = pos; }
 	inline void SetRot(const Vector3f& rot) { m_rot = rot; }
-	inline void SetScale(const Vector3f& scale) { m_scale = scale; }
+	inline void SetScale(float scale) { m_scale = scale; }
 protected:
 private:
 	static Camera* s_camera;
@@ -36,7 +36,8 @@ private:
 
 	Vector3f m_pos;
 	Vector3f m_rot;
-	Vector3f m_scale;
+	float m_scale;
+	//Vector3f m_scale;
 };
 
 #endif

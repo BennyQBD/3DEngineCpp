@@ -1,5 +1,7 @@
 #include "mesh.h"
 #include <GL/glew.h>
+#include "obj_loader.h"
+#include <iostream>
 
 Mesh::Mesh()
 {
@@ -8,6 +10,18 @@ Mesh::Mesh()
 	m_vbo = 0;
 	m_ibo = 0;
 	m_size = 0;
+}
+
+Mesh::Mesh(const std::string& fileName)
+{
+	IndexedModel model = OBJModel(fileName).ToIndexedModel();
+	
+	std::vector<Vertex> vertices;
+	
+	for(unsigned int i = 0; i < model.positions.size(); i++)
+		vertices.push_back(Vertex(model.positions[i], model.texCoords[i], model.normals[i]));
+		
+	AddVertices(&vertices[0], vertices.size(), (int*)&model.indices[0], model.indices.size(), false);
 }
 
 Mesh::~Mesh()

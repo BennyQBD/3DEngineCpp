@@ -2,10 +2,12 @@
 #define MESH_H
 
 #include "vertex.h"
+#include <string>
 
 class Mesh
 {
 public:
+	Mesh(const std::string& fileName);
 	Mesh();
 	virtual ~Mesh();
 

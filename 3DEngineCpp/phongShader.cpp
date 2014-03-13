@@ -71,6 +71,30 @@ PhongShader::PhongShader()
 
 void PhongShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix, const Material& material)
 {
+//	Matrix4f normalMat3 = Matrix3f(worldMatrix);
+//	
+//	normalMat3 = normalMat3.Transpose();
+//	normalMat3 = normalMat3.Inverse();
+//	
+//	Matrix4f normalMatrix = Matrix4f().InitIdentity();
+//	normalMatrix = Matrix4f(normalMat3);
+	//Matrix4f normalMatrix = Matrix4f(Matrix3f(worldMatrix).Transpose().Inverse());
+	//Matrix4f normalMatrix = Matrix4f(Matrix3f(Matrix3f(worldMatrix).Inverse()).Transpose());
+	
+//	Matrix3f worldRot3(worldMatrix);
+//	worldRot3 = worldRot3.Transpose();
+//	Matrix4f worldRot(worldRot3);
+//	
+//	Matrix4f worldPos = Matrix4f().InitTranslationTransform(Vector3f(-worldMatrix[3][0], -worldMatrix[3][1], -worldMatrix[3][2]));
+//	
+//	Matrix4f normalMatrix = worldRot * worldPos;
+
+//	Matrix4f normalMatrix = worldMatrix;
+	
+	//normalMatrix = Matrix4f(normalMatrix.Transpose()).Inverse();
+	//normalMatrix = normalMatrix.Inverse().Transpose();
+	//normalMatrix = Matrix4f(normalMatrix.Transpose()).Inverse();
+
 	material.texture->Bind();
 	SetUniform("transformProjected", projectedMatrix);
 	SetUniform("transform", worldMatrix);

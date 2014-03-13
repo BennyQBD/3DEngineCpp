@@ -85,6 +85,12 @@
 		<Unit filename="mesh.h">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
+		<Unit filename="obj_loader.cpp">
+			<Option virtualFolder="Engine/Static Libraries/" />
+		</Unit>
+		<Unit filename="obj_loader.h">
+			<Option virtualFolder="Engine/Static Libraries/" />
+		</Unit>
 		<Unit filename="phongShader.cpp">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>

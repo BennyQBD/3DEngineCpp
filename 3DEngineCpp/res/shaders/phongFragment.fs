@@ -65,7 +65,9 @@ vec4 calcLight(BaseLight base, vec3 direction, vec3 normal)
         
         vec3 directionToEye = normalize(eyePos - worldPos0);
         vec3 reflectDirection = normalize(reflect(direction, normal));
+        //vec3 halfDirection = normalize(directionToEye - direction);
         
+        //float specularFactor = dot(halfDirection, normal);
         float specularFactor = dot(directionToEye, reflectDirection);
         specularFactor = pow(specularFactor, specularPower);
         
