@@ -14,10 +14,10 @@ public:
 		m_material = &material;
 	}
 
-	virtual void Render(const Transform& transform, Shader* shader) 
+	virtual void Render(const Transform& transform, Shader* shader, RenderingEngine* renderingEngine) 
 	{
 		shader->Bind();
-		shader->UpdateUniforms(transform.GetTransformation(), transform.GetProjectedTransformation(), *m_material);
+		shader->UpdateUniforms(transform, *m_material, renderingEngine);
 		m_mesh->Draw();
 	}
 protected:

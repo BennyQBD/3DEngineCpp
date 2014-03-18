@@ -2,14 +2,17 @@
 #define GAMECOMPONENT_H_INCLUDED
 
 #include "transform.h"
-#include "shader.h"
+class RenderingEngine;
+class Shader;
 
 class GameComponent
 {
 public:
+	virtual ~GameComponent() {}
+
 	virtual void Input(const Transform& transform) {}
 	virtual void Update(const Transform& transform) {}
-	virtual void Render(const Transform& transform, Shader* shader) {}
+	virtual void Render(const Transform& transform, Shader* shader, RenderingEngine* renderingEngine) {}
 };
 
 #endif // GAMECOMPONENT_H_INCLUDED

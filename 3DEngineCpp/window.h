@@ -13,6 +13,7 @@ public:
 	static bool IsCloseRequested();
 	static int GetWidth();
 	static int GetHeight();
+	static float GetAspect();
 	static const std::string& GetTitle();
 
 	static void SetFullScreen(bool value);

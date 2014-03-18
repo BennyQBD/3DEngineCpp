@@ -3,10 +3,24 @@
 #include "time.h"
 #include "util.h"
 
-Camera::Camera(const Vector3f& pos, const Vector3f& forward, const Vector3f& up) :
-	m_pos(pos),
-	m_forward(forward),
-	m_up(up) {}
+Camera::Camera(float fov, float aspect, float zNear, float zFar) :
+	m_pos(Vector3f(0,0,0)),
+	m_forward(Vector3f(0,0,1)),
+	m_up(Vector3f(0,1,0)) 
+{
+	m_projection.InitPerspective(fov, aspect, zNear, zFar);
+}
+
+Matrix4f Camera::GetViewProjection() const
+{
+	Matrix4f cameraRotation;
+	Matrix4f cameraTranslation;
+	
+	cameraRotation.InitRotationFromDirection(m_forward, m_up);
+	cameraTranslation.InitTranslation(m_pos * -1);
+	
+	return m_projection * cameraRotation * cameraTranslation;
+}
 
 #include "window.h"
 bool mouseLocked = false;

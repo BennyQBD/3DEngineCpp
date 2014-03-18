@@ -63,6 +63,11 @@ int Window::GetHeight()
 	return s_height;
 }
 
+float Window::GetAspect()
+{
+	return (float)GetWidth()/(float)GetHeight();
+}
+
 const std::string& Window::GetTitle()
 {
 	return s_title;

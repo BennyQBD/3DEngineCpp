@@ -136,7 +136,7 @@ void Shader::CompileShader()
     //assert(gScaleLocation != 0xFFFFFFFF);
 }
 
-void Shader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix, const Material& material)
+void Shader::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)
 {
 
 }

@@ -17,7 +17,7 @@ BasicShader::BasicShader()
 
 static unsigned char whitePixel[] = {0xFF, 0xFF, 0xFF, 0xFF};
 
-void BasicShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix, const Material& material)
+void BasicShader::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)
 {
 	static Texture WHITE(1,1,whitePixel);
 
@@ -25,6 +25,9 @@ void BasicShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& pr
 		material.texture->Bind();
 	else
 		WHITE.Bind();
+
+	Matrix4f worldMatrix = transform.GetTransformation();
+	Matrix4f projectedMatrix = renderingEngine->GetMainCamera().GetViewProjection() * worldMatrix;
 
 	SetUniform("transform", projectedMatrix);
 	SetUniform("color", material.color);

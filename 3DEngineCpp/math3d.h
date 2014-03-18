@@ -264,7 +264,7 @@ public:
 		return *this;
 	}
 	
-	inline Matrix<T, D> InitScaleTransform(const Vector<T,D - 1>& r)
+	inline Matrix<T, D> InitScale(const Vector<T,D - 1>& r)
 	{
 		for(unsigned int i = 0; i < D; i++)
 		{
@@ -282,7 +282,7 @@ public:
 		return *this;
 	}
 	
-	inline Matrix<T, D> InitTranslationTransform(const Vector<T,D - 1>& r)
+	inline Matrix<T, D> InitTranslation(const Vector<T,D - 1>& r)
 	{
 		for(unsigned int i = 0; i < D; i++)
 		{
@@ -450,7 +450,7 @@ public:
 		}
 	}
 
-	inline Matrix4<T> InitRotateTransform(T rotateX, T rotateY, T rotateZ)
+	inline Matrix4<T> InitRotationEuler(T rotateX, T rotateY, T rotateZ)
 	{
 		Matrix4<T> rx, ry, rz;
 
@@ -478,9 +478,9 @@ public:
 		return *this;
 	}
 	
-	inline Matrix4<T> InitCameraTransform(const Vector3<T>& target, const Vector3<T>& up)
+	inline Matrix4<T> InitRotationFromDirection(const Vector3<T>& forward, const Vector3<T>& up)
 	{
-		Vector3<T> n = target.Normalized();
+		Vector3<T> n = forward.Normalized();
 		Vector3<T> u = Vector3<T>(up.Normalized()).Cross(n);
 		Vector3<T> v = n.Cross(u);
 		   
@@ -492,7 +492,7 @@ public:
 		return *this;
 	}
 	
-	inline Matrix4<T> InitPersProjTransform(T fov, T aspectRatio, T zNear, T zFar)
+	inline Matrix4<T> InitPerspective(T fov, T aspectRatio, T zNear, T zFar)
 	{
 		const T zRange     = zNear - zFar;
 		const T tanHalfFOV = tanf(fov / T(2));

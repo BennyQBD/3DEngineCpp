@@ -64,8 +64,12 @@
 		<Unit filename="gameComponent.h">
 			<Option virtualFolder="Engine/Components/" />
 		</Unit>
-		<Unit filename="gameObject.cpp" />
-		<Unit filename="gameObject.h" />
+		<Unit filename="gameObject.cpp">
+			<Option virtualFolder="Engine/Core/" />
+		</Unit>
+		<Unit filename="gameObject.h">
+			<Option virtualFolder="Engine/Core/" />
+		</Unit>
 		<Unit filename="input.cpp">
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
@@ -90,7 +94,9 @@
 		<Unit filename="mesh.h">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
-		<Unit filename="meshRenderer.h" />
+		<Unit filename="meshRenderer.h">
+			<Option virtualFolder="Engine/Components/" />
+		</Unit>
 		<Unit filename="obj_loader.cpp">
 			<Option virtualFolder="Engine/Static Libraries/" />
 		</Unit>
@@ -107,6 +113,12 @@
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
 		<Unit filename="renderUtil.h">
+			<Option virtualFolder="Engine/Rendering/" />
+		</Unit>
+		<Unit filename="renderingEngine.cpp">
+			<Option virtualFolder="Engine/Rendering/" />
+		</Unit>
+		<Unit filename="renderingEngine.h">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
 		<Unit filename="sdl_backend.cpp">

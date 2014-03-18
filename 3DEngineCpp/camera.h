@@ -6,13 +6,15 @@
 class Camera
 {
 public:
-	Camera(const Vector3f& pos = Vector3f(0,0,0), const Vector3f& forward = Vector3f(0,0,1), const Vector3f& up = Vector3f(0,1,0));
+	Camera(float fov, float aspect, float zNear, float zFar);
 
 	void Input();
 	void Move(const Vector3f& direction, float amt);
 	void RotateY(float angle);
 	void RotateX(float angle);
-
+	
+	Matrix4f GetViewProjection() const;
+	
 	inline Vector3f& GetPos() { return m_pos; }
 	inline Vector3f& GetForward() { return m_forward; }
 	inline Vector3f& GetUp() { return m_up; }
@@ -28,6 +30,7 @@ private:
 	Vector3f m_pos;
 	Vector3f m_forward;
 	Vector3f m_up;
+	Matrix4f m_projection;
 };
 
 #endif

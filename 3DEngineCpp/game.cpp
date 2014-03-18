@@ -9,10 +9,6 @@
 
 void Game::Init()
 {
-	m_camera = Camera();
-	Transform::SetProjection(70.0f, (float)Window::GetWidth(), (float)Window::GetHeight(), 0.1f, 1000.0f);
-	Transform::SetCamera(m_camera);
-
 	m_root = GameObject();
 	m_mesh = new Mesh("./res/models/plane3.obj");
 	m_texture = new Texture("test.png");
@@ -31,7 +27,6 @@ Game::~Game()
 
 void Game::Input()
 {
-	m_camera.Input();
 	m_root.Input();
 }
 

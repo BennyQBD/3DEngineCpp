@@ -69,7 +69,7 @@ PhongShader::PhongShader()
 	}
 }
 
-void PhongShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix, const Material& material)
+void PhongShader::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)
 {
 //	Matrix4f normalMat3 = Matrix3f(worldMatrix);
 //	
@@ -94,6 +94,9 @@ void PhongShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& pr
 	//normalMatrix = Matrix4f(normalMatrix.Transpose()).Inverse();
 	//normalMatrix = normalMatrix.Inverse().Transpose();
 	//normalMatrix = Matrix4f(normalMatrix.Transpose()).Inverse();
+
+	Matrix4f worldMatrix = transform.GetTransformation();
+	Matrix4f projectedMatrix = renderingEngine->GetMainCamera().GetViewProjection() * worldMatrix;
 
 	material.texture->Bind();
 	SetUniform("transformProjected", projectedMatrix);
@@ -140,7 +143,7 @@ void PhongShader::UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& pr
 	SetUniformf("specularIntensity", material.specularIntensity);
 	SetUniformf("specularPower", material.specularPower);
 		
-	SetUniform("eyePos", Transform::GetCamera().GetPos());
+	SetUniform("eyePos", renderingEngine->GetMainCamera().GetPos());
 }
 
 void PhongShader::SetDirectionalLight(const DirectionalLight& directionalLight)

@@ -7,6 +7,8 @@
 
 #include "math3d.h"
 #include "material.h"
+#include "renderingEngine.h"
+#include "transform.h"
 
 class Shader
 {
@@ -24,7 +26,7 @@ public:
 	void AddFragmentShader(const std::string& text);
 	void CompileShader();
 
-	virtual void UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix, const Material& material);
+	virtual void UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine);
 
 	void SetAttribLocation(const std::string& attributeName, int location);
 	void SetUniformi(const std::string& name, int value);

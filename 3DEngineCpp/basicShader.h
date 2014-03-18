@@ -12,7 +12,7 @@ public:
 		return &instance;
 	}
 
-	virtual void UpdateUniforms(const Matrix4f& worldMatrix, const Matrix4f& projectedMatrix, const Material& material);
+	virtual void UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine);
 protected:
 private:
 	BasicShader();

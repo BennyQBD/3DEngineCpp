@@ -29,7 +29,6 @@ private:
 	GameObject m_root;
 
 	Mesh* m_mesh;
-	Camera m_camera;
 	Material m_material;
 	Texture* m_texture;
 	MeshRenderer* m_meshRenderer;
