@@ -35,7 +35,9 @@ void ForwardDirectional::UpdateUniforms(const Transform& transform, const Materi
 	SetUniformf("specularIntensity", material.specularIntensity);
 	SetUniformf("specularPower", material.specularPower);
 	
-	SetUniform("directionalLight.direction", renderingEngine->GetDirectionalLight().direction);
-	SetUniform("directionalLight.base.color", renderingEngine->GetDirectionalLight().base.color);
-	SetUniformf("directionalLight.base.intensity", renderingEngine->GetDirectionalLight().base.intensity);
+	DirectionalLight directionalLight = *(DirectionalLight*)renderingEngine->GetActiveLight();
+	
+	SetUniform("directionalLight.direction", directionalLight.direction);
+	SetUniform("directionalLight.base.color", directionalLight.color);
+	SetUniformf("directionalLight.base.intensity", directionalLight.intensity);
 }

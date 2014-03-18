@@ -39,11 +39,13 @@ void ForwardPoint::UpdateUniforms(const Transform& transform, const Material& ma
 	SetUniformf("specularIntensity", material.specularIntensity);
 	SetUniformf("specularPower", material.specularPower);
 	
-	SetUniform("pointLight.base.color", renderingEngine->GetPointLight().base.color);
-	SetUniformf("pointLight.base.intensity", renderingEngine->GetPointLight().base.intensity);
-	SetUniformf("pointLight.atten.constant", renderingEngine->GetPointLight().atten.constant);
-	SetUniformf("pointLight.atten.linear", renderingEngine->GetPointLight().atten.linear);
-	SetUniformf("pointLight.atten.exponent", renderingEngine->GetPointLight().atten.exponent);
-	SetUniform("pointLight.position", renderingEngine->GetPointLight().position);
-	SetUniformf("pointLight.range", renderingEngine->GetPointLight().range);
+	PointLight pointLight = *(PointLight*)renderingEngine->GetActiveLight();
+	
+	SetUniform("pointLight.base.color", pointLight.color);
+	SetUniformf("pointLight.base.intensity", pointLight.intensity);
+	SetUniformf("pointLight.atten.constant", pointLight.atten.constant);
+	SetUniformf("pointLight.atten.linear", pointLight.atten.linear);
+	SetUniformf("pointLight.atten.exponent", pointLight.atten.exponent);
+	SetUniform("pointLight.position", pointLight.position);
+	SetUniformf("pointLight.range", pointLight.range);
 }

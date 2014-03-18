@@ -9,11 +9,11 @@
 
 RenderingEngine::RenderingEngine() :
 	m_mainCamera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f),
-	m_ambientLight(0.1f, 0.1f, 0.1f),
+	m_ambientLight(0.1f, 0.1f, 0.1f)
 	//m_ambientLight(0.0f, 0.0f, 0.0f),
 	//m_directionalLight(BaseLight(Vector3f(1,1,1), 0.8f), Vector3f(1,1,1)),
 	//m_pointLight(BaseLight(Vector3f(0,1,0),0.4f),Attenuation(0,0,1),Vector3f(7,0,7),100),
-	m_spotLight(PointLight(BaseLight(Vector3f(0,1,1),0.4f),Attenuation(0,0,0.1f),Vector3f(0,0,0),100),Vector3f(1,0,0),0.7f)
+	//m_spotLight(PointLight(BaseLight(Vector3f(0,1,1),0.4f),Attenuation(0,0,0.1f),Vector3f(0,0,0),100),Vector3f(1,0,0),0.7f)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -37,8 +37,7 @@ void RenderingEngine::Input(float delta)
 void RenderingEngine::Render(GameObject* object)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_directionalLights.clear();
-	m_pointLights.clear();
+	m_lights.clear();
 	
 	object->AddToRenderingEngine(this);
 	object->Render(ForwardAmbient::GetInstance(), this);
@@ -48,21 +47,11 @@ void RenderingEngine::Render(GameObject* object)
 	glDepthMask(GL_FALSE);
 	glDepthFunc(GL_EQUAL);
 	
-	for(unsigned int i = 0; i < m_directionalLights.size(); i++)
+	for(unsigned int i = 0; i < m_lights.size(); i++)
 	{
-		m_activeDirectionalLight = m_directionalLights[i];
-		object->Render(ForwardDirectional::GetInstance(), this);
+		m_activeLight = m_lights[i];
+		object->Render(m_activeLight->GetShader(), this);
 	}
-	
-	for(unsigned int i = 0; i < m_pointLights.size(); i++)
-	{
-		m_activePointLight = m_pointLights[i];
-		object->Render(ForwardPoint::GetInstance(), this);
-	}
-	
-	//object->Render(ForwardDirectional::GetInstance(), this);
-	//object->Render(ForwardPoint::GetInstance(), this);
-	//object->Render(ForwardSpot::GetInstance(), this);
 	
 	glDepthMask(GL_TRUE);
 	glDepthFunc(GL_LESS);

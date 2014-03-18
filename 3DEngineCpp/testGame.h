@@ -19,12 +19,14 @@ private:
 	GameObject m_planeObject;
 	GameObject m_directionalLightObject;
 	GameObject m_pointLightObject;
+	GameObject m_spotLightObject;
 	
-	DirectionalLight m_directionalLight;
-	PointLight m_pointLight;
+	DirectionalLight* m_directionalLight;
+	PointLight* m_pointLight;
+	SpotLight* m_spotLight;
 	
-	Mesh* m_mesh;
 	Material m_material;
+	Mesh* m_mesh;
 	Texture* m_texture;
 	MeshRenderer* m_meshRenderer;
 };

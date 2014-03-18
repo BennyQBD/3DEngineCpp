@@ -41,13 +41,15 @@ void ForwardSpot::UpdateUniforms(const Transform& transform, const Material& mat
 	SetUniformf("specularIntensity", material.specularIntensity);
 	SetUniformf("specularPower", material.specularPower);
 	
-	SetUniform("spotLight.pointLight.base.color", renderingEngine->GetSpotLight().pointLight.base.color);
-	SetUniformf("spotLight.pointLight.base.intensity", renderingEngine->GetSpotLight().pointLight.base.intensity);
-	SetUniformf("spotLight.pointLight.atten.constant", renderingEngine->GetSpotLight().pointLight.atten.constant);
-	SetUniformf("spotLight.pointLight.atten.linear", renderingEngine->GetSpotLight().pointLight.atten.linear);
-	SetUniformf("spotLight.pointLight.atten.exponent", renderingEngine->GetSpotLight().pointLight.atten.exponent);
-	SetUniform("spotLight.pointLight.position", renderingEngine->GetSpotLight().pointLight.position);
-	SetUniformf("spotLight.pointLight.range", renderingEngine->GetSpotLight().pointLight.range);
-	SetUniform("spotLight.direction", renderingEngine->GetSpotLight().direction);
-	SetUniformf("spotLight.cutoff", renderingEngine->GetSpotLight().cutoff);
+	SpotLight spotLight = *(SpotLight*)renderingEngine->GetActiveLight();
+	
+	SetUniform("spotLight.pointLight.base.color", spotLight.color);
+	SetUniformf("spotLight.pointLight.base.intensity", spotLight.intensity);
+	SetUniformf("spotLight.pointLight.atten.constant", spotLight.atten.constant);
+	SetUniformf("spotLight.pointLight.atten.linear", spotLight.atten.linear);
+	SetUniformf("spotLight.pointLight.atten.exponent", spotLight.atten.exponent);
+	SetUniform("spotLight.pointLight.position", spotLight.position);
+	SetUniformf("spotLight.pointLight.range", spotLight.range);
+	SetUniform("spotLight.direction", spotLight.direction);
+	SetUniformf("spotLight.cutoff", spotLight.cutoff);
 }

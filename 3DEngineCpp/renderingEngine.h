@@ -18,12 +18,9 @@ public:
 	inline void SetMainCamera(const Camera& camera) { m_mainCamera = camera; }
 	
 	inline Vector3f& GetAmbientLight() { return m_ambientLight; }
-	inline DirectionalLight& GetDirectionalLight() { return *m_activeDirectionalLight; }
-	inline PointLight& GetPointLight() { return *m_activePointLight; }
-	inline SpotLight& GetSpotLight() { return m_spotLight; }
+	inline BaseLight* GetActiveLight() { return m_activeLight; }
 	
-	inline void AddDirectionalLight(DirectionalLight* directionalLight) { m_directionalLights.push_back(directionalLight); }
-	inline void AddPointLight(PointLight* pointLight) { m_pointLights.push_back(pointLight); }
+	inline void AddLight(BaseLight* light) { m_lights.push_back(light); }
 	
 	virtual ~RenderingEngine();
 protected:
@@ -34,15 +31,9 @@ private:
 	
 	Camera m_mainCamera;
 	Vector3f m_ambientLight;
-//	DirectionalLight m_directionalLight;
-//	PointLight m_pointLight;
-	SpotLight m_spotLight;
 	
-	DirectionalLight* m_activeDirectionalLight;
-	PointLight* m_activePointLight;
-	
-	std::vector<DirectionalLight*> m_directionalLights;
-	std::vector<PointLight*> m_pointLights;
+	BaseLight* m_activeLight;
+	std::vector<BaseLight*> m_lights;
 };
 
 #endif // RENDERINGENGINE_H

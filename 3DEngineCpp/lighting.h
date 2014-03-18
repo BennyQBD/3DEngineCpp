@@ -4,26 +4,28 @@
 #include "math3d.h"
 #include "gameComponent.h"
 
-struct BaseLight
+struct BaseLight : public GameComponent
 {
+public:
 	Vector3f color;
 	float intensity;
 
 	BaseLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0) :
 		color(color),
 		intensity(intensity) {}
+	
+	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);	
+	inline void SetShader(Shader* shader) { m_shader = shader; }
+	inline Shader* GetShader() { return m_shader; }
+private:
+	Shader* m_shader;
 };
 
-struct DirectionalLight : public GameComponent
+struct DirectionalLight : public BaseLight
 {
-	BaseLight base;
 	Vector3f direction;
 
-	DirectionalLight(const BaseLight& base = BaseLight(), Vector3f direction = Vector3f(0,0,0)) :
-		base(base),
-		direction(direction.Normalized()) {}
-		
-	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);
+	DirectionalLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Vector3f& direction = Vector3f(0,0,0));
 };
 
 struct Attenuation
@@ -38,32 +40,22 @@ struct Attenuation
 		exponent(exponent) {}
 };
 
-struct PointLight : public GameComponent
+struct PointLight : public BaseLight
 {
-	BaseLight base;
 	Attenuation atten;
 	Vector3f position;
 	float range;
 
-	PointLight(const BaseLight& base = BaseLight(), const Attenuation& atten = Attenuation(), const Vector3f& position = Vector3f(), float range = 0) :
-		base(base),
-		atten(atten),
-		position(position),
-		range(range) {}
-		
-	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);
+	PointLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation(), const Vector3f& position = Vector3f(), float range = 0);
 };
 
-struct SpotLight
+struct SpotLight : public PointLight
 {
-	PointLight pointLight;
 	Vector3f direction;
 	float cutoff;
 
-	SpotLight(const PointLight& pointLight = PointLight(), const Vector3f& direction = Vector3f(), float cutoff = 0) :
-		pointLight(pointLight),
-		direction(direction),
-		cutoff(cutoff) {}
+	SpotLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation(), const Vector3f& position = Vector3f(), float range = 0, 
+			const Vector3f& direction = Vector3f(), float cutoff = 0);
 };
 
 #endif
