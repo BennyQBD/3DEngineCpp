@@ -20,7 +20,7 @@ struct DirectionalLight
 
 	DirectionalLight(const BaseLight& base = BaseLight(), Vector3f direction = Vector3f(0,0,0)) :
 		base(base),
-		direction(direction) {}
+		direction(direction.Normalized()) {}
 };
 
 struct Attenuation

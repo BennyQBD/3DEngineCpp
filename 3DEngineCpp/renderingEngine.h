@@ -2,6 +2,7 @@
 #define RENDERINGENGINE_H
 
 #include "camera.h"
+#include "lighting.h"
 class GameObject;
 
 class RenderingEngine
@@ -16,7 +17,7 @@ public:
 	inline void SetMainCamera(const Camera& camera) { m_mainCamera = camera; }
 	
 	inline Vector3f& GetAmbientLight() { return m_ambientLight; }
-	inline void SetAmbientLight(const Vector3f& value) { m_ambientLight = value; }
+	inline DirectionalLight& GetDirectionalLight() { return m_directionalLight; }
 	
 	virtual ~RenderingEngine();
 protected:
@@ -27,6 +28,7 @@ private:
 	
 	Camera m_mainCamera;
 	Vector3f m_ambientLight;
+	DirectionalLight m_directionalLight;
 };
 
 #endif // RENDERINGENGINE_H
