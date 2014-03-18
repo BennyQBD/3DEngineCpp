@@ -1,16 +1,9 @@
 #ifndef TIME_H
 #define TIME_H
 
-class Time
+namespace Time
 {
-public:
-	static double GetTime();
-	static double GetDelta();
-
-	static void SetDelta(double value);
-protected:
-private:
-	static double s_delta;
+	double GetTime();
 };
 
 #endif

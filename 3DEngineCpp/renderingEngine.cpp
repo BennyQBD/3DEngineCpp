@@ -21,9 +21,9 @@ RenderingEngine::~RenderingEngine()
 	//dtor
 }
 
-void RenderingEngine::Input()
+void RenderingEngine::Input(float delta)
 {
-	m_mainCamera.Input();
+	m_mainCamera.Input(delta);
 }
 
 void RenderingEngine::Render(GameObject* object)

@@ -9,7 +9,7 @@ class RenderingEngine
 public:
 	RenderingEngine();
 	
-	void Input();
+	void Input(float delta);
 	void Render(GameObject* object);
 	
 	inline Camera& GetMainCamera() { return m_mainCamera; }

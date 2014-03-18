@@ -8,7 +8,7 @@ class Camera
 public:
 	Camera(float fov, float aspect, float zNear, float zFar);
 
-	void Input();
+	void Input(float delta);
 	void Move(const Vector3f& direction, float amt);
 	void RotateY(float angle);
 	void RotateX(float angle);

@@ -25,10 +25,10 @@ Matrix4f Camera::GetViewProjection() const
 #include "window.h"
 bool mouseLocked = false;
 
-void Camera::Input()
+void Camera::Input(float delta)
 {
 	float sensitivity = 0.5f;
-	float movAmt = (float)(10 * Time::GetDelta());
+	float movAmt = (float)(10 * delta);
 	//float rotAmt = (float)(100 * Time::getDelta());
 
 	if(Input::GetKey(KEY::KEY_ESCAPE))

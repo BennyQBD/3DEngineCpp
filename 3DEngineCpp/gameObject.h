@@ -14,8 +14,8 @@ public:
 	void AddChild(GameObject& child);
 	void AddComponent(GameComponent* component);
 	
-	void Input();
-	void Update();
+	void Input(float delta);
+	void Update(float delta);
 	void Render(Shader* shader, RenderingEngine* renderingEngine);
 	
 	inline Transform& GetTransform() { return m_transform; }

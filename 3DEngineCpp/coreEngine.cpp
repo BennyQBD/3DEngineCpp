@@ -80,12 +80,11 @@ void CoreEngine::Run()
 			if(Window::IsCloseRequested())
 				Stop();
 
-			Time::SetDelta(m_frameTime);
 			Input::Update();
 
-			m_game->Input();
-			m_renderingEngine->Input();
-			m_game->Update();
+			m_game->Input(m_frameTime);
+			m_renderingEngine->Input(m_frameTime);
+			m_game->Update(m_frameTime);
 
 			unprocessedTime -= m_frameTime;
 		}

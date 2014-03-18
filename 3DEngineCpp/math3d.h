@@ -32,6 +32,7 @@ public:
 	inline T LengthSq() const { return this->Dot(*this); }
 	inline T Length() const { return sqrt(LengthSq()); }
 	inline Vector<T,D> Normalized() const { return *this/Length(); }
+	inline Vector<T,D> Lerp(const Vector<T,D>& r, T lerpFactor) const { return (r - *this) * lerpFactor + *this; }
 
 	inline Vector<T, D> operator+(const Vector<T,D>& r) const
 	{
@@ -136,6 +137,11 @@ public:
 		(*this)[1] = y;
 	}
 	
+	T Cross(const Vector2<T>& r) const
+	{
+		return GetX() * r.GetY() - GetY() * r.GetX();
+	}
+	
 	inline T GetX() const { return (*this)[0]; }
 	inline T GetY() const { return (*this)[1]; }
 	
@@ -185,6 +191,14 @@ public:
 			(*this * cosAngle) +                     //Rotation on local Z
 		    axis * this->Dot(axis * (1 - cosAngle)); //Rotation on local Y
 	}
+	
+	inline Vector2<T> GetXY() const { return Vector2<T>(GetX(), GetY()); }
+	inline Vector2<T> GetYZ() const { return Vector2<T>(GetY(), GetZ()); }
+	inline Vector2<T> GetZX() const { return Vector2<T>(GetZ(), GetX()); }
+	
+	inline Vector2<T> GetYX() const { return Vector2<T>(GetY(), GetX()); }
+	inline Vector2<T> GetZY() const { return Vector2<T>(GetZ(), GetY()); }
+	inline Vector2<T> GetXZ() const { return Vector2<T>(GetX(), GetZ()); }
 	
 	inline T GetX() const { return (*this)[0]; }
 	inline T GetY() const { return (*this)[1]; }
@@ -501,6 +515,20 @@ public:
 		(*this)[0][1] = T(0);                   (*this)[1][1] = T(1)/tanHalfFOV; (*this)[2][1] = T(0);            (*this)[3][1] = T(0);
 		(*this)[0][2] = T(0);                   (*this)[1][2] = T(0);            (*this)[2][2] = (-zNear - zFar)/zRange ; (*this)[3][2] = T(2)*zFar*zNear/zRange;
 		(*this)[0][3] = T(0);                   (*this)[1][3] = T(0);            (*this)[2][3] = T(1);            (*this)[3][3] = T(0); 
+		
+		return *this;
+	}
+	
+	inline Matrix4<T> InitOrthographic(T left, T right, T bottom, T top, T near, T far)
+	{
+		const T width = (right - left);
+		const T height = (top - bottom);
+		const T depth = (far - near);
+
+		(*this)[0][0] = T(2)/width; (*this)[1][0] = T(0);        (*this)[2][0] = T(0);        (*this)[3][0] = -(right + left)/width;
+		(*this)[0][1] = T(0);       (*this)[1][1] = T(2)/height; (*this)[2][1] = T(0);        (*this)[3][1] = -(top + bottom)/height;
+		(*this)[0][2] = T(0);       (*this)[1][2] = T(0);        (*this)[2][2] = T(-2)/depth; (*this)[3][2] = -(far + near)/depth;
+		(*this)[0][3] = T(0);       (*this)[1][3] = T(0);        (*this)[2][3] = T(0);        (*this)[3][3] = T(1); 
 		
 		return *this;
 	}

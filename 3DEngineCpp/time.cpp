@@ -3,16 +3,12 @@
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(WIN64)
 	#define OS_WINDOWS
+#elif defined(__linux__)
+	#define OS_LINUX
+#elif __cplusplus >= 201103L
+	#define OS_OTHER_CPP11
 #else
-	#ifdef __linux__
-		#define OS_LINUX
-	#else
-		#if __cplusplus >= 201103L
-			#define OS_OTHER_CPP11
-		#else
-			#define OS_OTHER
-		#endif
-	#endif
+	#define OS_OTHER
 #endif
 
 #ifdef OS_WINDOWS
@@ -35,8 +31,6 @@
 	#include <chrono>
 	static std::chrono::system_clock::time_point m_epoch = std::chrono::high_resolution_clock::now();
 #endif
-
-double Time::s_delta = 0.0;
 
 double Time::GetTime()
 {
@@ -71,14 +65,4 @@ double Time::GetTime()
 	#ifdef OS_OTHER
 		return (double)SDL_GetTicks()/1000.0;
 	#endif
-}
-
-double Time::GetDelta()
-{
-	return s_delta;
-}
-
-void Time::SetDelta(double value)
-{
-	Time::s_delta = value;
 }
