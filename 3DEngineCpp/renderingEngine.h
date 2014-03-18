@@ -18,6 +18,8 @@ public:
 	
 	inline Vector3f& GetAmbientLight() { return m_ambientLight; }
 	inline DirectionalLight& GetDirectionalLight() { return m_directionalLight; }
+	inline PointLight& GetPointLight() { return m_pointLight; }
+	inline SpotLight& GetSpotLight() { return m_spotLight; }
 	
 	virtual ~RenderingEngine();
 protected:
@@ -29,6 +31,8 @@ private:
 	Camera m_mainCamera;
 	Vector3f m_ambientLight;
 	DirectionalLight m_directionalLight;
+	PointLight m_pointLight;
+	SpotLight m_spotLight;
 };
 
 #endif // RENDERINGENGINE_H
