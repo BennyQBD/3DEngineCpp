@@ -227,12 +227,12 @@
 	"mesh.h"
 	"basicShader.h"
 
-1395131113 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.h
+1395133851 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.h
 	"camera.h"
 
-1395132137 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.cpp
+1395134357 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.cpp
 	"renderingEngine.h"
-	"basicShader.h"
+	"forwardAmbient.h"
 	"window.h"
 	"gameObject.h"
 	<GL/glew.h>
@@ -257,4 +257,10 @@
 	"phongShader.h"
 	"coreEngine.h"
 	"game.h"
+
+1395134340 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardAmbient.cpp
+	"forwardAmbient.h"
+
+1395134108 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardAmbient.h
+	"shader.h"
 

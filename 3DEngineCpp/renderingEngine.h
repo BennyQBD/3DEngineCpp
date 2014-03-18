@@ -15,6 +15,9 @@ public:
 	inline Camera& GetMainCamera() { return m_mainCamera; }
 	inline void SetMainCamera(const Camera& camera) { m_mainCamera = camera; }
 	
+	inline Vector3f& GetAmbientLight() { return m_ambientLight; }
+	inline void SetAmbientLight(const Vector3f& value) { m_ambientLight = value; }
+	
 	virtual ~RenderingEngine();
 protected:
 private:
@@ -23,6 +26,7 @@ private:
 	void operator=(const RenderingEngine& other) {}
 	
 	Camera m_mainCamera;
+	Vector3f m_ambientLight;
 };
 
 #endif // RENDERINGENGINE_H
