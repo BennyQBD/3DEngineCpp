@@ -2,6 +2,7 @@
 #define LIGHTING_H
 
 #include "math3d.h"
+#include "gameComponent.h"
 
 struct BaseLight
 {
@@ -13,7 +14,7 @@ struct BaseLight
 		intensity(intensity) {}
 };
 
-struct DirectionalLight
+struct DirectionalLight : public GameComponent
 {
 	BaseLight base;
 	Vector3f direction;
@@ -21,6 +22,8 @@ struct DirectionalLight
 	DirectionalLight(const BaseLight& base = BaseLight(), Vector3f direction = Vector3f(0,0,0)) :
 		base(base),
 		direction(direction.Normalized()) {}
+		
+	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);
 };
 
 struct Attenuation
@@ -35,7 +38,7 @@ struct Attenuation
 		exponent(exponent) {}
 };
 
-struct PointLight
+struct PointLight : public GameComponent
 {
 	BaseLight base;
 	Attenuation atten;
@@ -47,6 +50,8 @@ struct PointLight
 		atten(atten),
 		position(position),
 		range(range) {}
+		
+	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);
 };
 
 struct SpotLight

@@ -11,7 +11,15 @@ void TestGame::Init()
 	m_planeObject.GetTransform().SetPos(Vector3f(0, -1, 5));
 	m_planeObject.GetTransform().SetScale(4.0f);
 	
+	m_directionalLight = DirectionalLight(BaseLight(Vector3f(1,1,1), 0.8f), Vector3f(1,1,1));
+	m_directionalLightObject.AddComponent(&m_directionalLight);
+	
+	m_pointLight = PointLight(BaseLight(Vector3f(0,1,0),0.4f),Attenuation(0,0,1),Vector3f(7,0,7),100);
+	m_pointLightObject.AddComponent(&m_pointLight);
+	
 	AddToScene(m_planeObject);
+	AddToScene(m_directionalLightObject);
+	AddToScene(m_pointLightObject);
 }
 
 TestGame::~TestGame()

@@ -17,6 +17,7 @@ public:
 	void Input(float delta);
 	void Update(float delta);
 	void Render(Shader* shader, RenderingEngine* renderingEngine);
+	void AddToRenderingEngine(RenderingEngine* renderingEngine);
 	
 	inline Transform& GetTransform() { return m_transform; }
 protected:

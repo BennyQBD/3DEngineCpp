@@ -13,6 +13,8 @@ public:
 	virtual void Input(const Transform& transform, float delta) {}
 	virtual void Update(const Transform& transform, float delta) {}
 	virtual void Render(const Transform& transform, Shader* shader, RenderingEngine* renderingEngine) {}
+	
+	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine) {}
 };
 
 #endif // GAMECOMPONENT_H_INCLUDED

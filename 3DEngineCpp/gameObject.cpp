@@ -36,3 +36,12 @@ void GameObject::Render(Shader* shader, RenderingEngine* renderingEngine)
 	for(unsigned int i = 0; i < m_children.size(); i++)
 		m_children[i]->Render(shader, renderingEngine);
 }
+
+void GameObject::AddToRenderingEngine(RenderingEngine* renderingEngine)
+{
+	for(unsigned int i = 0; i < m_components.size(); i++)
+		m_components[i]->AddToRenderingEngine(renderingEngine);
+
+	for(unsigned int i = 0; i < m_children.size(); i++)
+		m_children[i]->AddToRenderingEngine(renderingEngine);
+}

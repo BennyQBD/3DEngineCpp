@@ -17,6 +17,11 @@ private:
 	void operator=(const TestGame& other) {}
 	
 	GameObject m_planeObject;
+	GameObject m_directionalLightObject;
+	GameObject m_pointLightObject;
+	
+	DirectionalLight m_directionalLight;
+	PointLight m_pointLight;
 	
 	Mesh* m_mesh;
 	Material m_material;
