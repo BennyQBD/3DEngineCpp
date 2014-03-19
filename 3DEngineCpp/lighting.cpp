@@ -31,9 +31,8 @@ PointLight::PointLight(const Vector3f& color, float intensity, const Attenuation
 	SetShader(ForwardPoint::GetInstance());
 }
 
-SpotLight::SpotLight(const Vector3f& color, float intensity, const Attenuation& atten, const Vector3f& direction, float cutoff) :
+SpotLight::SpotLight(const Vector3f& color, float intensity, const Attenuation& atten, float cutoff) :
 	PointLight(color, intensity, atten),
-	direction(direction),
 	cutoff(cutoff) 
 {
 	SetShader(ForwardSpot::GetInstance());

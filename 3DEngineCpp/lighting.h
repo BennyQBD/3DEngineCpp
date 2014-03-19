@@ -50,10 +50,9 @@ struct PointLight : public BaseLight
 
 struct SpotLight : public PointLight
 {
-	Vector3f direction;
 	float cutoff;
 
-	SpotLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation(), const Vector3f& direction = Vector3f(), float cutoff = 0);
+	SpotLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation(), float cutoff = 0);
 };
 
 #endif

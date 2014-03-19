@@ -503,18 +503,23 @@ public:
 		return *this;
 	}
 	
-	inline Matrix4<T> InitRotationFromDirection(const Vector3<T>& forward, const Vector3<T>& up)
+	inline Matrix4<T> InitRotationFromVectors(const Vector3<T>& n, const Vector3<T>& v, const Vector3<T>& u)
 	{
-		Vector3<T> n = forward.Normalized();
-		Vector3<T> u = Vector3<T>(up.Normalized()).Cross(n);
-		Vector3<T> v = n.Cross(u);
-		   
 		(*this)[0][0] = u.GetX();   (*this)[1][0] = u.GetY();   (*this)[2][0] = u.GetZ();   (*this)[3][0] = T(0);
 		(*this)[0][1] = v.GetX();   (*this)[1][1] = v.GetY();   (*this)[2][1] = v.GetZ();   (*this)[3][1] = T(0);
 		(*this)[0][2] = n.GetX();   (*this)[1][2] = n.GetY();   (*this)[2][2] = n.GetZ();   (*this)[3][2] = T(0);
 		(*this)[0][3] = T(0);       (*this)[1][3] = T(0);       (*this)[2][3] = T(0);       (*this)[3][3] = T(1);  
 		
 		return *this;
+	}
+	
+	inline Matrix4<T> InitRotationFromDirection(const Vector3<T>& forward, const Vector3<T>& up)
+	{
+		Vector3<T> n = forward.Normalized();
+		Vector3<T> u = Vector3<T>(up.Normalized()).Cross(n);
+		Vector3<T> v = n.Cross(u);
+		
+		return InitRotationFromVectors(n,v,u);
 	}
 	
 	inline Matrix4<T> InitPerspective(T fov, T aspectRatio, T zNear, T zFar)
@@ -570,42 +575,6 @@ public:
 				for(unsigned int j = 0; j < 3; j++)
 					(*this)[i][j] = r[i][j];
 		}
-	}
-};
-
-class Quaternion : public Vector4<float>
-{
-public:
-	Quaternion() { }
-	
-	Quaternion(float x, float y, float z, float w)
-	{
-		(*this)[0] = x;
-		(*this)[1] = y;
-		(*this)[2] = z;
-		(*this)[3] = w;
-	}
-
-	inline Quaternion Conjugate() const { return Quaternion(-GetX(), -GetY(), -GetZ(), GetW()); }
-
-	inline Quaternion operator*(const Quaternion& r) const
-	{
-		const float _w = (GetW() * r.GetW()) - (GetX() * r.GetX()) - (GetY() * r.GetY()) - (GetZ() * r.GetZ());
-		const float _x = (GetX() * r.GetW()) + (GetW() * r.GetX()) + (GetY() * r.GetZ()) - (GetZ() * r.GetY());
-		const float _y = (GetY() * r.GetW()) + (GetW() * r.GetY()) + (GetZ() * r.GetX()) - (GetX() * r.GetZ());
-		const float _z = (GetZ() * r.GetW()) + (GetW() * r.GetZ()) + (GetX() * r.GetY()) - (GetY() * r.GetX());
-
-		return Quaternion(_x, _y, _z, _w);
-	}
-	
-	inline Quaternion operator*(const Vector3<float>& v) const
-	{
-		const float _w = - (GetX() * v.GetX()) - (GetY() * v.GetY()) - (GetZ() * v.GetZ());
-		const float _x =   (GetW() * v.GetX()) + (GetY() * v.GetZ()) - (GetZ() * v.GetY());
-		const float _y =   (GetW() * v.GetY()) + (GetZ() * v.GetX()) - (GetX() * v.GetZ());
-		const float _z =   (GetW() * v.GetZ()) + (GetX() * v.GetY()) - (GetY() * v.GetX());
-
-		return Quaternion(_x, _y, _z, _w);
 	}
 };
 
@@ -753,5 +722,85 @@ typedef Matrix4<float> Matrix4f;
 typedef Matrix<double, 2> Matrix2d;
 typedef Matrix3<double> Matrix3d;
 typedef Matrix4<double> Matrix4d;
+
+class Quaternion : public Vector4<float>
+{
+public:
+	Quaternion(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 1.0f)
+	{
+		(*this)[0] = x;
+		(*this)[1] = y;
+		(*this)[2] = z;
+		(*this)[3] = w;
+	}
+	
+	Quaternion(const Vector3f& axis, float angle)
+	{
+		float sinHalfAngle = sinf(angle/2);
+		float cosHalfAngle = cosf(angle/2);
+		
+		(*this)[0] = axis.GetX() * sinHalfAngle;
+		(*this)[1] = axis.GetY() * sinHalfAngle;
+		(*this)[2] = axis.GetZ() * sinHalfAngle;
+		(*this)[3] = cosHalfAngle;
+	}
+	
+	inline Matrix4f ToRotationMatrix() const
+	{
+		return Matrix4f().InitRotationFromVectors(GetForward(),GetUp(),GetRight());
+	}
+	
+	inline Vector3f GetForward() const
+	{ 
+		return Vector3f(2.0f * (GetX() * GetZ() - GetW() * GetY()), 2.0f * (GetY() * GetZ() + GetW() * GetX()), 1.0f - 2.0f * (GetX() * GetX() + GetY() * GetY())); 
+	}
+	
+	inline Vector3f GetBack() const
+	{ 
+		return Vector3f(-2.0f * (GetX() * GetZ() - GetW() * GetY()), -2.0f * (GetY() * GetZ() + GetW() * GetX()), -(1.0f - 2.0f * (GetX() * GetX() + GetY() * GetY()))); 
+	}
+	
+	inline Vector3f GetUp() const
+	{ 
+		return Vector3f(2.0f * (GetX()*GetY() + GetW()*GetZ()), 1.0f - 2.0f * (GetX()*GetX() + GetZ()*GetZ()), 2.0f * (GetY()*GetZ() - GetW()*GetX())); 
+	}
+	
+	inline Vector3f GetDown() const
+	{ 
+		return Vector3f(-2.0f * (GetX()*GetY() + GetW()*GetZ()), -(1.0f - 2.0f * (GetX()*GetX() + GetZ()*GetZ())), -2.0f * (GetY()*GetZ() - GetW()*GetX())); 
+	}
+	
+	inline Vector3f GetRight() const
+	{ 
+		return Vector3f(1.0f - 2.0f * (GetY()*GetY() + GetZ()*GetZ()), 2.0f * (GetX()*GetY() - GetW()*GetZ()), 2.0f * (GetX()*GetZ() + GetW()*GetY())); 
+	}
+	
+	inline Vector3f GetLeft() const
+	{ 
+		return Vector3f(-(1.0f - 2.0f * (GetY()*GetY() + GetZ()*GetZ())), -2.0f * (GetX()*GetY() - GetW()*GetZ()), -2.0f * (GetX()*GetZ() + GetW()*GetY())); 
+	}
+
+	inline Quaternion Conjugate() const { return Quaternion(-GetX(), -GetY(), -GetZ(), GetW()); }
+
+	inline Quaternion operator*(const Quaternion& r) const
+	{
+		const float _w = (GetW() * r.GetW()) - (GetX() * r.GetX()) - (GetY() * r.GetY()) - (GetZ() * r.GetZ());
+		const float _x = (GetX() * r.GetW()) + (GetW() * r.GetX()) + (GetY() * r.GetZ()) - (GetZ() * r.GetY());
+		const float _y = (GetY() * r.GetW()) + (GetW() * r.GetY()) + (GetZ() * r.GetX()) - (GetX() * r.GetZ());
+		const float _z = (GetZ() * r.GetW()) + (GetW() * r.GetZ()) + (GetX() * r.GetY()) - (GetY() * r.GetX());
+
+		return Quaternion(_x, _y, _z, _w);
+	}
+	
+	inline Quaternion operator*(const Vector3<float>& v) const
+	{
+		const float _w = - (GetX() * v.GetX()) - (GetY() * v.GetY()) - (GetZ() * v.GetZ());
+		const float _x =   (GetW() * v.GetX()) + (GetY() * v.GetZ()) - (GetZ() * v.GetY());
+		const float _y =   (GetW() * v.GetY()) + (GetZ() * v.GetX()) - (GetX() * v.GetZ());
+		const float _z =   (GetW() * v.GetZ()) + (GetX() * v.GetY()) - (GetY() * v.GetX());
+
+		return Quaternion(_x, _y, _z, _w);
+	}
+};
 
 #endif // MATH3D_H_INCLUDED

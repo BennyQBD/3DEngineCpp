@@ -16,6 +16,7 @@ void TestGame::Init()
 {
 	GameObject* planeObject = new GameObject();
 	GameObject* pointLightObject = new GameObject();
+	GameObject* spotLightObject = new GameObject();
 
 	planeObject->AddComponent(new MeshRenderer(new Mesh("./res/models/plane3.obj"), new Material(new Texture("test.png"), Vector3f(1,1,1), 1, 8)));
 	planeObject->GetTransform().SetPos(Vector3f(0, -1, 5));
@@ -24,10 +25,13 @@ void TestGame::Init()
 	pointLightObject->AddComponent(new PointLight(Vector3f(0,1,0),0.4f,Attenuation(0,0,1)));
 	pointLightObject->GetTransform().SetPos(Vector3f(7,0,7));
 	
+	spotLightObject->AddComponent(new SpotLight(Vector3f(0,1,1),0.4f,Attenuation(0,0,0.1f),0.7f));
+	spotLightObject->GetTransform().SetRot(Quaternion(Vector3f(0,1,0), ToRadians(-90.0f)));
+	
 	AddToScene(planeObject);
 	AddToScene(pointLightObject);
+	AddToScene(spotLightObject);
 	AddToScene((new GameObject())->AddComponent(new DirectionalLight(Vector3f(1,1,1), 0.8f, Vector3f(1,1,1))));
-	AddToScene((new GameObject())->AddComponent(new SpotLight(Vector3f(0,1,1),0.4f,Attenuation(0,0,0.1f),Vector3f(1,0,0),0.7f)));
 }
 
 int main()

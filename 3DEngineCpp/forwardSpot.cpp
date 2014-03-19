@@ -50,6 +50,6 @@ void ForwardSpot::UpdateUniforms(const Transform& transform, const Material& mat
 	SetUniformf("spotLight.pointLight.atten.exponent", spotLight.atten.exponent);
 	SetUniform("spotLight.pointLight.position", spotLight.GetTransform().GetPos());
 	SetUniformf("spotLight.pointLight.range", spotLight.range);
-	SetUniform("spotLight.direction", spotLight.direction);
+	SetUniform("spotLight.direction", spotLight.GetTransform().GetRot().GetForward());
 	SetUniformf("spotLight.cutoff", spotLight.cutoff);
 }

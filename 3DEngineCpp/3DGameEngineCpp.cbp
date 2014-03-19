@@ -104,10 +104,10 @@
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="lighting.cpp">
-			<Option virtualFolder="Engine/Rendering/" />
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
 		<Unit filename="lighting.h">
-			<Option virtualFolder="Engine/Rendering/" />
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Game/" />
@@ -163,12 +163,6 @@
 		</Unit>
 		<Unit filename="stb_image.h">
 			<Option virtualFolder="Engine/Static Libraries/" />
-		</Unit>
-		<Unit filename="testGame.cpp">
-			<Option virtualFolder="Game/" />
-		</Unit>
-		<Unit filename="testGame.h">
-			<Option virtualFolder="Game/" />
 		</Unit>
 		<Unit filename="texture.cpp">
 			<Option virtualFolder="Engine/Rendering/" />
