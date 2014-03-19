@@ -58,7 +58,7 @@
 	"game.h"
 	<iostream>
 
-1395133401 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
+1395225011 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
 	"gameObject.h"
 
 1394389253 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.h
@@ -72,7 +72,7 @@
 	"math3d.h"
 	"camera.h"
 
-1395140485 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.h
+1395224189 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.h
 	"math3d.h"
 	"gameComponent.h"
 
@@ -87,9 +87,8 @@
 
 1377314990 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/sdl_backend.h
 
-1395132965 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.cpp
-	"coreEngine.h"
-	"testGame.h"
+1395225543 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.cpp
+	"3DEngine.h"
 
 1393697022 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.h
 	"game.h"
@@ -197,7 +196,7 @@
 	"renderingEngine.h"
 	<string>
 
-1395132496 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.h
+1395224445 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.h
 	<math.h>
 
 1393792608 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/obj_loader.h
@@ -212,18 +211,19 @@
 	<algorithm>
 	<map>
 
-1395138331 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.cpp
+1395225110 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.cpp
 	"gameObject.h"
-
-1395138302 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.h
-	<vector>
-	"transform.h"
 	"gameComponent.h"
 
-1395138152 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameComponent.h
+1395225096 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.h
+	<vector>
 	"transform.h"
 
-1395130311 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/meshRenderer.h
+1395224482 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameComponent.h
+	"transform.h"
+	"gameObject.h"
+
+1395224787 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/meshRenderer.h
 	"gameComponent.h"
 	"mesh.h"
 	"basicShader.h"
@@ -243,10 +243,9 @@
 	"gameObject.h"
 	<GL/glew.h>
 
-1395140885 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/testGame.h
-	"3DEngine.h"
+1395225285 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/testGame.h
 
-1395140949 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/testGame.cpp
+1395225284 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/testGame.cpp
 	"testGame.h"
 
 1395140687 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/3DEngine.h
@@ -275,19 +274,19 @@
 1395140542 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardDirectional.cpp
 	"forwardDirectional.h"
 
-1395140593 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardPoint.cpp
+1395224524 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardPoint.cpp
 	"forwardPoint.h"
 
 1395137225 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardPoint.h
 	"shader.h"
 
-1395140632 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.cpp
+1395224532 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.cpp
 	"forwardSpot.h"
 
 1395137773 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.h
 	"shader.h"
 
-1395140681 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.cpp
+1395224573 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.cpp
 	"lighting.h"
 	"renderingEngine.h"
 	"forwardDirectional.h"

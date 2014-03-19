@@ -43,10 +43,9 @@ struct Attenuation
 struct PointLight : public BaseLight
 {
 	Attenuation atten;
-	Vector3f position;
 	float range;
 
-	PointLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation(), const Vector3f& position = Vector3f(), float range = 0);
+	PointLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation());
 };
 
 struct SpotLight : public PointLight
@@ -54,8 +53,7 @@ struct SpotLight : public PointLight
 	Vector3f direction;
 	float cutoff;
 
-	SpotLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation(), const Vector3f& position = Vector3f(), float range = 0, 
-			const Vector3f& direction = Vector3f(), float cutoff = 0);
+	SpotLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Attenuation& atten = Attenuation(), const Vector3f& direction = Vector3f(), float cutoff = 0);
 };
 
 #endif

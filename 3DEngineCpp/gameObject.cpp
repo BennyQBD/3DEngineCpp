@@ -1,19 +1,33 @@
 #include "gameObject.h"
+#include "gameComponent.h"
 
-void GameObject::AddChild(GameObject& child)
+GameObject::~GameObject()
 {
-	m_children.push_back(&child);
+	for(unsigned int i = 0; i < m_components.size(); i++)
+		if(m_components[i])
+			delete m_components[i];
+	
+	for(unsigned int i = 0; i < m_children.size(); i++)
+		if(m_children[i])
+			delete m_children[i];
 }
 
-void GameObject::AddComponent(GameComponent* component)
+GameObject* GameObject::AddChild(GameObject* child)
+{
+	m_children.push_back(child); return this;
+}
+
+GameObject* GameObject::AddComponent(GameComponent* component)
 {
 	m_components.push_back(component);
+	component->SetParent(this);
+	return this;
 }
 
 void GameObject::Input(float delta)
 {
 	for(unsigned int i = 0; i < m_components.size(); i++)
-		m_components[i]->Input(m_transform, delta);
+		m_components[i]->Input(delta);
 
 	for(unsigned int i = 0; i < m_children.size(); i++)
 		m_children[i]->Input(delta);
@@ -22,7 +36,7 @@ void GameObject::Input(float delta)
 void GameObject::Update(float delta)
 {
 	for(unsigned int i = 0; i < m_components.size(); i++)
-		m_components[i]->Update(m_transform, delta);
+		m_components[i]->Update(delta);
 
 	for(unsigned int i = 0; i < m_children.size(); i++)
 		m_children[i]->Update(delta);
@@ -31,7 +45,7 @@ void GameObject::Update(float delta)
 void GameObject::Render(Shader* shader, RenderingEngine* renderingEngine)
 {
 	for(unsigned int i = 0; i < m_components.size(); i++)
-		m_components[i]->Render(m_transform, shader, renderingEngine);
+		m_components[i]->Render(shader, renderingEngine);
 
 	for(unsigned int i = 0; i < m_children.size(); i++)
 		m_children[i]->Render(shader, renderingEngine);

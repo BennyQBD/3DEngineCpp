@@ -4,6 +4,8 @@
 #include "forwardPoint.h"
 #include "forwardSpot.h"
 
+#define COLOR_DEPTH 256
+
 void BaseLight::AddToRenderingEngine(RenderingEngine* renderingEngine)
 {
 	renderingEngine->AddLight(this);
@@ -16,17 +18,21 @@ DirectionalLight::DirectionalLight(const Vector3f& color, float intensity, const
 	SetShader(ForwardDirectional::GetInstance());
 }
 
-PointLight::PointLight(const Vector3f& color, float intensity, const Attenuation& atten, const Vector3f& position, float range) :
+PointLight::PointLight(const Vector3f& color, float intensity, const Attenuation& atten) :
 	BaseLight(color, intensity),
-	atten(atten),
-	position(position),
-	range(range) 
+	atten(atten)
 {
+	float a = atten.exponent;
+	float b = atten.linear;
+	float c = atten.constant - COLOR_DEPTH * intensity * color.Max();
+	
+	range = (-b + sqrtf(b*b - 4*a*c))/(2*a);
+
 	SetShader(ForwardPoint::GetInstance());
 }
 
-SpotLight::SpotLight(const Vector3f& color, float intensity, const Attenuation& atten, const Vector3f& position, float range, const Vector3f& direction, float cutoff) :
-	PointLight(color, intensity, atten, position, range),
+SpotLight::SpotLight(const Vector3f& color, float intensity, const Attenuation& atten, const Vector3f& direction, float cutoff) :
+	PointLight(color, intensity, atten),
 	direction(direction),
 	cutoff(cutoff) 
 {

@@ -3,16 +3,18 @@
 
 #include <vector>
 #include "transform.h"
-#include "gameComponent.h"
+class GameComponent;
+class Shader;
 class RenderingEngine;
 
 class GameObject
 {
 public:
 	GameObject() {}
+	virtual ~GameObject();
 	
-	void AddChild(GameObject& child);
-	void AddComponent(GameComponent* component);
+	GameObject* AddChild(GameObject* child);
+	GameObject* AddComponent(GameComponent* component);
 	
 	void Input(float delta);
 	void Update(float delta);

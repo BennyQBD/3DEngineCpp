@@ -2,6 +2,7 @@
 #define GAMECOMPONENT_H_INCLUDED
 
 #include "transform.h"
+#include "gameObject.h"
 class RenderingEngine;
 class Shader;
 
@@ -10,11 +11,17 @@ class GameComponent
 public:
 	virtual ~GameComponent() {}
 
-	virtual void Input(const Transform& transform, float delta) {}
-	virtual void Update(const Transform& transform, float delta) {}
-	virtual void Render(const Transform& transform, Shader* shader, RenderingEngine* renderingEngine) {}
+	virtual void Input(float delta) {}
+	virtual void Update(float delta) {}
+	virtual void Render(Shader* shader, RenderingEngine* renderingEngine) {}
 	
 	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine) {}
+	
+	inline void SetParent(GameObject* parent) { m_parent = parent; }
+	inline Transform& GetTransform() { return m_parent->GetTransform(); }
+	
+private:
+	GameObject* m_parent;
 };
 
 #endif // GAMECOMPONENT_H_INCLUDED

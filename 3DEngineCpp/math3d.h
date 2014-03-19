@@ -29,6 +29,17 @@ public:
 		return result;
 	}
 	
+	inline T Max() const
+	{
+		T Max = (*this)[0];
+		
+		for(int i = 0; i < D; i++)
+			if((*this)[i] > Max)
+				Max = (*this)[i];
+		
+		return Max;
+	}
+	
 	inline T LengthSq() const { return this->Dot(*this); }
 	inline T Length() const { return sqrt(LengthSq()); }
 	inline Vector<T,D> Normalized() const { return *this/Length(); }

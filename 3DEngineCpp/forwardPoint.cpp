@@ -46,6 +46,6 @@ void ForwardPoint::UpdateUniforms(const Transform& transform, const Material& ma
 	SetUniformf("pointLight.atten.constant", pointLight.atten.constant);
 	SetUniformf("pointLight.atten.linear", pointLight.atten.linear);
 	SetUniformf("pointLight.atten.exponent", pointLight.atten.exponent);
-	SetUniform("pointLight.position", pointLight.position);
+	SetUniform("pointLight.position", pointLight.GetTransform().GetPos());
 	SetUniformf("pointLight.range", pointLight.range);
 }
