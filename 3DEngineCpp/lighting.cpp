@@ -11,9 +11,8 @@ void BaseLight::AddToRenderingEngine(RenderingEngine* renderingEngine)
 	renderingEngine->AddLight(this);
 }
 
-DirectionalLight::DirectionalLight(const Vector3f& color, float intensity, const Vector3f& direction) :
-	BaseLight(color, intensity),
-	direction(direction.Normalized()) 
+DirectionalLight::DirectionalLight(const Vector3f& color, float intensity) :
+	BaseLight(color, intensity)
 {
 	SetShader(ForwardDirectional::GetInstance());
 }

@@ -441,6 +441,38 @@ public:
 		return ret;
 	}
 	
+	inline Vector<T,D> Transform(const Vector<T,D>& r) const
+	{
+		Vector<T,D> ret;
+		
+		for(unsigned int i = 0; i < D; i++)
+		{
+			ret[i] = 0;
+			for(unsigned int j = 0; j < D; j++)
+				ret[i] += m[i][j] * r[j];
+		}
+		
+		return ret;
+	}
+	
+	inline Vector<T,D-1> Transform(const Vector<T,D-1>& r) const
+	{
+		Vector<T,D> r2;
+		
+		for(int i = 0; i < D-1; i++)
+			r2[i] = r[i];
+			
+		r2[D-1] = T(1);
+		
+		Vector<T,D> ret2 = Transform(r2);
+		Vector<T,D-1> ret;
+		
+		for(int i = 0; i < D-1; i++)
+			ret[i] = ret2[i];
+			
+		return ret;
+	}
+	
 	inline void Set(unsigned int x, unsigned int y, T val) { m[x][y] = val; }
 	
 	inline const T* operator[](int index) const { return m[index]; }

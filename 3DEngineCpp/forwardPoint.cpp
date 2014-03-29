@@ -35,7 +35,7 @@ void ForwardPoint::UpdateUniforms(const Transform& transform, const Material& ma
 	SetUniform("model", worldMatrix);
 	SetUniform("MVP", projectedMatrix);
 	
-	SetUniform("eyePos", renderingEngine->GetMainCamera().GetTransform().GetPos());
+	SetUniform("eyePos", renderingEngine->GetMainCamera().GetTransform().GetTransformedPos());
 	SetUniformf("specularIntensity", material.specularIntensity);
 	SetUniformf("specularPower", material.specularPower);
 	
@@ -46,6 +46,6 @@ void ForwardPoint::UpdateUniforms(const Transform& transform, const Material& ma
 	SetUniformf("pointLight.atten.constant", pointLight.atten.constant);
 	SetUniformf("pointLight.atten.linear", pointLight.atten.linear);
 	SetUniformf("pointLight.atten.exponent", pointLight.atten.exponent);
-	SetUniform("pointLight.position", pointLight.GetTransform().GetPos());
+	SetUniform("pointLight.position", pointLight.GetTransform().GetTransformedPos());
 	SetUniformf("pointLight.range", pointLight.range);
 }

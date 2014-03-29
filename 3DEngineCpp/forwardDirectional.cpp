@@ -31,13 +31,13 @@ void ForwardDirectional::UpdateUniforms(const Transform& transform, const Materi
 	SetUniform("model", worldMatrix);
 	SetUniform("MVP", projectedMatrix);
 	
-	SetUniform("eyePos", renderingEngine->GetMainCamera().GetTransform().GetPos());
+	SetUniform("eyePos", renderingEngine->GetMainCamera().GetTransform().GetTransformedPos());
 	SetUniformf("specularIntensity", material.specularIntensity);
 	SetUniformf("specularPower", material.specularPower);
 	
 	DirectionalLight directionalLight = *(DirectionalLight*)renderingEngine->GetActiveLight();
 	
-	SetUniform("directionalLight.direction", directionalLight.direction);
+	SetUniform("directionalLight.direction", directionalLight.GetTransform().GetTransformedRot().GetForward());
 	SetUniform("directionalLight.base.color", directionalLight.color);
 	SetUniformf("directionalLight.base.intensity", directionalLight.intensity);
 }

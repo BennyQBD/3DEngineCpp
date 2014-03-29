@@ -11,11 +11,11 @@ Camera::Camera(float fov, float aspect, float zNear, float zFar)
 
 Matrix4f Camera::GetViewProjection() const
 {
-	Matrix4f cameraRotation = GetTransform().GetRot().ToRotationMatrix();
+	Matrix4f cameraRotation = GetTransform().GetTransformedRot().ToRotationMatrix();
 	Matrix4f cameraTranslation;
 	
 	//cameraRotation.InitRotationFromDirection(m_forward, m_up);
-	cameraTranslation.InitTranslation(GetTransform().GetPos() * -1);
+	cameraTranslation.InitTranslation(GetTransform().GetTransformedPos() * -1);
 	
 	return m_projection * cameraRotation * cameraTranslation;
 }

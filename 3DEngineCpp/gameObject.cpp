@@ -15,6 +15,7 @@ GameObject::~GameObject()
 GameObject* GameObject::AddChild(GameObject* child)
 {
 	m_children.push_back(child); 
+	child->GetTransform().SetParent(&m_transform);
 	return this;
 }
 

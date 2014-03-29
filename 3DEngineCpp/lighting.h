@@ -23,9 +23,7 @@ private:
 
 struct DirectionalLight : public BaseLight
 {
-	Vector3f direction;
-
-	DirectionalLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0, const Vector3f& direction = Vector3f(0,0,0));
+	DirectionalLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0);
 };
 
 struct Attenuation
