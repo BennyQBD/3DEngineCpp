@@ -14,7 +14,8 @@ GameObject::~GameObject()
 
 GameObject* GameObject::AddChild(GameObject* child)
 {
-	m_children.push_back(child); return this;
+	m_children.push_back(child); 
+	return this;
 }
 
 GameObject* GameObject::AddComponent(GameComponent* component)

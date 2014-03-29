@@ -11,25 +11,23 @@ class RenderingEngine
 public:
 	RenderingEngine();
 	
-	void Input(float delta);
 	void Render(GameObject* object);
 	
-	inline Camera& GetMainCamera() { return m_mainCamera; }
-	inline void SetMainCamera(const Camera& camera) { m_mainCamera = camera; }
+	inline Camera& GetMainCamera() { return *m_mainCamera; }
 	
 	inline Vector3f& GetAmbientLight() { return m_ambientLight; }
 	inline BaseLight* GetActiveLight() { return m_activeLight; }
 	
 	inline void AddLight(BaseLight* light) { m_lights.push_back(light); }
+	inline void AddCamera(Camera* camera) { m_mainCamera = camera; }
 	
 	virtual ~RenderingEngine();
 protected:
 private:
-	RenderingEngine(const RenderingEngine& other) :
-		m_mainCamera(ToRadians(70.0f), 1.0f, 0.01f, 1000.0f) {}
+	RenderingEngine(const RenderingEngine& other) {}
 	void operator=(const RenderingEngine& other) {}
 	
-	Camera m_mainCamera;
+	Camera* m_mainCamera;
 	Vector3f m_ambientLight;
 	
 	BaseLight* m_activeLight;

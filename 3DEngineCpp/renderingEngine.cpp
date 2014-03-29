@@ -8,7 +8,7 @@
 #include <GL/glew.h>
 
 RenderingEngine::RenderingEngine() :
-	m_mainCamera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f),
+	//m_mainCamera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f),
 	m_ambientLight(0.1f, 0.1f, 0.1f)
 	//m_ambientLight(0.0f, 0.0f, 0.0f),
 	//m_directionalLight(BaseLight(Vector3f(1,1,1), 0.8f), Vector3f(1,1,1)),
@@ -27,11 +27,6 @@ RenderingEngine::RenderingEngine() :
 RenderingEngine::~RenderingEngine()
 {
 	//dtor
-}
-
-void RenderingEngine::Input(float delta)
-{
-	m_mainCamera.Input(delta);
 }
 
 void RenderingEngine::Render(GameObject* object)

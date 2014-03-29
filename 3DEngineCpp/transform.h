@@ -2,7 +2,6 @@
 #define TRANSFORM_H
 
 #include "math3d.h"
-#include "camera.h"
 
 class Transform
 {
@@ -12,7 +11,9 @@ public:
 	Matrix4f GetTransformation() const;
 
 	inline Vector3f& GetPos() { return m_pos; }
+	inline const Vector3f& GetPos() const { return m_pos; }
 	inline Quaternion& GetRot() { return m_rot; }
+	inline const Quaternion& GetRot() const { return m_rot; }
 	inline float GetScale() const { return m_scale; }
 
 	inline void SetPos(const Vector3f& pos) { m_pos = pos; }

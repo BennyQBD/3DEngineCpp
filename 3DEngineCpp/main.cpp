@@ -32,6 +32,7 @@ void TestGame::Init()
 	AddToScene(pointLightObject);
 	AddToScene(spotLightObject);
 	AddToScene((new GameObject())->AddComponent(new DirectionalLight(Vector3f(1,1,1), 0.8f, Vector3f(1,1,1))));
+	AddToScene((new GameObject())->AddComponent(new Camera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f)));
 }
 
 int main()

@@ -2,24 +2,27 @@
 #include "input.h"
 #include "time.h"
 #include "util.h"
+#include "renderingEngine.h"
 
-Camera::Camera(float fov, float aspect, float zNear, float zFar) :
-	m_pos(Vector3f(0,0,0)),
-	m_forward(Vector3f(0,0,1)),
-	m_up(Vector3f(0,1,0)) 
+Camera::Camera(float fov, float aspect, float zNear, float zFar)
 {
 	m_projection.InitPerspective(fov, aspect, zNear, zFar);
 }
 
 Matrix4f Camera::GetViewProjection() const
 {
-	Matrix4f cameraRotation;
+	Matrix4f cameraRotation = GetTransform().GetRot().ToRotationMatrix();
 	Matrix4f cameraTranslation;
 	
-	cameraRotation.InitRotationFromDirection(m_forward, m_up);
-	cameraTranslation.InitTranslation(m_pos * -1);
+	//cameraRotation.InitRotationFromDirection(m_forward, m_up);
+	cameraTranslation.InitTranslation(GetTransform().GetPos() * -1);
 	
 	return m_projection * cameraRotation * cameraTranslation;
+}
+
+void Camera::AddToRenderingEngine(RenderingEngine* renderingEngine)
+{
+	renderingEngine->AddCamera(this);
 }
 
 #include "window.h"
@@ -27,7 +30,7 @@ bool mouseLocked = false;
 
 void Camera::Input(float delta)
 {
-	float sensitivity = 0.5f;
+	float sensitivity = -0.5f;
 	float movAmt = (float)(10 * delta);
 	//float rotAmt = (float)(100 * Time::getDelta());
 
@@ -46,9 +49,11 @@ void Camera::Input(float delta)
 		bool rotX = deltaPos.GetY() != 0;
 			
 		if(rotY)
-			RotateY(ToRadians(deltaPos.GetX() * sensitivity));
+			GetTransform().SetRot(GetTransform().GetRot() * Quaternion(Vector3f(0,1,0), ToRadians(deltaPos.GetX() * sensitivity)));
+//			RotateY(ToRadians(deltaPos.GetX() * sensitivity));
 		if(rotX)
-			RotateX(ToRadians(deltaPos.GetY() * sensitivity));
+			GetTransform().SetRot(GetTransform().GetRot() * Quaternion(GetTransform().GetRot().GetRight(), ToRadians(deltaPos.GetY() * sensitivity)));
+//			RotateX(ToRadians(deltaPos.GetY() * sensitivity));
 			
 		if(rotY || rotX)
 			Input::SetMousePosition(centerPosition);
@@ -63,13 +68,13 @@ void Camera::Input(float delta)
 	}
 
 	if(Input::GetKey(KEY::KEY_W))
-		Move(GetForward(), movAmt);
+		Move(GetTransform().GetRot().GetForward(), movAmt);
 	if(Input::GetKey(KEY::KEY_S))
-		Move(GetForward(), -movAmt);
+		Move(GetTransform().GetRot().GetForward(), -movAmt);
 	if(Input::GetKey(KEY::KEY_A))
-		Move(GetLeft(), movAmt);
+		Move(GetTransform().GetRot().GetLeft(), movAmt);
 	if(Input::GetKey(KEY::KEY_D))
-		Move(GetRight(), movAmt);
+		Move(GetTransform().GetRot().GetRight(), movAmt);
 	
 
 	//if(Input::getKey(KEY::KEY_UP))
@@ -84,24 +89,6 @@ void Camera::Input(float delta)
 
 void Camera::Move(const Vector3f& direction, float amt)
 {
-	m_pos += (direction * amt);
-}
-
-void Camera::RotateY(float angle)
-{
-//	Vector3f hAxis = Vector3f::UP.Cross(m_forward).Normalized();
-	Vector3f hAxis = Vector3f(0,1,0).Cross(m_forward).Normalized();
-
-//	m_forward = m_forward.Rotate(angle, Vector3f::UP).Normalized();
-	m_forward = m_forward.Rotate(angle, Vector3f(0,1,0)).Normalized();
-	m_up = m_forward.Cross(hAxis).Normalized();
-}
-
-void Camera::RotateX(float angle)
-{
-//	Vector3f hAxis = Vector3f::UP.Cross(m_forward).Normalized();
-	Vector3f hAxis = Vector3f(0,1,0).Cross(m_forward).Normalized();
-
-	m_forward = m_forward.Rotate(angle, hAxis).Normalized();
-	m_up = m_forward.Cross(hAxis).Normalized();
+	GetTransform().SetPos(GetTransform().GetPos() + (direction * amt));
+	//m_pos += (direction * amt);
 }
