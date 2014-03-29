@@ -40,17 +40,11 @@
 		<Unit filename="3DEngine.h">
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
-		<Unit filename="basicShader.cpp">
-			<Option virtualFolder="Engine/Rendering/" />
-		</Unit>
-		<Unit filename="basicShader.h">
-			<Option virtualFolder="Engine/Rendering/" />
-		</Unit>
 		<Unit filename="camera.cpp">
-			<Option virtualFolder="Engine/Rendering/" />
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
 		<Unit filename="camera.h">
-			<Option virtualFolder="Engine/Rendering/" />
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
 		<Unit filename="coreEngine.cpp">
 			<Option virtualFolder="Engine/Core/" />
@@ -114,6 +108,9 @@
 		</Unit>
 		<Unit filename="material.h">
 			<Option virtualFolder="Engine/Rendering/" />
+		</Unit>
+		<Unit filename="math3d.cpp">
+			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="math3d.h">
 			<Option virtualFolder="Engine/Core/" />
