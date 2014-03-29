@@ -28,6 +28,8 @@ GameObject* GameObject::AddComponent(GameComponent* component)
 
 void GameObject::Input(float delta)
 {
+	m_transform.Update();
+
 	for(unsigned int i = 0; i < m_components.size(); i++)
 		m_components[i]->Input(delta);
 

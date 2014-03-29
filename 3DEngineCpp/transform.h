@@ -10,7 +10,9 @@ public:
 
 	Matrix4f GetTransformation() const;
 	bool HasChanged();
-
+	void Update();
+	void Rotate(const Vector3f& axis, float angle);
+	
 	inline Vector3f& GetPos() { return m_pos; }
 	inline const Vector3f& GetPos() const { return m_pos; }
 	inline Quaternion& GetRot() { return m_rot; }

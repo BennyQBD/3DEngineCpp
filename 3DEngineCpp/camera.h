@@ -11,8 +11,6 @@ public:
 
 	void Input(float delta);
 	void Move(const Vector3f& direction, float amt);
-//	void RotateY(float angle);
-//	void RotateX(float angle);
 	
 	Matrix4f GetViewProjection() const;
 	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);

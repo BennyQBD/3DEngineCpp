@@ -449,7 +449,7 @@ public:
 		{
 			ret[i] = 0;
 			for(unsigned int j = 0; j < D; j++)
-				ret[i] += m[i][j] * r[j];
+				ret[i] += m[j][i] * r[j];
 		}
 		
 		return ret;
@@ -610,6 +610,8 @@ public:
 	}
 };
 
+class Quaternion;
+
 class Vector3f : public Vector3<float>
 {
 public:
@@ -666,6 +668,8 @@ public:
 //
 //		return ret;
 	}
+
+	Vector3f Rotate(const Quaternion& rotation) const;
 
 	inline Vector3f Normalized() const
 	{
@@ -766,6 +770,14 @@ public:
 		(*this)[3] = w;
 	}
 	
+	Quaternion(const Vector4<float>& r)
+	{
+		(*this)[0] = r[0];
+		(*this)[1] = r[1];
+		(*this)[2] = r[2];
+		(*this)[3] = r[3];
+	}
+	
 	Quaternion(const Vector3f& axis, float angle)
 	{
 		float sinHalfAngle = sinf(angle/2);
@@ -779,37 +791,41 @@ public:
 	
 	inline Matrix4f ToRotationMatrix() const
 	{
-		return Matrix4f().InitRotationFromVectors(GetForward(),GetUp(),GetRight());
+		Vector3f forward = Vector3f(2.0f * (GetX() * GetZ() - GetW() * GetY()), 2.0f * (GetY() * GetZ() + GetW() * GetX()), 1.0f - 2.0f * (GetX() * GetX() + GetY() * GetY()));
+		Vector3f up = Vector3f(2.0f * (GetX()*GetY() + GetW()*GetZ()), 1.0f - 2.0f * (GetX()*GetX() + GetZ()*GetZ()), 2.0f * (GetY()*GetZ() - GetW()*GetX()));
+		Vector3f right = Vector3f(1.0f - 2.0f * (GetY()*GetY() + GetZ()*GetZ()), 2.0f * (GetX()*GetY() - GetW()*GetZ()), 2.0f * (GetX()*GetZ() + GetW()*GetY()));
+	
+		return Matrix4f().InitRotationFromVectors(forward,up,right);
 	}
 	
 	inline Vector3f GetForward() const
 	{ 
-		return Vector3f(2.0f * (GetX() * GetZ() - GetW() * GetY()), 2.0f * (GetY() * GetZ() + GetW() * GetX()), 1.0f - 2.0f * (GetX() * GetX() + GetY() * GetY())); 
+		return Vector3f(0,0,1).Rotate(*this); 
 	}
 	
 	inline Vector3f GetBack() const
 	{ 
-		return Vector3f(-2.0f * (GetX() * GetZ() - GetW() * GetY()), -2.0f * (GetY() * GetZ() + GetW() * GetX()), -(1.0f - 2.0f * (GetX() * GetX() + GetY() * GetY()))); 
+		return Vector3f(0,0,-1).Rotate(*this); 
 	}
 	
 	inline Vector3f GetUp() const
 	{ 
-		return Vector3f(2.0f * (GetX()*GetY() + GetW()*GetZ()), 1.0f - 2.0f * (GetX()*GetX() + GetZ()*GetZ()), 2.0f * (GetY()*GetZ() - GetW()*GetX())); 
+		return Vector3f(0,1,0).Rotate(*this); 
 	}
 	
 	inline Vector3f GetDown() const
 	{ 
-		return Vector3f(-2.0f * (GetX()*GetY() + GetW()*GetZ()), -(1.0f - 2.0f * (GetX()*GetX() + GetZ()*GetZ())), -2.0f * (GetY()*GetZ() - GetW()*GetX())); 
+		return Vector3f(0,-1,0).Rotate(*this); 
 	}
 	
 	inline Vector3f GetRight() const
 	{ 
-		return Vector3f(1.0f - 2.0f * (GetY()*GetY() + GetZ()*GetZ()), 2.0f * (GetX()*GetY() - GetW()*GetZ()), 2.0f * (GetX()*GetZ() + GetW()*GetY())); 
+		return Vector3f(1,0,0).Rotate(*this); 
 	}
 	
 	inline Vector3f GetLeft() const
 	{ 
-		return Vector3f(-(1.0f - 2.0f * (GetY()*GetY() + GetZ()*GetZ())), -2.0f * (GetX()*GetY() - GetW()*GetZ()), -2.0f * (GetX()*GetZ() + GetW()*GetY())); 
+		return Vector3f(-1,0,0).Rotate(*this);  
 	}
 
 	inline Quaternion Conjugate() const { return Quaternion(-GetX(), -GetY(), -GetZ(), GetW()); }
