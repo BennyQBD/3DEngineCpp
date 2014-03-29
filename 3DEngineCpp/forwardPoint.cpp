@@ -30,14 +30,14 @@ void ForwardPoint::UpdateUniforms(const Transform& transform, const Material& ma
 {
 	Matrix4f worldMatrix = transform.GetTransformation();
 	Matrix4f projectedMatrix = renderingEngine->GetMainCamera().GetViewProjection() * worldMatrix;
-	material.texture->Bind();
+	material.GetTexture("diffuse")->Bind(0);
 
 	SetUniform("model", worldMatrix);
 	SetUniform("MVP", projectedMatrix);
 	
 	SetUniform("eyePos", renderingEngine->GetMainCamera().GetTransform().GetTransformedPos());
-	SetUniformf("specularIntensity", material.specularIntensity);
-	SetUniformf("specularPower", material.specularPower);
+	SetUniformf("specularIntensity", material.GetFloat("specularIntensity"));
+	SetUniformf("specularPower", material.GetFloat("specularPower"));
 	
 	PointLight pointLight = *(PointLight*)renderingEngine->GetActiveLight();
 	

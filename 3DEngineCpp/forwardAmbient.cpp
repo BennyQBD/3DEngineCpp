@@ -13,16 +13,9 @@ ForwardAmbient::ForwardAmbient()
 	AddUniform("ambientIntensity");
 }
 
-static unsigned char whitePixel[] = {0xFF, 0xFF, 0xFF, 0xFF};
-
 void ForwardAmbient::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)
 {
-	static Texture WHITE(1,1,whitePixel);
-
-	if(material.texture != NULL)
-		material.texture->Bind();
-	else
-		WHITE.Bind();
+	material.GetTexture("diffuse")->Bind(0);
 
 	Matrix4f worldMatrix = transform.GetTransformation();
 	Matrix4f projectedMatrix = renderingEngine->GetMainCamera().GetViewProjection() * worldMatrix;

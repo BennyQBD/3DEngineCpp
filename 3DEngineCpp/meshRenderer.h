@@ -3,7 +3,6 @@
 
 #include "gameComponent.h"
 #include "mesh.h"
-#include "basicShader.h"
 
 class MeshRenderer : public GameComponent
 {

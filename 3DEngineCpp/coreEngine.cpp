@@ -90,7 +90,7 @@ void CoreEngine::Run()
 
 		if(render)
 		{
-			m_renderingEngine->Render(&m_game->GetRoot());
+			m_game->Render(m_renderingEngine);
 			Window::Render();
 			frames++;
 		}
