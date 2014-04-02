@@ -3,46 +3,88 @@
 #include "obj_loader.h"
 #include <iostream>
 
-Mesh::Mesh()
+std::map<std::string, MeshData*> Mesh::s_resourceMap;
+
+MeshData::MeshData(int indexSize)
 {
-	//glGenBuffers(1, &m_vbo);
-	//glGenBuffers(1, &m_ibo);
-	m_vbo = 0;
-	m_ibo = 0;
-	m_size = 0;
+	glGenBuffers(1, &m_vbo);
+	glGenBuffers(1, &m_ibo);
+	m_size = indexSize;
+	m_referenceCount = 1;
 }
 
-Mesh::Mesh(const std::string& fileName)
-{
-	IndexedModel model = OBJModel(fileName).ToIndexedModel();
-	
-	std::vector<Vertex> vertices;
-	
-	for(unsigned int i = 0; i < model.positions.size(); i++)
-		vertices.push_back(Vertex(model.positions[i], model.texCoords[i], model.normals[i]));
-		
-	AddVertices(&vertices[0], vertices.size(), (int*)&model.indices[0], model.indices.size(), false);
-}
-
-Mesh::~Mesh()
-{
+MeshData::~MeshData() 
+{ 
 	if(m_vbo) glDeleteBuffers(1, &m_vbo);
 	if(m_ibo) glDeleteBuffers(1, &m_ibo);
 }
 
-void Mesh::AddVertices(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals)
+void MeshData::AddReference()
 {
-	if(!m_vbo) glGenBuffers(1, &m_vbo);
-	if(!m_ibo) glGenBuffers(1, &m_ibo);
-	m_size = indexSize;
+	m_referenceCount++;
+}
+
+bool MeshData::RemoveReference()
+{
+	m_referenceCount--;
+	return m_referenceCount == 0;
+}
+
+
+Mesh::Mesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals)
+{
+	m_fileName = "";
+	InitMesh(vertices, vertSize, indices, indexSize, calcNormals);
+}
+
+Mesh::Mesh(const std::string& fileName)
+{
+	m_fileName = fileName;
+	m_meshData = 0;
+	
+	std::map<std::string, MeshData*>::const_iterator it = s_resourceMap.find(fileName);
+	if(it != s_resourceMap.end())
+	{
+		m_meshData = it->second;
+		m_meshData->AddReference();
+	}
+	else
+	{
+		IndexedModel model = OBJModel(fileName).ToIndexedModel();
+		
+		std::vector<Vertex> vertices;
+		
+		for(unsigned int i = 0; i < model.positions.size(); i++)
+			vertices.push_back(Vertex(model.positions[i], model.texCoords[i], model.normals[i]));
+			
+		InitMesh(&vertices[0], vertices.size(), (int*)&model.indices[0], model.indices.size(), false);
+		
+		s_resourceMap.insert(std::pair<std::string, MeshData*>(fileName, m_meshData));
+	}
+}
+
+Mesh::~Mesh()
+{
+	if(m_meshData && m_meshData->RemoveReference())
+	{
+		if(m_fileName.length() > 0)
+			s_resourceMap.erase(m_fileName);
+			
+		delete m_meshData;
+	}
+}
+
+void Mesh::InitMesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals)
+{
+	m_meshData = new MeshData(indexSize);
 
 	if(calcNormals)
 		this->CalcNormals(vertices, vertSize, indices, indexSize);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_meshData->GetVBO());
 	glBufferData(GL_ARRAY_BUFFER, vertSize * sizeof(Vertex), vertices, GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_meshData->GetIBO());
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(int), indices, GL_STATIC_DRAW);
 }
 
@@ -52,13 +94,13 @@ void Mesh::Draw() const
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_meshData->GetVBO());
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(Vector3f));
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vector3f) + sizeof(Vector2f)));
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-	glDrawElements(GL_TRIANGLES, m_size, GL_UNSIGNED_INT, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_meshData->GetIBO());
+	glDrawElements(GL_TRIANGLES, m_meshData->GetSize(), GL_UNSIGNED_INT, 0);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
