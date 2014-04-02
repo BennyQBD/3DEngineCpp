@@ -5,29 +5,17 @@
 
 std::map<std::string, MeshData*> Mesh::s_resourceMap;
 
-MeshData::MeshData(int indexSize)
+MeshData::MeshData(int indexSize) : ReferenceCounter()
 {
 	glGenBuffers(1, &m_vbo);
 	glGenBuffers(1, &m_ibo);
 	m_size = indexSize;
-	m_referenceCount = 1;
 }
 
 MeshData::~MeshData() 
 { 
 	if(m_vbo) glDeleteBuffers(1, &m_vbo);
 	if(m_ibo) glDeleteBuffers(1, &m_ibo);
-}
-
-void MeshData::AddReference()
-{
-	m_referenceCount++;
-}
-
-bool MeshData::RemoveReference()
-{
-	m_referenceCount--;
-	return m_referenceCount == 0;
 }
 
 

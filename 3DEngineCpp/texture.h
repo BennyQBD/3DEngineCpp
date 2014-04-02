@@ -1,8 +1,27 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+#include "referenceCounter.h"
 #include <GL/glew.h>
 #include <string>
+#include <map>
+
+class TextureData : public ReferenceCounter
+{
+public:
+	TextureData(GLenum textureTarget);
+	virtual ~TextureData();
+	
+	inline GLenum GetTextureTarget() { return m_textureTarget; }
+	inline GLuint GetTextureID() { return m_textureID; }
+protected:	
+private:
+	TextureData(TextureData& other) {}
+	void operator=(TextureData& other) {}
+
+	GLenum m_textureTarget;
+	GLuint m_textureID;
+};
 
 class Texture
 {
@@ -14,12 +33,14 @@ public:
 	void Bind(unsigned int unit = 0) const;	
 protected:
 private:
+	static std::map<std::string, TextureData*> s_resourceMap;
+	static const TextureData* s_lastBind;
+
 	Texture(Texture& texture) {}
 	void operator=(Texture& texture) {}
-	static const Texture* s_lastBind;
 
-	GLenum m_textureTarget;
-	GLuint m_textureID;
+	TextureData* m_textureData;
+	std::string m_fileName;
 
 	void InitTexture(int width, int height, unsigned char* data, GLenum textureTarget, GLfloat filter);
 };

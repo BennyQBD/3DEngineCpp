@@ -27,9 +27,11 @@
 	"math3d.h"
 	<map>
 
-1393692838 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.h
+1396477371 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.h
+	"referenceCounter.h"
 	<GL/glew.h>
 	<string>
+	<map>
 
 1393720610 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/util.h
 	<unistd.h>
@@ -65,8 +67,9 @@
 1396131757 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
 	"gameObject.h"
 
-1396474697 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.h
+1396476690 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.h
 	"vertex.h"
+	"referenceCounter.h"
 	<string>
 	<map>
 
@@ -101,7 +104,7 @@
 
 1393719725 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/matrix4f.cpp
 
-1396475472 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.cpp
+1396476417 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.cpp
 	"mesh.h"
 	<GL/glew.h>
 	"obj_loader.h"
@@ -152,7 +155,7 @@
 1377314990 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/stb_image.h
 	<stdio.h>
 
-1393692841 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.cpp
+1396477433 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.cpp
 	"texture.h"
 	"stb_image.h"
 	<iostream>
@@ -296,4 +299,6 @@
 
 1396130853 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.cpp
 	"math3d.h"
+
+1396476383 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/referenceCounter.h
 

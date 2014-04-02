@@ -2,17 +2,15 @@
 #define MESH_H
 
 #include "vertex.h"
+#include "referenceCounter.h"
 #include <string>
 #include <map>
 
-class MeshData
+class MeshData : public ReferenceCounter
 {
 public:
 	MeshData(int indexSize);
 	virtual ~MeshData();
-	
-	void AddReference();
-	bool RemoveReference();
 	
 	inline unsigned int GetVBO() { return m_vbo; }
 	inline unsigned int GetIBO() { return m_ibo; }
@@ -25,7 +23,6 @@ private:
 	unsigned int m_vbo;
 	unsigned int m_ibo;
 	int m_size;
-	unsigned int m_referenceCount;
 };
 
 class Mesh
