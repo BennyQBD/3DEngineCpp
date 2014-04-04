@@ -9,15 +9,22 @@ struct BaseLight : public GameComponent
 public:
 	Vector3f color;
 	float intensity;
-
+	
 	BaseLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0) :
 		color(color),
-		intensity(intensity) {}
+		intensity(intensity),
+		m_shader(0) {}
+	
+	virtual ~BaseLight();
 	
 	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);	
-	inline void SetShader(Shader* shader) { m_shader = shader; }
 	inline Shader* GetShader() { return m_shader; }
+	
+	void SetShader(Shader* shader);
 private:
+	BaseLight(BaseLight& other) {}
+	void operator=(BaseLight& other) {}
+
 	Shader* m_shader;
 };
 

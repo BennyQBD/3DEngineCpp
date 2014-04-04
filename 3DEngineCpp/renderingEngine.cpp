@@ -1,20 +1,16 @@
 #include "renderingEngine.h"
-#include "forwardAmbient.h"
-#include "forwardPoint.h"
-#include "forwardSpot.h"
-#include "forwardDirectional.h"
 #include "window.h"
 #include "gameObject.h"
+#include "shader.h"
 #include <GL/glew.h>
 
-RenderingEngine::RenderingEngine() :
-	//m_mainCamera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f),
-	m_ambientLight(0.1f, 0.1f, 0.1f)
-	//m_ambientLight(0.0f, 0.0f, 0.0f),
-	//m_directionalLight(BaseLight(Vector3f(1,1,1), 0.8f), Vector3f(1,1,1)),
-	//m_pointLight(BaseLight(Vector3f(0,1,0),0.4f),Attenuation(0,0,1),Vector3f(7,0,7),100),
-	//m_spotLight(PointLight(BaseLight(Vector3f(0,1,1),0.4f),Attenuation(0,0,0.1f),Vector3f(0,0,0),100),Vector3f(1,0,0),0.7f)
+RenderingEngine::RenderingEngine()
 {
+	m_samplerMap.insert(std::pair<std::string, unsigned int>("diffuse", 0));
+	
+	AddVector3f("ambient", Vector3f(0.1f, 0.1f, 0.1f));
+	m_defaultShader = new Shader("forward-ambient");
+
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	glFrontFace(GL_CW);
@@ -24,9 +20,9 @@ RenderingEngine::RenderingEngine() :
 	glEnable(GL_DEPTH_CLAMP);
 }
 
-RenderingEngine::~RenderingEngine()
+RenderingEngine::~RenderingEngine() 
 {
-	//dtor
+	if(m_defaultShader) delete m_defaultShader;
 }
 
 void RenderingEngine::Render(GameObject* object)
@@ -35,7 +31,7 @@ void RenderingEngine::Render(GameObject* object)
 	m_lights.clear();
 	
 	object->AddToRenderingEngine(this);
-	object->Render(ForwardAmbient::GetInstance(), this);
+	object->Render(m_defaultShader, this);
 	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE);

@@ -5,22 +5,12 @@
 #include <vector>
 #include <string>
 
+#include "referenceCounter.h"
 #include "math3d.h"
 #include "material.h"
 #include "renderingEngine.h"
+#include "lighting.h"
 #include "transform.h"
-
-struct UniformData
-{
-    unsigned int Location;
-    std::string Type;
-    
-    UniformData(unsigned int UniformLocation, const std::string& UniformType)
-    {
-        Location = UniformLocation;
-        Type = UniformType;
-    }
-};
 
 struct TypedData
 {
@@ -34,6 +24,35 @@ struct UniformStruct
 	std::vector<TypedData> memberNames;
 };
 
+class ShaderData : public ReferenceCounter
+{
+public:
+	ShaderData(const std::string& fileName);
+	virtual ~ShaderData();
+	
+	inline int GetProgram() { return m_program; }
+	inline std::vector<int>& GetShaders() { return m_shaders; }
+	inline std::vector<std::string>& GetUniformNames() { return m_uniformNames; }
+	inline std::vector<std::string>& GetUniformTypes() { return m_uniformTypes; }
+	inline std::map<std::string, unsigned int>& GetUniformMap() { return m_uniformMap; }
+private:
+	void AddVertexShader(const std::string& text);
+	void AddGeometryShader(const std::string& text);
+	void AddFragmentShader(const std::string& text);
+	void AddProgram(const std::string& text, int type);
+	
+	void AddAllAttributes(const std::string& vertexShaderText);
+	void AddShaderUniforms(const std::string& shaderText);
+	void AddUniform(const std::string& uniformName, const std::string& uniformType, const std::vector<UniformStruct>& structs);
+	void CompileShader();
+
+	int m_program;
+	std::vector<int> m_shaders;
+	std::vector<std::string> m_uniformNames;
+	std::vector<std::string> m_uniformTypes;
+	std::map<std::string, unsigned int> m_uniformMap;
+};
+
 class Shader
 {
 public:
@@ -41,29 +60,22 @@ public:
 	virtual ~Shader();
 
 	void Bind();
-	void AddVertexShader(const std::string& text);
-	void AddGeometryShader(const std::string& text);
-	void AddFragmentShader(const std::string& text);
-	void CompileShader();
-
 	virtual void UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine);
 
-	void SetAttribLocation(const std::string& attributeName, int location);
-	void SetUniformi(const std::string& name, int value);
-	void SetUniformf(const std::string& name, float value);
-	void SetUniform(const std::string& name, const Matrix4f& value);
-	void SetUniform(const std::string& name, const Vector3f& value);
+	void SetUniformi(const std::string& uniformName, int value);
+	void SetUniformf(const std::string& uniformName, float value);
+	void SetUniformMatrix4f(const std::string& uniformName, const Matrix4f& value);
+	void SetUniformVector3f(const std::string& uniformName, const Vector3f& value);
 protected:
 private:
-	int m_program;
-	std::map<std::string, UniformData> m_uniforms;
-	std::vector<int> m_shaders;
-	
-	void AddShaderUniforms(const std::string& shaderText);
-	void AddUniform(const std::string& uniformName, const std::string& uniformType, const std::vector<UniformStruct>& structs);
-	void AddAllAttributes(const std::string& vertexShaderText);
+	static std::map<std::string, ShaderData*> s_resourceMap;
 
-	void AddProgram(const std::string& text, int type);
+	ShaderData* m_shaderData;
+	std::string m_fileName;
+	
+	void SetUniformDirectionalLight(const std::string& uniformName, const DirectionalLight& value);
+	void SetUniformPointLight(const std::string& uniformName, const PointLight& value);
+	void SetUniformSpotLight(const std::string& uniformName, const SpotLight& value);
 };
 
 #endif
