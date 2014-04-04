@@ -41,7 +41,7 @@
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="camera.cpp">
-			<Option virtualFolder="Engine/Components/" />
+			<Option virtualFolder="Engine/Static Libraries/" />
 		</Unit>
 		<Unit filename="camera.h">
 			<Option virtualFolder="Engine/Components/" />
@@ -52,29 +52,17 @@
 		<Unit filename="coreEngine.h">
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
-		<Unit filename="forwardAmbient.cpp">
-			<Option virtualFolder="Engine/Rendering/" />
+		<Unit filename="freeLook.cpp">
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
-		<Unit filename="forwardAmbient.h">
-			<Option virtualFolder="Engine/Rendering/" />
+		<Unit filename="freeLook.h">
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
-		<Unit filename="forwardDirectional.cpp">
-			<Option virtualFolder="Engine/Rendering/" />
+		<Unit filename="freeMove.cpp">
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
-		<Unit filename="forwardDirectional.h">
-			<Option virtualFolder="Engine/Rendering/" />
-		</Unit>
-		<Unit filename="forwardPoint.cpp">
-			<Option virtualFolder="Engine/Rendering/" />
-		</Unit>
-		<Unit filename="forwardPoint.h">
-			<Option virtualFolder="Engine/Rendering/" />
-		</Unit>
-		<Unit filename="forwardSpot.cpp">
-			<Option virtualFolder="Engine/Rendering/" />
-		</Unit>
-		<Unit filename="forwardSpot.h">
-			<Option virtualFolder="Engine/Rendering/" />
+		<Unit filename="freeMove.h">
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
 		<Unit filename="game.cpp">
 			<Option virtualFolder="Engine/Core/" />
@@ -105,6 +93,9 @@
 		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Game/" />
+		</Unit>
+		<Unit filename="mappedValues.h">
+			<Option virtualFolder="Engine/Util/" />
 		</Unit>
 		<Unit filename="material.h">
 			<Option virtualFolder="Engine/Rendering/" />
