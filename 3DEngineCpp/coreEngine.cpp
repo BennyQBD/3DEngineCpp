@@ -4,6 +4,7 @@
 #include "input.h"
 #include "renderUtil.h"
 #include "util.h"
+#include "game.h"
 
 #include <stdio.h>
 
@@ -13,7 +14,10 @@ CoreEngine::CoreEngine(int width, int height, double frameRate, Game* game) :
 	m_height(height),
 	m_frameTime(1.0/frameRate),
 	m_game(game),
-	m_renderingEngine(NULL) {}
+	m_renderingEngine(NULL) 
+{
+	m_game->SetEngine(this);
+}
 	
 CoreEngine::~CoreEngine()
 {

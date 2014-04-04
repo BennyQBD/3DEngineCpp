@@ -789,6 +789,90 @@ public:
 		(*this)[3] = cosHalfAngle;
 	}
 	
+	Quaternion(const Matrix4f& m)
+	{
+		float trace = m[0][0] + m[1][1] + m[2][2];
+		
+		if(trace > 0)
+		{
+			float s = 0.5f / sqrtf(trace + 1.0f);
+			(*this)[3] = 0.25f / s;
+			(*this)[0] = (m[1][2] - m[2][1]) * s;
+			(*this)[1] = (m[2][0] - m[0][2]) * s;
+			(*this)[2] = (m[0][1] - m[1][0]) * s;
+		}
+		else if(m[0][0] > m[1][1] && m[0][0] > m[2][2])
+		{
+			float s = 2.0f * sqrtf(1.0f + m[0][0] - m[1][1] - m[2][2]);
+			(*this)[3] = (m[1][2] - m[2][1]) / s;
+			(*this)[0] = 0.25f * s;
+			(*this)[1] = (m[1][0] + m[0][1]) / s;
+			(*this)[2] = (m[2][0] + m[0][2]) / s;
+		}
+		else if(m[1][1] > m[2][2])
+		{
+			float s = 2.0f * sqrtf(1.0f + m[1][1] - m[0][0] - m[2][2]);
+			(*this)[3] = (m[2][0] - m[0][2]) / s;
+			(*this)[0] = (m[1][0] + m[0][1]) / s;
+			(*this)[1] = 0.25f * s;
+			(*this)[2] = (m[2][1] + m[1][2]) / s;
+		}
+		else
+		{
+			float s = 2.0f * sqrtf(1.0f + m[2][2] - m[1][1] - m[0][0]);
+			(*this)[3] = (m[0][1] - m[1][0]) / s;
+			(*this)[0] = (m[2][0] + m[0][2]) / s;
+			(*this)[1] = (m[1][2] + m[2][1]) / s;
+			(*this)[2] = 0.25f * s;
+		}
+		
+		float length = Length();
+		(*this)[3] = (*this)[3] / length;
+		(*this)[0] = (*this)[0] / length;
+		(*this)[1] = (*this)[1] / length;
+		(*this)[2] = (*this)[2] / length;
+	}
+	
+	inline Quaternion NLerp(const Quaternion& r, float lerpFactor, bool shortestPath) const
+	{
+		Quaternion correctedDest;
+		
+		if(shortestPath && this->Dot(r) < 0)
+			correctedDest = r * -1;
+		else
+			correctedDest = r;
+	
+		return Quaternion(Lerp(correctedDest, lerpFactor).Normalized());
+	}
+	
+	inline Quaternion SLerp(const Quaternion& r, float lerpFactor, bool shortestPath) const
+	{
+		static const float EPSILON = 1e3;
+	
+		float cos = this->Dot(r);
+		Quaternion correctedDest;
+		
+		if(shortestPath && cos < 0)
+		{
+			cos *= -1;
+			correctedDest = r * -1;
+		}
+		else
+			correctedDest = r;
+			
+		if(fabs(cos) > (1 - EPSILON))
+			return NLerp(correctedDest, lerpFactor, false);
+		
+		float sin = (float)sqrtf(1.0f - cos * cos);
+		float angle = atan2(sin, cos);
+		float invSin = 1.0f/sin;
+		
+		float srcFactor = sinf((1.0f - lerpFactor) * angle) * invSin;
+		float destFactor = sinf((lerpFactor) * angle) * invSin;
+		
+		return Quaternion((*this) * srcFactor + correctedDest * destFactor);
+	}
+	
 	inline Matrix4f ToRotationMatrix() const
 	{
 		Vector3f forward = Vector3f(2.0f * (GetX() * GetZ() - GetW() * GetY()), 2.0f * (GetY() * GetZ() + GetW() * GetX()), 1.0f - 2.0f * (GetX() * GetX() + GetY() * GetY()));

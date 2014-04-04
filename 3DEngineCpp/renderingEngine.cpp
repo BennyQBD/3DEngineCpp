@@ -28,10 +28,7 @@ RenderingEngine::~RenderingEngine()
 void RenderingEngine::Render(GameObject* object)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	m_lights.clear();
-	
-	object->AddToRenderingEngine(this);
-	object->Render(m_defaultShader, this);
+	object->RenderAll(m_defaultShader, this);
 	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE);
@@ -41,7 +38,7 @@ void RenderingEngine::Render(GameObject* object)
 	for(unsigned int i = 0; i < m_lights.size(); i++)
 	{
 		m_activeLight = m_lights[i];
-		object->Render(m_activeLight->GetShader(), this);
+		object->RenderAll(m_activeLight->GetShader(), this);
 	}
 	
 	glDepthMask(GL_TRUE);

@@ -1,9 +1,9 @@
 #ifndef COREENGINE_H
 #define COREENGINE_H
 
-#include "game.h"
 #include "renderingEngine.h"
 #include <string>
+class Game;
 
 class CoreEngine
 {
@@ -16,6 +16,7 @@ public:
 	void Start();
 	void Stop();
 	
+	inline RenderingEngine* GetRenderingEngine() { return m_renderingEngine; }
 protected:
 private:
 	CoreEngine(const CoreEngine& other) {}

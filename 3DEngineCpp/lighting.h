@@ -4,7 +4,9 @@
 #include "math3d.h"
 #include "gameComponent.h"
 
-struct BaseLight : public GameComponent
+class CoreEngine;
+
+class BaseLight : public GameComponent
 {
 public:
 	Vector3f color;
@@ -17,7 +19,7 @@ public:
 	
 	virtual ~BaseLight();
 	
-	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);	
+	virtual void AddToEngine(CoreEngine* engine);	
 	inline Shader* GetShader() { return m_shader; }
 	
 	void SetShader(Shader* shader);

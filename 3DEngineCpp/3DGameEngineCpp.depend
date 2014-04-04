@@ -6,7 +6,7 @@
 1395129800 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/basicShader.h
 	"shader.h"
 
-1396645498 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.h
+1396647026 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.h
 	<map>
 	<vector>
 	<string>
@@ -41,19 +41,16 @@
 	<vector>
 	<string>
 
-1396130461 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/camera.cpp
+1396650562 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/camera.cpp
 	"camera.h"
-	"input.h"
-	"time.h"
-	"util.h"
 	"renderingEngine.h"
-	"window.h"
+	"coreEngine.h"
 
-1396128969 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/camera.h
+1396650449 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/camera.h
 	"math3d.h"
 	"gameComponent.h"
 
-1393716831 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/input.h
+1396653183 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/input.h
 	"math3d.h"
 
 1393716411 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vector2f.h
@@ -64,13 +61,14 @@
 1395130463 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/window.h
 	<string>
 
-1396133347 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.cpp
+1396654027 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.cpp
 	"game.h"
 	"renderingEngine.h"
 	<iostream>
 
-1396131757 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
+1396654011 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/game.h
 	"gameObject.h"
+	"coreEngine.h"
 
 1396476690 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mesh.h
 	"vertex.h"
@@ -81,10 +79,10 @@
 1393716772 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/vertex.h
 	"math3d.h"
 
-1396129777 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.h
+1396653869 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.h
 	"math3d.h"
 
-1396646492 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.h
+1396649873 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.h
 	"math3d.h"
 	"gameComponent.h"
 
@@ -99,8 +97,10 @@
 
 1377314990 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/sdl_backend.h
 
-1396636953 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.cpp
+1396653511 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.cpp
 	"3DEngine.h"
+	"freeLook.h"
+	"freeMove.h"
 
 1393697022 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.h
 	"game.h"
@@ -138,7 +138,7 @@
 	<SDL2/SDL.h>
 	<iostream>
 
-1396646653 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.cpp
+1396647525 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.cpp
 	"shader.h"
 	<cassert>
 	<fstream>
@@ -175,7 +175,7 @@
 	<SDL2/SDL.h>
 	<chrono>
 
-1396130713 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.cpp
+1396653872 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.cpp
 	"transform.h"
 
 1396636520 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/util.cpp
@@ -194,21 +194,21 @@
 	<GL/glew.h>
 	"sdl_backend.h"
 
-1396131707 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/coreEngine.cpp
+1396649216 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/coreEngine.cpp
 	"coreEngine.h"
 	"time.h"
 	"window.h"
 	"input.h"
 	"renderUtil.h"
 	"util.h"
+	"game.h"
 	<stdio.h>
 
-1394693942 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/coreEngine.h
-	"game.h"
+1396649211 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/coreEngine.h
 	"renderingEngine.h"
 	<string>
 
-1396131024 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.h
+1396651964 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.h
 	<math.h>
 
 1393792608 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/obj_loader.h
@@ -223,15 +223,16 @@
 	<algorithm>
 	<map>
 
-1396129190 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.cpp
+1396654568 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.cpp
 	"gameObject.h"
 	"gameComponent.h"
+	"coreEngine.h"
 
-1395225096 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.h
+1396654326 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameObject.h
 	<vector>
 	"transform.h"
 
-1396123364 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameComponent.h
+1396649225 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/gameComponent.h
 	"transform.h"
 	"gameObject.h"
 
@@ -247,7 +248,7 @@
 	<vector>
 	<map>
 
-1396644480 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.cpp
+1396654109 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.cpp
 	"renderingEngine.h"
 	"window.h"
 	"gameObject.h"
@@ -295,10 +296,11 @@
 1396643714 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.h
 	"shader.h"
 
-1396646467 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.cpp
+1396649943 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.cpp
 	"lighting.h"
 	"renderingEngine.h"
 	"shader.h"
+	"coreEngine.h"
 
 1396130853 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/math3d.cpp
 	"math3d.h"
@@ -308,4 +310,21 @@
 1396643654 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/mappedValues.h
 	<map>
 	<string>
+
+1396653702 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/freeLook.cpp
+	"freeLook.h"
+	"window.h"
+
+1396653405 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/freeLook.h
+	"math3d.h"
+	"gameComponent.h"
+	"input.h"
+
+1396653543 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/freeMove.cpp
+	"freeMove.h"
+
+1396653384 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/freeMove.h
+	"math3d.h"
+	"gameComponent.h"
+	"input.h"
 

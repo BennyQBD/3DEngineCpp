@@ -8,12 +8,9 @@ class Camera : public GameComponent
 {
 public:
 	Camera(float fov, float aspect, float zNear, float zFar);
-
-	void Input(float delta);
-	void Move(const Vector3f& direction, float amt);
 	
 	Matrix4f GetViewProjection() const;
-	virtual void AddToRenderingEngine(RenderingEngine* renderingEngine);
+	virtual void AddToEngine(CoreEngine* engine);
 protected:
 private:
 	Matrix4f m_projection;

@@ -1,4 +1,6 @@
 #include "3DEngine.h"
+#include "freeLook.h"
+#include "freeMove.h"
 
 class TestGame : public Game
 {
@@ -50,8 +52,10 @@ void TestGame::Init()
 	AddToScene(spotLightObject);
 	AddToScene(directionalLightObject);
 	AddToScene(testMesh1);
-	testMesh2->AddChild((new GameObject())->AddComponent(new Camera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f)));
-	//AddToScene((new GameObject())->AddComponent(new Camera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f)));
+	testMesh2->AddChild((new GameObject())
+		->AddComponent(new Camera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f))
+		->AddComponent(new FreeLook())
+		->AddComponent(new FreeMove()));
 	
 	directionalLightObject->GetTransform().SetRot(Quaternion(Vector3f(1,0,0), ToRadians(-45)));
 }

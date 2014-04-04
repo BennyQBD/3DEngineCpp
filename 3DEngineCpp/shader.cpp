@@ -8,7 +8,7 @@
 #include "util.h"
 
 //--------------------------------------------------------------------------------
-// Variables Initializations
+// Variable Initializations
 //--------------------------------------------------------------------------------
 std::map<std::string, ShaderData*> Shader::s_resourceMap;
 

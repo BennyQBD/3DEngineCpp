@@ -3,8 +3,9 @@
 //#include <SDL.h>
 #include "math3d.h"
 
-namespace MOUSE
+class Input
 {
+public:
 	enum
 	{
 		LEFT_MOUSE = 1,
@@ -13,10 +14,7 @@ namespace MOUSE
 		MOUSE_WHEEL_UP = 4,
 		MOUSE_WHEEL_DOWN = 5
 	};
-};
 
-namespace KEY
-{
 	enum
 	{
 			KEY_UNKNOWN = 0,
@@ -638,11 +636,7 @@ namespace KEY
 	//
 	//	KEY_LAST
 	//} KEY;
-};
 
-class Input
-{
-public:
 	static void Update();
 
 	static bool GetKey(int keyCode);

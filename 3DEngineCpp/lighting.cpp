@@ -1,12 +1,13 @@
 #include "lighting.h"
 #include "renderingEngine.h"
 #include "shader.h"
+#include "coreEngine.h"
 
 #define COLOR_DEPTH 256
 
-void BaseLight::AddToRenderingEngine(RenderingEngine* renderingEngine)
+void BaseLight::AddToEngine(CoreEngine* engine)
 {
-	renderingEngine->AddLight(this);
+	engine->GetRenderingEngine()->AddLight(this);
 }
 
 BaseLight::~BaseLight()

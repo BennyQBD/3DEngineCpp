@@ -12,6 +12,13 @@ public:
 	bool HasChanged();
 	void Update();
 	void Rotate(const Vector3f& axis, float angle);
+	void Rotate(const Quaternion& rotation);
+	void LookAt(const Vector3f& point, const Vector3f& up);
+	
+	Quaternion GetLookAtRotation(const Vector3f& point, const Vector3f& up) 
+	{ 
+		return Quaternion(Matrix4f().InitRotationFromDirection((point - m_pos).Normalized(), up)); 
+	}
 	
 	inline Vector3f& GetPos() { return m_pos; }
 	inline const Vector3f& GetPos() const { return m_pos; }
