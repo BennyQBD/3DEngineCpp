@@ -1,16 +1,16 @@
 #include "forwardAmbient.h"
 
-ForwardAmbient::ForwardAmbient()
+ForwardAmbient::ForwardAmbient() : Shader("forward-ambient")
 {
-	AddVertexShaderFromFile("forward-ambient.vs");
-	AddFragmentShaderFromFile("forward-ambient.fs");
-
-	SetAttribLocation("position", 0);
-	SetAttribLocation("texCoord", 1);
-	CompileShader();
-
-	AddUniform("T_MVP");
-	AddUniform("R_ambient");
+//	AddVertexShaderFromFile("forward-ambient.vs");
+//	AddFragmentShaderFromFile("forward-ambient.fs");
+//
+//	SetAttribLocation("position", 0);
+//	SetAttribLocation("texCoord", 1);
+//	CompileShader();
+//
+//	AddUniform("T_MVP");
+//	AddUniform("R_ambient");
 }
 
 void ForwardAmbient::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)

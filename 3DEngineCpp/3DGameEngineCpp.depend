@@ -6,7 +6,7 @@
 1395129800 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/basicShader.h
 	"shader.h"
 
-1395130613 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.h
+1396639441 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.h
 	<map>
 	<vector>
 	<string>
@@ -135,7 +135,7 @@
 	<SDL2/SDL.h>
 	<iostream>
 
-1396636374 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.cpp
+1396639661 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/shader.cpp
 	"shader.h"
 	<cassert>
 	<fstream>
@@ -268,28 +268,28 @@
 	"coreEngine.h"
 	"game.h"
 
-1396636582 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardAmbient.cpp
+1396638603 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardAmbient.cpp
 	"forwardAmbient.h"
 
-1395134108 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardAmbient.h
+1396638584 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardAmbient.h
 	"shader.h"
 
-1395136536 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardDirectional.h
+1396638618 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardDirectional.h
 	"shader.h"
 
-1396636694 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardDirectional.cpp
+1396637136 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardDirectional.cpp
 	"forwardDirectional.h"
 
-1396636748 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardPoint.cpp
+1396637158 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardPoint.cpp
 	"forwardPoint.h"
 
-1395137225 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardPoint.h
+1396638628 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardPoint.h
 	"shader.h"
 
-1396636787 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.cpp
+1396637172 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.cpp
 	"forwardSpot.h"
 
-1395137773 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.h
+1396638634 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/forwardSpot.h
 	"shader.h"
 
 1396124003 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.cpp

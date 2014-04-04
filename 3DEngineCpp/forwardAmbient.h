@@ -17,7 +17,7 @@ protected:
 private:
 	ForwardAmbient();
 
-	ForwardAmbient(ForwardAmbient const&){}// Don't Implement
+	ForwardAmbient(ForwardAmbient const&) : Shader("") {}// Don't Implement
 	void operator=(ForwardAmbient const&){} // Don't implement
 };
 

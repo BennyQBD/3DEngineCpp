@@ -17,7 +17,7 @@ protected:
 private:
 	ForwardPoint();
 
-	ForwardPoint(ForwardPoint const&){}// Don't Implement
+	ForwardPoint(ForwardPoint const&) : Shader("") {}// Don't Implement
 	void operator=(ForwardPoint const&){} // Don't implement
 };
 

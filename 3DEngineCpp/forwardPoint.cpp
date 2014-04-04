@@ -1,29 +1,29 @@
 #include "forwardPoint.h"
 
-ForwardPoint::ForwardPoint()
+ForwardPoint::ForwardPoint() : Shader("forward-point")
 {
-	AddVertexShaderFromFile("forward-point.vs");
-	AddFragmentShaderFromFile("forward-point.fs");
-
-	SetAttribLocation("position", 0);
-	SetAttribLocation("texCoord", 1);
-	SetAttribLocation("normal", 2);
-	CompileShader();
-
-	AddUniform("T_model");
-	AddUniform("T_MVP");
-	
-	AddUniform("specularIntensity");
-	AddUniform("specularPower");
-	AddUniform("C_eyePos");
-		
-	AddUniform("R_pointLight.base.color");
-	AddUniform("R_pointLight.base.intensity");
-	AddUniform("R_pointLight.atten.constant");
-	AddUniform("R_pointLight.atten.linear");
-	AddUniform("R_pointLight.atten.exponent");
-	AddUniform("R_pointLight.position");
-	AddUniform("R_pointLight.range");
+//	AddVertexShaderFromFile("forward-point.vs");
+//	AddFragmentShaderFromFile("forward-point.fs");
+//
+//	SetAttribLocation("position", 0);
+//	SetAttribLocation("texCoord", 1);
+//	SetAttribLocation("normal", 2);
+//	CompileShader();
+//
+//	AddUniform("T_model");
+//	AddUniform("T_MVP");
+//	
+//	AddUniform("specularIntensity");
+//	AddUniform("specularPower");
+//	AddUniform("C_eyePos");
+//		
+//	AddUniform("R_pointLight.base.color");
+//	AddUniform("R_pointLight.base.intensity");
+//	AddUniform("R_pointLight.atten.constant");
+//	AddUniform("R_pointLight.atten.linear");
+//	AddUniform("R_pointLight.atten.exponent");
+//	AddUniform("R_pointLight.position");
+//	AddUniform("R_pointLight.range");
 }
 
 void ForwardPoint::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)

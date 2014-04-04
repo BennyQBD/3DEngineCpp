@@ -1,25 +1,25 @@
 #include "forwardDirectional.h"
 
-ForwardDirectional::ForwardDirectional()
+ForwardDirectional::ForwardDirectional() : Shader("forward-directional")
 {
-	AddVertexShaderFromFile("forward-directional.vs");
-	AddFragmentShaderFromFile("forward-directional.fs");
-
-	SetAttribLocation("position", 0);
-	SetAttribLocation("texCoord", 1);
-	SetAttribLocation("normal", 2);
-	CompileShader();
-
-	AddUniform("T_model");
-	AddUniform("T_MVP");
-	
-	AddUniform("specularIntensity");
-	AddUniform("specularPower");
-	AddUniform("C_eyePos");
-		
-	AddUniform("R_directionalLight.base.color");
-	AddUniform("R_directionalLight.base.intensity");
-	AddUniform("R_directionalLight.direction");
+//	AddVertexShaderFromFile("forward-directional.vs");
+//	AddFragmentShaderFromFile("forward-directional.fs");
+//
+//	SetAttribLocation("position", 0);
+//	SetAttribLocation("texCoord", 1);
+//	SetAttribLocation("normal", 2);
+//	CompileShader();
+//
+//	AddUniform("T_model");
+//	AddUniform("T_MVP");
+//	
+//	AddUniform("specularIntensity");
+//	AddUniform("specularPower");
+//	AddUniform("C_eyePos");
+//		
+//	AddUniform("R_directionalLight.base.color");
+//	AddUniform("R_directionalLight.base.intensity");
+//	AddUniform("R_directionalLight.direction");
 }
 
 void ForwardDirectional::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)

@@ -1,31 +1,31 @@
 #include "forwardSpot.h"
 
-ForwardSpot::ForwardSpot()
+ForwardSpot::ForwardSpot() : Shader("forward-spot")
 {
-	AddVertexShaderFromFile("forward-spot.vs");
-	AddFragmentShaderFromFile("forward-spot.fs");
-
-	SetAttribLocation("position", 0);
-	SetAttribLocation("texCoord", 1);
-	SetAttribLocation("normal", 2);
-	CompileShader();
-
-	AddUniform("T_model");
-	AddUniform("T_MVP");
-	
-	AddUniform("specularIntensity");
-	AddUniform("specularPower");
-	AddUniform("C_eyePos");
-		
-	AddUniform("R_spotLight.pointLight.base.color");
-	AddUniform("R_spotLight.pointLight.base.intensity");
-	AddUniform("R_spotLight.pointLight.atten.constant");
-	AddUniform("R_spotLight.pointLight.atten.linear");
-	AddUniform("R_spotLight.pointLight.atten.exponent");
-	AddUniform("R_spotLight.pointLight.position");
-	AddUniform("R_spotLight.pointLight.range");
-	AddUniform("R_spotLight.direction");
-	AddUniform("R_spotLight.cutoff");
+//	AddVertexShaderFromFile("forward-spot.vs");
+//	AddFragmentShaderFromFile("forward-spot.fs");
+//
+//	SetAttribLocation("position", 0);
+//	SetAttribLocation("texCoord", 1);
+//	SetAttribLocation("normal", 2);
+//	CompileShader();
+//
+//	AddUniform("T_model");
+//	AddUniform("T_MVP");
+//	
+//	AddUniform("specularIntensity");
+//	AddUniform("specularPower");
+//	AddUniform("C_eyePos");
+//		
+//	AddUniform("R_spotLight.pointLight.base.color");
+//	AddUniform("R_spotLight.pointLight.base.intensity");
+//	AddUniform("R_spotLight.pointLight.atten.constant");
+//	AddUniform("R_spotLight.pointLight.atten.linear");
+//	AddUniform("R_spotLight.pointLight.atten.exponent");
+//	AddUniform("R_spotLight.pointLight.position");
+//	AddUniform("R_spotLight.pointLight.range");
+//	AddUniform("R_spotLight.direction");
+//	AddUniform("R_spotLight.cutoff");
 }
 
 void ForwardSpot::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)

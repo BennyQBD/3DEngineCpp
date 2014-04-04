@@ -17,7 +17,7 @@ protected:
 private:
 	ForwardDirectional();
 
-	ForwardDirectional(ForwardDirectional const&){}// Don't Implement
+	ForwardDirectional(ForwardDirectional const&) : Shader("") {}// Don't Implement
 	void operator=(ForwardDirectional const&){} // Don't implement
 };
 
