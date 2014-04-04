@@ -1,11 +1,13 @@
-#version 120
+#version 330
 
 const int MAX_POINT_LIGHTS = 4;
 const int MAX_SPOT_LIGHTS = 4;
 
-varying vec2 texCoord0;
-varying vec3 normal0;
-varying vec3 worldPos0;
+in vec2 texCoord0;
+in vec3 normal0;
+in vec3 worldPos0;
+
+out vec4 fragColor;
 
 struct BaseLight
 {
@@ -31,6 +33,7 @@ struct PointLight
     BaseLight base;
     Attenuation atten;
     vec3 position;
+    float range;
 };
 
 struct SpotLight
@@ -65,9 +68,7 @@ vec4 calcLight(BaseLight base, vec3 direction, vec3 normal)
         
         vec3 directionToEye = normalize(eyePos - worldPos0);
         vec3 reflectDirection = normalize(reflect(direction, normal));
-        //vec3 halfDirection = normalize(directionToEye - direction);
         
-        //float specularFactor = dot(halfDirection, normal);
         float specularFactor = dot(directionToEye, reflectDirection);
         specularFactor = pow(specularFactor, specularPower);
         
@@ -90,17 +91,17 @@ vec4 calcPointLight(PointLight pointLight, vec3 normal)
     vec3 lightDirection = worldPos0 - pointLight.position;
     float distanceToPoint = length(lightDirection);
     
-    //if(distanceToPoint > pointLight.range)
-        //return vec4(0,0,0,0);
+    if(distanceToPoint > pointLight.range)
+        return vec4(0,0,0,0);
     
     lightDirection = normalize(lightDirection);
     
     vec4 color = calcLight(pointLight.base, lightDirection, normal);
     
     float attenuation = pointLight.atten.constant +
-                        pointLight.atten.linear * distanceToPoint +
-                        pointLight.atten.exponent * distanceToPoint * distanceToPoint +
-                        0.0001;
+                         pointLight.atten.linear * distanceToPoint +
+                         pointLight.atten.exponent * distanceToPoint * distanceToPoint +
+                         0.0001;
                          
     return color / attenuation;
 }
@@ -123,9 +124,13 @@ vec4 calcSpotLight(SpotLight spotLight, vec3 normal)
 
 void main()
 { 
-    vec4 color = vec4(baseColor, 1) * texture2D(sampler, texCoord0.xy);
-
     vec4 totalLight = vec4(ambientLight,1);
+    vec4 color = vec4(baseColor, 1);
+    vec4 textureColor = texture(sampler, texCoord0.xy);
+    
+    if(textureColor != vec4(0,0,0,0))
+        color *= textureColor;
+    
     vec3 normal = normalize(normal0);
     
     totalLight += calcDirectionalLight(directionalLight, normal);
@@ -138,5 +143,5 @@ void main()
         if(spotLights[i].pointLight.base.intensity > 0)
             totalLight += calcSpotLight(spotLights[i], normal);
     
-    gl_FragColor = color * totalLight;
+    fragColor = color * totalLight;
 }

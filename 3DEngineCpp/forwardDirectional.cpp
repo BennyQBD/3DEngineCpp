@@ -10,16 +10,16 @@ ForwardDirectional::ForwardDirectional()
 	SetAttribLocation("normal", 2);
 	CompileShader();
 
-	AddUniform("model");
-	AddUniform("MVP");
+	AddUniform("T_model");
+	AddUniform("T_MVP");
 	
 	AddUniform("specularIntensity");
 	AddUniform("specularPower");
-	AddUniform("eyePos");
+	AddUniform("C_eyePos");
 		
-	AddUniform("directionalLight.base.color");
-	AddUniform("directionalLight.base.intensity");
-	AddUniform("directionalLight.direction");
+	AddUniform("R_directionalLight.base.color");
+	AddUniform("R_directionalLight.base.intensity");
+	AddUniform("R_directionalLight.direction");
 }
 
 void ForwardDirectional::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)
@@ -28,16 +28,16 @@ void ForwardDirectional::UpdateUniforms(const Transform& transform, const Materi
 	Matrix4f projectedMatrix = renderingEngine->GetMainCamera().GetViewProjection() * worldMatrix;
 	material.GetTexture("diffuse")->Bind(0);
 
-	SetUniform("model", worldMatrix);
-	SetUniform("MVP", projectedMatrix);
+	SetUniform("T_model", worldMatrix);
+	SetUniform("T_MVP", projectedMatrix);
 	
-	SetUniform("eyePos", renderingEngine->GetMainCamera().GetTransform().GetTransformedPos());
+	SetUniform("C_eyePos", renderingEngine->GetMainCamera().GetTransform().GetTransformedPos());
 	SetUniformf("specularIntensity", material.GetFloat("specularIntensity"));
 	SetUniformf("specularPower", material.GetFloat("specularPower"));
 	
 	DirectionalLight directionalLight = *(DirectionalLight*)renderingEngine->GetActiveLight();
 	
-	SetUniform("directionalLight.direction", directionalLight.GetTransform().GetTransformedRot().GetForward());
-	SetUniform("directionalLight.base.color", directionalLight.color);
-	SetUniformf("directionalLight.base.intensity", directionalLight.intensity);
+	SetUniform("R_directionalLight.direction", directionalLight.GetTransform().GetTransformedRot().GetForward());
+	SetUniform("R_directionalLight.base.color", directionalLight.color);
+	SetUniformf("R_directionalLight.base.intensity", directionalLight.intensity);
 }

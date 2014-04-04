@@ -9,8 +9,8 @@ ForwardAmbient::ForwardAmbient()
 	SetAttribLocation("texCoord", 1);
 	CompileShader();
 
-	AddUniform("MVP");
-	AddUniform("ambientIntensity");
+	AddUniform("T_MVP");
+	AddUniform("R_ambient");
 }
 
 void ForwardAmbient::UpdateUniforms(const Transform& transform, const Material& material, RenderingEngine* renderingEngine)
@@ -20,6 +20,6 @@ void ForwardAmbient::UpdateUniforms(const Transform& transform, const Material& 
 	Matrix4f worldMatrix = transform.GetTransformation();
 	Matrix4f projectedMatrix = renderingEngine->GetMainCamera().GetViewProjection() * worldMatrix;
 
-	SetUniform("MVP", projectedMatrix);
-	SetUniform("ambientIntensity", renderingEngine->GetAmbientLight());
+	SetUniform("T_MVP", projectedMatrix);
+	SetUniform("R_ambient", renderingEngine->GetAmbientLight());
 }

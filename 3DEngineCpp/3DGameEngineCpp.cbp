@@ -5,7 +5,7 @@
 		<Option title="3DGameEngine" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="Game/;Engine/;Engine/Core/;Engine/Rendering/;Engine/Static Libraries/;Engine/Components/;" />
+		<Option virtualFolders="Engine/;Engine/Core/;Engine/Rendering/;Engine/Static Libraries/;Engine/Components/;Engine/Util/;Game/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/3DGameEngine" prefix_auto="1" extension_auto="1" />
@@ -130,6 +130,9 @@
 		<Unit filename="obj_loader.h">
 			<Option virtualFolder="Engine/Static Libraries/" />
 		</Unit>
+		<Unit filename="referenceCounter.h">
+			<Option virtualFolder="Engine/Util/" />
+		</Unit>
 		<Unit filename="renderUtil.cpp">
 			<Option virtualFolder="Engine/Rendering/" />
 		</Unit>
@@ -180,10 +183,10 @@
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="util.cpp">
-			<Option virtualFolder="Engine/Core/" />
+			<Option virtualFolder="Engine/Util/" />
 		</Unit>
 		<Unit filename="util.h">
-			<Option virtualFolder="Engine/Core/" />
+			<Option virtualFolder="Engine/Util/" />
 		</Unit>
 		<Unit filename="vertex.h">
 			<Option virtualFolder="Engine/Rendering/" />
