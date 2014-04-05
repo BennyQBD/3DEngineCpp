@@ -86,8 +86,8 @@ void CoreEngine::Run()
 
 			Input::Update();
 
-			m_game->Input(m_frameTime);
-			m_game->Update(m_frameTime);
+			m_game->Input((float)m_frameTime);
+			m_game->Update((float)m_frameTime);
 
 			unprocessedTime -= m_frameTime;
 		}

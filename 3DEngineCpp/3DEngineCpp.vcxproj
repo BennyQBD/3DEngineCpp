@@ -11,16 +11,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basicShader.h" />
+    <ClInclude Include="3DEngine.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="coreEngine.h" />
+    <ClInclude Include="freeLook.h" />
+    <ClInclude Include="freeMove.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="gameComponent.h" />
+    <ClInclude Include="gameObject.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="lighting.h" />
+    <ClInclude Include="mappedValues.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="math3d.h" />
     <ClInclude Include="mesh.h" />
-    <ClInclude Include="phongShader.h" />
+    <ClInclude Include="meshRenderer.h" />
+    <ClInclude Include="obj_loader.h" />
+    <ClInclude Include="referenceCounter.h" />
+    <ClInclude Include="renderingEngine.h" />
     <ClInclude Include="renderUtil.h" />
     <ClInclude Include="sdl_backend.h" />
     <ClInclude Include="shader.h" />
@@ -33,14 +41,19 @@
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="basicShader.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="coreEngine.cpp" />
+    <ClCompile Include="freeLook.cpp" />
+    <ClCompile Include="freeMove.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="lighting.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="math3d.cpp" />
     <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="phongShader.cpp" />
+    <ClCompile Include="obj_loader.cpp" />
+    <ClCompile Include="renderingEngine.cpp" />
     <ClCompile Include="renderUtil.cpp" />
     <ClCompile Include="sdl_backend.cpp" />
     <ClCompile Include="shader.cpp" />
