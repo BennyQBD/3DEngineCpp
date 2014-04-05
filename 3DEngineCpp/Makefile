@@ -40,9 +40,9 @@ OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
 OUT_RELEASE = bin/Release/3DGameEngine
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/transform.o $(OBJDIR_DEBUG)/sdl_backend.o $(OBJDIR_DEBUG)/shader.o $(OBJDIR_DEBUG)/stb_image.o $(OBJDIR_DEBUG)/texture.o $(OBJDIR_DEBUG)/time.o $(OBJDIR_DEBUG)/util.o $(OBJDIR_DEBUG)/vector3f.o $(OBJDIR_DEBUG)/window.o $(OBJDIR_DEBUG)/camera.o $(OBJDIR_DEBUG)/game.o $(OBJDIR_DEBUG)/input.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/basicShader.o $(OBJDIR_DEBUG)/matrix4f.o $(OBJDIR_DEBUG)/mesh.o $(OBJDIR_DEBUG)/phongShader.o $(OBJDIR_DEBUG)/renderUtil.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/obj_loader.o $(OBJDIR_DEBUG)/renderUtil.o $(OBJDIR_DEBUG)/renderingEngine.o $(OBJDIR_DEBUG)/sdl_backend.o $(OBJDIR_DEBUG)/shader.o $(OBJDIR_DEBUG)/stb_image.o $(OBJDIR_DEBUG)/texture.o $(OBJDIR_DEBUG)/time.o $(OBJDIR_DEBUG)/transform.o $(OBJDIR_DEBUG)/util.o $(OBJDIR_DEBUG)/window.o $(OBJDIR_DEBUG)/camera.o $(OBJDIR_DEBUG)/coreEngine.o $(OBJDIR_DEBUG)/freeLook.o $(OBJDIR_DEBUG)/freeMove.o $(OBJDIR_DEBUG)/game.o $(OBJDIR_DEBUG)/gameObject.o $(OBJDIR_DEBUG)/input.o $(OBJDIR_DEBUG)/lighting.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/math3d.o $(OBJDIR_DEBUG)/mesh.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/transform.o $(OBJDIR_RELEASE)/sdl_backend.o $(OBJDIR_RELEASE)/shader.o $(OBJDIR_RELEASE)/stb_image.o $(OBJDIR_RELEASE)/texture.o $(OBJDIR_RELEASE)/time.o $(OBJDIR_RELEASE)/util.o $(OBJDIR_RELEASE)/vector3f.o $(OBJDIR_RELEASE)/window.o $(OBJDIR_RELEASE)/camera.o $(OBJDIR_RELEASE)/game.o $(OBJDIR_RELEASE)/input.o $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/basicShader.o $(OBJDIR_RELEASE)/matrix4f.o $(OBJDIR_RELEASE)/mesh.o $(OBJDIR_RELEASE)/phongShader.o $(OBJDIR_RELEASE)/renderUtil.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/obj_loader.o $(OBJDIR_RELEASE)/renderUtil.o $(OBJDIR_RELEASE)/renderingEngine.o $(OBJDIR_RELEASE)/sdl_backend.o $(OBJDIR_RELEASE)/shader.o $(OBJDIR_RELEASE)/stb_image.o $(OBJDIR_RELEASE)/texture.o $(OBJDIR_RELEASE)/time.o $(OBJDIR_RELEASE)/transform.o $(OBJDIR_RELEASE)/util.o $(OBJDIR_RELEASE)/window.o $(OBJDIR_RELEASE)/camera.o $(OBJDIR_RELEASE)/coreEngine.o $(OBJDIR_RELEASE)/freeLook.o $(OBJDIR_RELEASE)/freeMove.o $(OBJDIR_RELEASE)/game.o $(OBJDIR_RELEASE)/gameObject.o $(OBJDIR_RELEASE)/input.o $(OBJDIR_RELEASE)/lighting.o $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/math3d.o $(OBJDIR_RELEASE)/mesh.o
 
 all: debug release
 
@@ -59,8 +59,14 @@ debug: before_debug out_debug after_debug
 out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
 
-$(OBJDIR_DEBUG)/transform.o: transform.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c transform.cpp -o $(OBJDIR_DEBUG)/transform.o
+$(OBJDIR_DEBUG)/obj_loader.o: obj_loader.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c obj_loader.cpp -o $(OBJDIR_DEBUG)/obj_loader.o
+
+$(OBJDIR_DEBUG)/renderUtil.o: renderUtil.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c renderUtil.cpp -o $(OBJDIR_DEBUG)/renderUtil.o
+
+$(OBJDIR_DEBUG)/renderingEngine.o: renderingEngine.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c renderingEngine.cpp -o $(OBJDIR_DEBUG)/renderingEngine.o
 
 $(OBJDIR_DEBUG)/sdl_backend.o: sdl_backend.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c sdl_backend.cpp -o $(OBJDIR_DEBUG)/sdl_backend.o
@@ -77,11 +83,11 @@ $(OBJDIR_DEBUG)/texture.o: texture.cpp
 $(OBJDIR_DEBUG)/time.o: time.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c time.cpp -o $(OBJDIR_DEBUG)/time.o
 
+$(OBJDIR_DEBUG)/transform.o: transform.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c transform.cpp -o $(OBJDIR_DEBUG)/transform.o
+
 $(OBJDIR_DEBUG)/util.o: util.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c util.cpp -o $(OBJDIR_DEBUG)/util.o
-
-$(OBJDIR_DEBUG)/vector3f.o: vector3f.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c vector3f.cpp -o $(OBJDIR_DEBUG)/vector3f.o
 
 $(OBJDIR_DEBUG)/window.o: window.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c window.cpp -o $(OBJDIR_DEBUG)/window.o
@@ -89,29 +95,35 @@ $(OBJDIR_DEBUG)/window.o: window.cpp
 $(OBJDIR_DEBUG)/camera.o: camera.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c camera.cpp -o $(OBJDIR_DEBUG)/camera.o
 
+$(OBJDIR_DEBUG)/coreEngine.o: coreEngine.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c coreEngine.cpp -o $(OBJDIR_DEBUG)/coreEngine.o
+
+$(OBJDIR_DEBUG)/freeLook.o: freeLook.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c freeLook.cpp -o $(OBJDIR_DEBUG)/freeLook.o
+
+$(OBJDIR_DEBUG)/freeMove.o: freeMove.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c freeMove.cpp -o $(OBJDIR_DEBUG)/freeMove.o
+
 $(OBJDIR_DEBUG)/game.o: game.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c game.cpp -o $(OBJDIR_DEBUG)/game.o
+
+$(OBJDIR_DEBUG)/gameObject.o: gameObject.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c gameObject.cpp -o $(OBJDIR_DEBUG)/gameObject.o
 
 $(OBJDIR_DEBUG)/input.o: input.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c input.cpp -o $(OBJDIR_DEBUG)/input.o
 
+$(OBJDIR_DEBUG)/lighting.o: lighting.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c lighting.cpp -o $(OBJDIR_DEBUG)/lighting.o
+
 $(OBJDIR_DEBUG)/main.o: main.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c main.cpp -o $(OBJDIR_DEBUG)/main.o
 
-$(OBJDIR_DEBUG)/basicShader.o: basicShader.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c basicShader.cpp -o $(OBJDIR_DEBUG)/basicShader.o
-
-$(OBJDIR_DEBUG)/matrix4f.o: matrix4f.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c matrix4f.cpp -o $(OBJDIR_DEBUG)/matrix4f.o
+$(OBJDIR_DEBUG)/math3d.o: math3d.cpp
+	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c math3d.cpp -o $(OBJDIR_DEBUG)/math3d.o
 
 $(OBJDIR_DEBUG)/mesh.o: mesh.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c mesh.cpp -o $(OBJDIR_DEBUG)/mesh.o
-
-$(OBJDIR_DEBUG)/phongShader.o: phongShader.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c phongShader.cpp -o $(OBJDIR_DEBUG)/phongShader.o
-
-$(OBJDIR_DEBUG)/renderUtil.o: renderUtil.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c renderUtil.cpp -o $(OBJDIR_DEBUG)/renderUtil.o
 
 clean_debug: 
 	rm -f $(OBJ_DEBUG) $(OUT_DEBUG)
@@ -129,8 +141,14 @@ release: before_release out_release after_release
 out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
 
-$(OBJDIR_RELEASE)/transform.o: transform.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c transform.cpp -o $(OBJDIR_RELEASE)/transform.o
+$(OBJDIR_RELEASE)/obj_loader.o: obj_loader.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c obj_loader.cpp -o $(OBJDIR_RELEASE)/obj_loader.o
+
+$(OBJDIR_RELEASE)/renderUtil.o: renderUtil.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c renderUtil.cpp -o $(OBJDIR_RELEASE)/renderUtil.o
+
+$(OBJDIR_RELEASE)/renderingEngine.o: renderingEngine.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c renderingEngine.cpp -o $(OBJDIR_RELEASE)/renderingEngine.o
 
 $(OBJDIR_RELEASE)/sdl_backend.o: sdl_backend.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c sdl_backend.cpp -o $(OBJDIR_RELEASE)/sdl_backend.o
@@ -147,11 +165,11 @@ $(OBJDIR_RELEASE)/texture.o: texture.cpp
 $(OBJDIR_RELEASE)/time.o: time.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c time.cpp -o $(OBJDIR_RELEASE)/time.o
 
+$(OBJDIR_RELEASE)/transform.o: transform.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c transform.cpp -o $(OBJDIR_RELEASE)/transform.o
+
 $(OBJDIR_RELEASE)/util.o: util.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c util.cpp -o $(OBJDIR_RELEASE)/util.o
-
-$(OBJDIR_RELEASE)/vector3f.o: vector3f.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c vector3f.cpp -o $(OBJDIR_RELEASE)/vector3f.o
 
 $(OBJDIR_RELEASE)/window.o: window.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c window.cpp -o $(OBJDIR_RELEASE)/window.o
@@ -159,29 +177,35 @@ $(OBJDIR_RELEASE)/window.o: window.cpp
 $(OBJDIR_RELEASE)/camera.o: camera.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c camera.cpp -o $(OBJDIR_RELEASE)/camera.o
 
+$(OBJDIR_RELEASE)/coreEngine.o: coreEngine.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c coreEngine.cpp -o $(OBJDIR_RELEASE)/coreEngine.o
+
+$(OBJDIR_RELEASE)/freeLook.o: freeLook.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c freeLook.cpp -o $(OBJDIR_RELEASE)/freeLook.o
+
+$(OBJDIR_RELEASE)/freeMove.o: freeMove.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c freeMove.cpp -o $(OBJDIR_RELEASE)/freeMove.o
+
 $(OBJDIR_RELEASE)/game.o: game.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c game.cpp -o $(OBJDIR_RELEASE)/game.o
+
+$(OBJDIR_RELEASE)/gameObject.o: gameObject.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c gameObject.cpp -o $(OBJDIR_RELEASE)/gameObject.o
 
 $(OBJDIR_RELEASE)/input.o: input.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c input.cpp -o $(OBJDIR_RELEASE)/input.o
 
+$(OBJDIR_RELEASE)/lighting.o: lighting.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c lighting.cpp -o $(OBJDIR_RELEASE)/lighting.o
+
 $(OBJDIR_RELEASE)/main.o: main.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c main.cpp -o $(OBJDIR_RELEASE)/main.o
 
-$(OBJDIR_RELEASE)/basicShader.o: basicShader.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c basicShader.cpp -o $(OBJDIR_RELEASE)/basicShader.o
-
-$(OBJDIR_RELEASE)/matrix4f.o: matrix4f.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c matrix4f.cpp -o $(OBJDIR_RELEASE)/matrix4f.o
+$(OBJDIR_RELEASE)/math3d.o: math3d.cpp
+	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c math3d.cpp -o $(OBJDIR_RELEASE)/math3d.o
 
 $(OBJDIR_RELEASE)/mesh.o: mesh.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c mesh.cpp -o $(OBJDIR_RELEASE)/mesh.o
-
-$(OBJDIR_RELEASE)/phongShader.o: phongShader.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c phongShader.cpp -o $(OBJDIR_RELEASE)/phongShader.o
-
-$(OBJDIR_RELEASE)/renderUtil.o: renderUtil.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c renderUtil.cpp -o $(OBJDIR_RELEASE)/renderUtil.o
 
 clean_release: 
 	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)
