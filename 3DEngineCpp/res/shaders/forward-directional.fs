@@ -3,7 +3,9 @@
 
 uniform DirectionalLight R_directionalLight;
 
-void main()
+vec4 CalcLightingEffect(vec3 normal, vec3 worldPos)
 {
-    gl_FragColor = texture2D(diffuse, texCoord0.xy) * CalcDirectionalLight(R_directionalLight, normalize(normal0), worldPos0);
+	return CalcDirectionalLight(R_directionalLight, normal, worldPos);
 }
+
+#include "lightingMain.fsh"

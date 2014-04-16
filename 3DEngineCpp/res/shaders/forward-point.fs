@@ -3,7 +3,9 @@
 
 uniform PointLight R_pointLight;
 
-void main()
+vec4 CalcLightingEffect(vec3 normal, vec3 worldPos)
 {
-    gl_FragColor = texture2D(diffuse, texCoord0.xy) * CalcPointLight(R_pointLight, normalize(normal0), worldPos0);
+	return CalcPointLight(R_pointLight, normal, worldPos);
 }
+
+#include "lightingMain.fsh"
