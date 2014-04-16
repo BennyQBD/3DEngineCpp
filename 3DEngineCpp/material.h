@@ -19,11 +19,13 @@ public:
 			if(it->second) delete it->second;
 	}
 	
-	Material(Texture* diffuse, float specularIntensity, float specularPower)
+	Material(Texture* diffuse, float specularIntensity, float specularPower,
+		Texture* normalMap = new Texture("default_normal.jpg"))
 	{
 		AddTexture("diffuse", diffuse);
 		AddFloat("specularIntensity", specularIntensity);
 		AddFloat("specularPower", specularPower);
+		AddTexture("normalMap", normalMap);
 	}
 	
 	inline void AddTexture(const std::string& name, Texture* value) { m_textureMap.insert(std::pair<std::string, Texture*>(name, value)); }

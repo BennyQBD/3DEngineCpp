@@ -49,7 +49,8 @@ Mesh::Mesh(const std::string& fileName)
 		const aiScene* scene = importer.ReadFile(fileName.c_str(), 
 		                                         aiProcess_Triangulate |
 		                                         aiProcess_GenSmoothNormals | 
-		                                         aiProcess_FlipUVs);
+		                                         aiProcess_FlipUVs |
+		                                         aiProcess_CalcTangentSpace);
 		
 		if(!scene)
 		{
@@ -68,10 +69,12 @@ Mesh::Mesh(const std::string& fileName)
 			const aiVector3D* pPos = &(model->mVertices[i]);
 			const aiVector3D* pNormal = &(model->mNormals[i]);
 			const aiVector3D* pTexCoord = model->HasTextureCoords(0) ? &(model->mTextureCoords[0][i]) : &aiZeroVector;
+			const aiVector3D* pTangent = &(model->mTangents[i]);
 
 			Vertex vert(Vector3f(pPos->x, pPos->y, pPos->z),
 					    Vector2f(pTexCoord->x, pTexCoord->y),
-					    Vector3f(pNormal->x, pNormal->y, pNormal->z));
+					    Vector3f(pNormal->x, pNormal->y, pNormal->z),
+					    Vector3f(pTangent->x, pTangent->y, pTangent->z));
 			
 			vertices.push_back(vert);
 		}
@@ -121,11 +124,13 @@ void Mesh::Draw() const
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_meshData->GetVBO());
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(Vector3f));
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vector3f) + sizeof(Vector2f)));
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vector3f) + sizeof(Vector2f) + sizeof(Vector3f)));
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_meshData->GetIBO());
 	glDrawElements(GL_TRIANGLES, m_meshData->GetSize(), GL_UNSIGNED_INT, 0);
@@ -133,6 +138,7 @@ void Mesh::Draw() const
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
+	glDisableVertexAttribArray(3);
 }
 
 void Mesh::CalcNormals(Vertex* vertices, int vertSize, int* indices, int indexSize)
