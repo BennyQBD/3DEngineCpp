@@ -3,6 +3,11 @@
 
 It's like the 3D Game Engine, except in C++
 
+##Build Dependencies##
+- GLEW
+- SDL2
+- ASSIMP
+
 ##Build Instructions##
 
 ###Windows###
@@ -20,7 +25,7 @@ I do not have a Mac, and therefore cannot write effective step by step instructi
 - If anyone can provide high resolution timing code for Mac, that would make Mac build considerations significantly simpler! (See time.cpp for reference)
 
 ###Linux###
-- Open a Terminal and install the build dependencies (GLEW, SDL2). Syntax on Ubuntu Linux: sudo apt-get install libglew-dev libsdl2-dev
+- Open a Terminal and install the build dependencies. Syntax on Ubuntu Linux: sudo apt-get install libglew-dev libsdl2-dev libassimp-dev
   
     - NOTE: The syntax for this depends on both your package manager and your Linux distribution. If you're not sure how to install the dependencies, check with your distribution and package manager for details.
 

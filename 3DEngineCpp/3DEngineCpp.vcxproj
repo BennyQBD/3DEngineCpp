@@ -26,7 +26,6 @@
     <ClInclude Include="math3d.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="meshRenderer.h" />
-    <ClInclude Include="obj_loader.h" />
     <ClInclude Include="referenceCounter.h" />
     <ClInclude Include="renderingEngine.h" />
     <ClInclude Include="renderUtil.h" />
@@ -52,7 +51,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math3d.cpp" />
     <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="obj_loader.cpp" />
     <ClCompile Include="renderingEngine.cpp" />
     <ClCompile Include="renderUtil.cpp" />
     <ClCompile Include="sdl_backend.cpp" />
@@ -112,7 +110,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>.\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glu32.lib;glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glu32.lib;glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;assimp.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,7 +130,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>.\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glu32.lib;glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;opengl32.lib;glu32.lib;glew32.lib;glew32mx.lib;glew32mxs.lib;glew32s.lib;assimp.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

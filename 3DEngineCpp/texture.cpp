@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cassert>
 
-const TextureData* Texture::s_lastBind = 0;
 std::map<std::string, TextureData*> Texture::s_resourceMap;
 
 TextureData::TextureData(GLenum textureTarget)
@@ -78,11 +77,7 @@ void Texture::InitTexture(int width, int height, unsigned char* data, GLenum tex
 
 void Texture::Bind(unsigned int unit) const
 {
-	if(s_lastBind != m_textureData)
-	{
-		assert(unit >= 0 && unit <= 31);
-		glActiveTexture(GL_TEXTURE0 + unit);
-		glBindTexture(m_textureData->GetTextureTarget(), m_textureData->GetTextureID());
-		s_lastBind = m_textureData;
-	}
+	assert(unit >= 0 && unit <= 31);
+	glActiveTexture(GL_TEXTURE0 + unit);
+	glBindTexture(m_textureData->GetTextureTarget(), m_textureData->GetTextureID());
 }

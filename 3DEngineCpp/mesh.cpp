@@ -1,7 +1,13 @@
 #include "mesh.h"
 #include <GL/glew.h>
-#include "obj_loader.h"
 #include <iostream>
+
+#include <vector>
+#include <cassert>
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 std::map<std::string, MeshData*> Mesh::s_resourceMap;
 
@@ -38,14 +44,48 @@ Mesh::Mesh(const std::string& fileName)
 	}
 	else
 	{
-		IndexedModel model = OBJModel(fileName).ToIndexedModel();
+		Assimp::Importer importer;
+		
+		const aiScene* scene = importer.ReadFile(fileName.c_str(), 
+		                                         aiProcess_Triangulate |
+		                                         aiProcess_GenSmoothNormals | 
+		                                         aiProcess_FlipUVs);
+		
+		if(!scene)
+		{
+			std::cout << "Mesh load failed!: " << fileName << std::endl;
+			assert(0 == 0);
+		}
+		
+		const aiMesh* model = scene->mMeshes[0];
 		
 		std::vector<Vertex> vertices;
-		
-		for(unsigned int i = 0; i < model.positions.size(); i++)
-			vertices.push_back(Vertex(model.positions[i], model.texCoords[i], model.normals[i]));
+		std::vector<int> indices;
+
+		const aiVector3D aiZeroVector(0.0f, 0.0f, 0.0f);
+		for(unsigned int i = 0; i < model->mNumVertices; i++) 
+		{
+			const aiVector3D* pPos = &(model->mVertices[i]);
+			const aiVector3D* pNormal = &(model->mNormals[i]);
+			const aiVector3D* pTexCoord = model->HasTextureCoords(0) ? &(model->mTextureCoords[0][i]) : &aiZeroVector;
+
+			Vertex vert(Vector3f(pPos->x, pPos->y, pPos->z),
+					    Vector2f(pTexCoord->x, pTexCoord->y),
+					    Vector3f(pNormal->x, pNormal->y, pNormal->z));
 			
-		InitMesh(&vertices[0], vertices.size(), (int*)&model.indices[0], model.indices.size(), false);
+			vertices.push_back(vert);
+		}
+
+		for(unsigned int i = 0; i < model->mNumFaces; i++)
+		{
+			const aiFace& face = model->mFaces[i];
+			assert(face.mNumIndices == 3);
+			indices.push_back(face.mIndices[0]);
+			indices.push_back(face.mIndices[1]);
+			indices.push_back(face.mIndices[2]);
+		}
+		
+		InitMesh(&vertices[0], vertices.size(), (int*)&indices[0], indices.size(), false);
 		
 		s_resourceMap.insert(std::pair<std::string, MeshData*>(fileName, m_meshData));
 	}

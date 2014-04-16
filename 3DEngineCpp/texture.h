@@ -34,7 +34,6 @@ public:
 protected:
 private:
 	static std::map<std::string, TextureData*> s_resourceMap;
-	static const TextureData* s_lastBind;
 
 	Texture(Texture& texture) {}
 	void operator=(Texture& texture) {}

@@ -36,12 +36,13 @@
 			<Add library="SDL2" />
 			<Add library="GLEW" />
 			<Add library="GL" />
+			<Add library="assimp" />
 		</Linker>
 		<Unit filename="3DEngine.h">
 			<Option virtualFolder="Engine/Core/" />
 		</Unit>
 		<Unit filename="camera.cpp">
-			<Option virtualFolder="Engine/Static Libraries/" />
+			<Option virtualFolder="Engine/Components/" />
 		</Unit>
 		<Unit filename="camera.h">
 			<Option virtualFolder="Engine/Components/" />
@@ -114,12 +115,6 @@
 		</Unit>
 		<Unit filename="meshRenderer.h">
 			<Option virtualFolder="Engine/Components/" />
-		</Unit>
-		<Unit filename="obj_loader.cpp">
-			<Option virtualFolder="Engine/Static Libraries/" />
-		</Unit>
-		<Unit filename="obj_loader.h">
-			<Option virtualFolder="Engine/Static Libraries/" />
 		</Unit>
 		<Unit filename="referenceCounter.h">
 			<Option virtualFolder="Engine/Util/" />

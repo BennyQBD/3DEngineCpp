@@ -15,10 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3DEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="coreEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freeLook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="freeMove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
@@ -27,10 +45,25 @@
     <ClInclude Include="lighting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mappedValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="math3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="meshRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="referenceCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderingEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="renderUtil.h">
@@ -63,57 +96,42 @@
     <ClInclude Include="window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="math3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="coreEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="3DEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="freeLook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="freeMove.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mappedValues.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="meshRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="obj_loader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="referenceCounter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderingEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="coreEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freeLook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="freeMove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lighting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="math3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="renderingEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="renderUtil.cpp">
@@ -141,30 +159,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="coreEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="freeLook.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="freeMove.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="lighting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="math3d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="obj_loader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="renderingEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
