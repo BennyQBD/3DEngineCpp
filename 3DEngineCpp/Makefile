@@ -15,7 +15,7 @@ INC =
 CFLAGS = -Wall
 RESINC = 
 LIBDIR = 
-LIB = -lSDL2 -lGLEW -lGL
+LIB = -lSDL2 -lGLEW -lGL -lassimp
 LDFLAGS = 
 
 INC_DEBUG = $(INC)
@@ -40,9 +40,9 @@ OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
 OUT_RELEASE = bin/Release/3DGameEngine
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/obj_loader.o $(OBJDIR_DEBUG)/renderUtil.o $(OBJDIR_DEBUG)/renderingEngine.o $(OBJDIR_DEBUG)/sdl_backend.o $(OBJDIR_DEBUG)/shader.o $(OBJDIR_DEBUG)/stb_image.o $(OBJDIR_DEBUG)/texture.o $(OBJDIR_DEBUG)/time.o $(OBJDIR_DEBUG)/transform.o $(OBJDIR_DEBUG)/util.o $(OBJDIR_DEBUG)/window.o $(OBJDIR_DEBUG)/camera.o $(OBJDIR_DEBUG)/coreEngine.o $(OBJDIR_DEBUG)/freeLook.o $(OBJDIR_DEBUG)/freeMove.o $(OBJDIR_DEBUG)/game.o $(OBJDIR_DEBUG)/gameObject.o $(OBJDIR_DEBUG)/input.o $(OBJDIR_DEBUG)/lighting.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/math3d.o $(OBJDIR_DEBUG)/mesh.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/renderUtil.o $(OBJDIR_DEBUG)/renderingEngine.o $(OBJDIR_DEBUG)/sdl_backend.o $(OBJDIR_DEBUG)/shader.o $(OBJDIR_DEBUG)/stb_image.o $(OBJDIR_DEBUG)/texture.o $(OBJDIR_DEBUG)/time.o $(OBJDIR_DEBUG)/transform.o $(OBJDIR_DEBUG)/util.o $(OBJDIR_DEBUG)/window.o $(OBJDIR_DEBUG)/camera.o $(OBJDIR_DEBUG)/coreEngine.o $(OBJDIR_DEBUG)/freeLook.o $(OBJDIR_DEBUG)/freeMove.o $(OBJDIR_DEBUG)/game.o $(OBJDIR_DEBUG)/gameObject.o $(OBJDIR_DEBUG)/input.o $(OBJDIR_DEBUG)/lighting.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/math3d.o $(OBJDIR_DEBUG)/mesh.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/obj_loader.o $(OBJDIR_RELEASE)/renderUtil.o $(OBJDIR_RELEASE)/renderingEngine.o $(OBJDIR_RELEASE)/sdl_backend.o $(OBJDIR_RELEASE)/shader.o $(OBJDIR_RELEASE)/stb_image.o $(OBJDIR_RELEASE)/texture.o $(OBJDIR_RELEASE)/time.o $(OBJDIR_RELEASE)/transform.o $(OBJDIR_RELEASE)/util.o $(OBJDIR_RELEASE)/window.o $(OBJDIR_RELEASE)/camera.o $(OBJDIR_RELEASE)/coreEngine.o $(OBJDIR_RELEASE)/freeLook.o $(OBJDIR_RELEASE)/freeMove.o $(OBJDIR_RELEASE)/game.o $(OBJDIR_RELEASE)/gameObject.o $(OBJDIR_RELEASE)/input.o $(OBJDIR_RELEASE)/lighting.o $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/math3d.o $(OBJDIR_RELEASE)/mesh.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/renderUtil.o $(OBJDIR_RELEASE)/renderingEngine.o $(OBJDIR_RELEASE)/sdl_backend.o $(OBJDIR_RELEASE)/shader.o $(OBJDIR_RELEASE)/stb_image.o $(OBJDIR_RELEASE)/texture.o $(OBJDIR_RELEASE)/time.o $(OBJDIR_RELEASE)/transform.o $(OBJDIR_RELEASE)/util.o $(OBJDIR_RELEASE)/window.o $(OBJDIR_RELEASE)/camera.o $(OBJDIR_RELEASE)/coreEngine.o $(OBJDIR_RELEASE)/freeLook.o $(OBJDIR_RELEASE)/freeMove.o $(OBJDIR_RELEASE)/game.o $(OBJDIR_RELEASE)/gameObject.o $(OBJDIR_RELEASE)/input.o $(OBJDIR_RELEASE)/lighting.o $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/math3d.o $(OBJDIR_RELEASE)/mesh.o
 
 all: debug release
 
@@ -51,6 +51,7 @@ clean: clean_debug clean_release
 before_debug: 
 	test -d bin/Debug || mkdir -p bin/Debug
 	test -d $(OBJDIR_DEBUG) || mkdir -p $(OBJDIR_DEBUG)
+	test -d bin/Debug/res || cp -r res/ bin/Debug/res
 
 after_debug: 
 
@@ -58,9 +59,6 @@ debug: before_debug out_debug after_debug
 
 out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
-
-$(OBJDIR_DEBUG)/obj_loader.o: obj_loader.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c obj_loader.cpp -o $(OBJDIR_DEBUG)/obj_loader.o
 
 $(OBJDIR_DEBUG)/renderUtil.o: renderUtil.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c renderUtil.cpp -o $(OBJDIR_DEBUG)/renderUtil.o
@@ -133,6 +131,7 @@ clean_debug:
 before_release: 
 	test -d bin/Release || mkdir -p bin/Release
 	test -d $(OBJDIR_RELEASE) || mkdir -p $(OBJDIR_RELEASE)
+	test -d bin/Release/res || cp -r res/ bin/Release/res
 
 after_release: 
 
@@ -140,9 +139,6 @@ release: before_release out_release after_release
 
 out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
-
-$(OBJDIR_RELEASE)/obj_loader.o: obj_loader.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c obj_loader.cpp -o $(OBJDIR_RELEASE)/obj_loader.o
 
 $(OBJDIR_RELEASE)/renderUtil.o: renderUtil.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c renderUtil.cpp -o $(OBJDIR_RELEASE)/renderUtil.o
