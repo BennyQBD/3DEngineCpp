@@ -56,7 +56,7 @@ void TestGame::Init()
 	AddToScene(directionalLightObject);
 	AddToScene(testMesh1);
 	testMesh2->AddChild((new GameObject())
-		->AddComponent(new Camera(ToRadians(70.0f), Window::GetAspect(), 0.01f, 1000.0f))
+		->AddComponent(new Camera(Matrix4f().InitPerspective(ToRadians(70.0f), Window::GetAspect(), 0.1f, 1000.0f)))
 		->AddComponent(new FreeLook())
 		->AddComponent(new FreeMove()));
 	
