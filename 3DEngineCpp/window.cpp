@@ -43,6 +43,12 @@ void Window::Dispose()
 	SDL_Quit();
 }
 
+void Window::BindAsRenderTarget()
+{
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+	glViewport(0, 0, GetWidth(), GetHeight());
+}
+
 bool Window::IsCloseRequested()
 {
 	return SDLGetIsCloseRequested();

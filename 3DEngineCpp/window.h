@@ -9,6 +9,7 @@ public:
 	static void Create(int width, int height, const std::string& title);
 	static void Render();
 	static void Dispose();
+	static void BindAsRenderTarget();
 
 	static bool IsCloseRequested();
 	static int GetWidth();

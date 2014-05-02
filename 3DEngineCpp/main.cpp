@@ -38,6 +38,9 @@ void TestGame::Init()
 	GameObject* testMesh1 = new GameObject();
 	GameObject* testMesh2 = new GameObject();
 	
+	//WARNING: bricks2_normal.jpg is reversed on the y axis. This is intentional, and demonstrates how normal maps are sometimes flipped.
+	//If you want to fix this, the easiest solution is to flip it in an image editor.
+	
 	testMesh1->AddComponent(new MeshRenderer(new Mesh("./res/models/plane3.obj"), new Material(new Texture("bricks2.jpg"), 1, 8,
 																								new Texture("bricks2_normal.jpg"),
 																								new Texture("bricks2_disp.jpg"), 0.04f, -1.0f)));
