@@ -66,10 +66,10 @@ void TextureData::InitRenderTargets(GLenum* attachments)
 		if(m_frameBuffer == 0)
 		{
 			glGenFramebuffers(1, &m_frameBuffer);
-			glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frameBuffer);
+			glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 		}
 		
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, attachments[i], m_textureTarget, m_textureID[i], 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, attachments[i], m_textureTarget, m_textureID[i], 0);
 	}
 	
 	if(m_frameBuffer == 0)
@@ -99,7 +99,7 @@ void TextureData::Bind(int textureNum)
 
 void TextureData::BindAsRenderTarget()
 {
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 	glViewport(0, 0, m_width, m_height);
 }
 
