@@ -15,8 +15,17 @@ TextureData::TextureData(GLenum textureTarget, int width, int height, int numTex
 	m_frameBuffer = 0;
 	m_renderBuffer = 0;
 	
+	bool needsFramebuffer = NeedsFramebuffer(attachments);
+	if(needsFramebuffer)
+	{
+		glGenFramebuffers(1, &m_frameBuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
+	}
+	
 	InitTextures(data, filters);
-	InitRenderTargets(attachments);
+	
+	if(needsFramebuffer)
+		InitRenderTargets(attachments);
 }
 
 TextureData::~TextureData()
@@ -25,6 +34,17 @@ TextureData::~TextureData()
 	if(m_frameBuffer) glDeleteFramebuffers(1, &m_frameBuffer);
 	if(m_renderBuffer) glDeleteRenderbuffers(1, &m_renderBuffer);
 	if(m_textureID) delete[] m_textureID;
+}
+
+bool TextureData::NeedsFramebuffer(GLenum* attachments)
+{
+	for(int i = 0; i < m_numTextures; i++)
+	{
+		if(attachments[i] != GL_DEPTH_ATTACHMENT && attachments[i] != GL_NONE)
+			return true;
+	}
+	
+	return false;
 }
 
 void TextureData::InitTextures(unsigned char** data, GLfloat* filters)
@@ -94,6 +114,8 @@ void TextureData::InitRenderTargets(GLenum* attachments)
 		std::cerr << "Framebuffer creation failed!" << std::endl;
 		assert(false);
 	}
+	
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void TextureData::Bind(int textureNum)
