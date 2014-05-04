@@ -36,6 +36,9 @@ void TextureData::InitTextures(unsigned char** data, GLfloat* filters)
 			
 		glTexParameterf(m_textureTarget, GL_TEXTURE_MIN_FILTER, filters[i]);
 		glTexParameterf(m_textureTarget, GL_TEXTURE_MAG_FILTER, filters[i]);
+		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
 			
 		glTexImage2D(m_textureTarget, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data[i]);
 	}
