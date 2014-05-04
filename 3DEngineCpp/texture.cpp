@@ -40,7 +40,7 @@ bool TextureData::NeedsFramebuffer(GLenum* attachments)
 {
 	for(int i = 0; i < m_numTextures; i++)
 	{
-		if(attachments[i] != GL_DEPTH_ATTACHMENT && attachments[i] != GL_NONE)
+		if(attachments[i] != GL_NONE)
 			return true;
 	}
 	
