@@ -103,6 +103,7 @@ void TextureData::Bind(int textureNum)
 
 void TextureData::BindAsRenderTarget()
 {
+	glBindTexture(GL_TEXTURE_2D,0);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 	glViewport(0, 0, m_width, m_height);
 }
