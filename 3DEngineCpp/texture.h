@@ -22,7 +22,6 @@ private:
 
 	void InitTextures(unsigned char** data, GLfloat* filter);
 	void InitRenderTargets(GLenum* attachments);
-	bool NeedsFramebuffer(GLenum* attachments);
 
 	GLuint* m_textureID;
 	GLenum m_textureTarget;
