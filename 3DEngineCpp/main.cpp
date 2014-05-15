@@ -21,7 +21,7 @@ void TestGame::Init()
 	GameObject* spotLightObject = new GameObject();
 	GameObject* directionalLightObject = new GameObject();
 
-	planeObject->AddComponent(new MeshRenderer(new Mesh("./res/models/plane3.obj"), new Material(new Texture("bricks.jpg"), 0.5f, 4, 
+	planeObject->AddComponent(new MeshRenderer(new Mesh("./res/models/plane4.obj"), new Material(new Texture("bricks.jpg"), 0.5f, 4, 
 	                                                                                             new Texture("bricks_normal.jpg"),
 	                                                                                             new Texture("bricks_disp.png"), 0.03f, -0.5f)));
 	planeObject->GetTransform().SetPos(Vector3f(0, -1, 5));
@@ -38,14 +38,12 @@ void TestGame::Init()
 	GameObject* testMesh1 = new GameObject();
 	GameObject* testMesh2 = new GameObject();
 	
-	//WARNING: bricks2_normal.jpg is reversed on the y axis. This is intentional, and demonstrates how normal maps are sometimes flipped.
-	//If you want to fix this, the easiest solution is to flip it in an image editor.
-	
 	testMesh1->AddComponent(new MeshRenderer(new Mesh("./res/models/plane3.obj"), new Material(new Texture("bricks2.jpg"), 1, 8,
-																								new Texture("bricks2_normal.jpg"),
+																								new Texture("bricks2_normal.png"),
 																								new Texture("bricks2_disp.jpg"), 0.04f, -1.0f)));
 	testMesh2->AddComponent(new MeshRenderer(new Mesh("./res/models/plane3.obj"), new Material(new Texture("bricks2.jpg"), 1, 8,
-																								new Texture("bricks2_normal.jpg"))));
+																								new Texture("bricks2_normal.png"),
+																								new Texture("bricks2_disp.jpg"), 0.04f, -1.0f)));
 	
 	testMesh1->GetTransform().SetPos(Vector3f(0, 2, 0));
 	testMesh1->GetTransform().SetRot(Quaternion(Vector3f(0,1,0), 0.4f));

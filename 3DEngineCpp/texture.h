@@ -9,7 +9,7 @@
 class TextureData : public ReferenceCounter
 {
 public:
-	TextureData(GLenum textureTarget, int width, int height, int numTextures, unsigned char** data, GLfloat* filters, GLenum* attachments);
+	TextureData(GLenum textureTarget, int width, int height, int numTextures, unsigned char** data, GLfloat* filters, GLenum* internalFormat, GLenum* format, bool clamp, GLenum* attachments);
 	
 	void Bind(int textureNum);
 	void BindAsRenderTarget();
@@ -20,7 +20,7 @@ private:
 	TextureData(TextureData& other) {}
 	void operator=(TextureData& other) {}
 
-	void InitTextures(unsigned char** data, GLfloat* filter);
+	void InitTextures(unsigned char** data, GLfloat* filter, GLenum* internalFormat, GLenum* format, bool clamp);
 	void InitRenderTargets(GLenum* attachments);
 
 	GLuint* m_textureID;
@@ -35,8 +35,8 @@ private:
 class Texture
 {
 public:
-	Texture(const std::string& fileName, GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR, GLenum attachment = GL_NONE);
-	Texture(int width = 0, int height = 0, unsigned char* data = 0, GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR, GLenum attachment = GL_NONE);
+	Texture(const std::string& fileName, GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR, GLenum internalFormat = GL_RGBA, GLenum format = GL_RGBA, bool clamp = false, GLenum attachment = GL_NONE);
+	Texture(int width = 0, int height = 0, unsigned char* data = 0, GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR, GLenum internalFormat = GL_RGBA, GLenum format = GL_RGBA, bool clamp = false, GLenum attachment = GL_NONE);
 	virtual ~Texture();
 
 	void Bind(unsigned int unit = 0) const;	

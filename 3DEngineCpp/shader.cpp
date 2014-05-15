@@ -104,7 +104,30 @@ void Shader::UpdateUniforms(const Transform& transform, const Material& material
 		std::string uniformName = m_shaderData->GetUniformNames()[i];
 		std::string uniformType = m_shaderData->GetUniformTypes()[i];
 		
-		if(uniformType == "sampler2D")
+		if(uniformName.substr(0, 2) == "R_")
+		{
+			std::string unprefixedName = uniformName.substr(2, uniformName.length());
+			
+			if(uniformType == "sampler2D")
+			{
+				int samplerSlot = renderingEngine->GetSamplerSlot(uniformName);
+				renderingEngine->GetTexture(uniformName)->Bind(samplerSlot);
+				SetUniformi(uniformName, samplerSlot);
+			}
+			else if(uniformType == "vec3")
+				SetUniformVector3f(uniformName, renderingEngine->GetVector3f(unprefixedName));
+			else if(uniformType == "float")
+				SetUniformf(uniformName, renderingEngine->GetFloat(unprefixedName));
+			else if(uniformType == "DirectionalLight")
+				SetUniformDirectionalLight(uniformName, *(DirectionalLight*)renderingEngine->GetActiveLight());
+			else if(uniformType == "PointLight")
+				SetUniformPointLight(uniformName, *(PointLight*)renderingEngine->GetActiveLight());
+			else if(uniformType == "SpotLight")
+				SetUniformSpotLight(uniformName, *(SpotLight*)renderingEngine->GetActiveLight());
+			else
+				renderingEngine->UpdateUniformStruct(transform, material, this, uniformName, uniformType);
+		}
+		else if(uniformType == "sampler2D")
 		{
 			int samplerSlot = renderingEngine->GetSamplerSlot(uniformName);
 			material.GetTexture(uniformName)->Bind(samplerSlot);
@@ -118,23 +141,6 @@ void Shader::UpdateUniforms(const Transform& transform, const Material& material
 				SetUniformMatrix4f(uniformName, worldMatrix);
 			else
 				throw "Invalid Transform Uniform: " + uniformName;
-		}
-		else if(uniformName.substr(0, 2) == "R_")
-		{
-			std::string unprefixedName = uniformName.substr(2, uniformName.length());
-			
-			if(uniformType == "vec3")
-				SetUniformVector3f(uniformName, renderingEngine->GetVector3f(unprefixedName));
-			else if(uniformType == "float")
-				SetUniformf(uniformName, renderingEngine->GetFloat(unprefixedName));
-			else if(uniformType == "DirectionalLight")
-				SetUniformDirectionalLight(uniformName, *(DirectionalLight*)renderingEngine->GetActiveLight());
-			else if(uniformType == "PointLight")
-				SetUniformPointLight(uniformName, *(PointLight*)renderingEngine->GetActiveLight());
-			else if(uniformType == "SpotLight")
-				SetUniformSpotLight(uniformName, *(SpotLight*)renderingEngine->GetActiveLight());
-			else
-				renderingEngine->UpdateUniformStruct(transform, material, this, uniformName, uniformType);
 		}
 		else if(uniformName.substr(0, 2) == "C_")
 		{
