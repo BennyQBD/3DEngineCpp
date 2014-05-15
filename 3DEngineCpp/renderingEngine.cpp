@@ -30,7 +30,7 @@ RenderingEngine::RenderingEngine()
   	int width = Window::GetWidth();
 	int height = Window::GetHeight();
 
-	m_tempTarget = new Texture(width, height, 0, GL_TEXTURE_2D, GL_NEAREST, GL_COLOR_ATTACHMENT0);
+	m_tempTarget = new Texture(width, height, 0, GL_TEXTURE_2D, GL_NEAREST, GL_RGBA, GL_RGBA, false, GL_COLOR_ATTACHMENT0);
 	                  
 	m_planeMaterial = new Material(m_tempTarget, 1, 8);
 	m_planeTransform.SetScale(1.0f);
