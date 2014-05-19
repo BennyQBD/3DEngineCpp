@@ -24,6 +24,7 @@ public:
 	inline void AddCamera(Camera* camera) { m_mainCamera = camera; }
 	
 	inline unsigned int GetSamplerSlot(const std::string& samplerName) { return m_samplerMap[samplerName]; }
+	inline Matrix4f GetLightMatrix() { return m_lightMatrix; }
 	
 	virtual void UpdateUniformStruct(const Transform& transform, const Material& material, Shader* shader, 
 		const std::string& uniformName, const std::string& uniformType) 
@@ -34,6 +35,8 @@ public:
 	virtual ~RenderingEngine();
 protected:
 private:
+	static const Matrix4f s_biasMatrix;
+
 	RenderingEngine(const RenderingEngine& other) {}
 	void operator=(const RenderingEngine& other) {}
 	
@@ -48,8 +51,12 @@ private:
 	
 	BaseLight* m_activeLight;
 	Shader* m_defaultShader;
+	Shader* m_shadowMapShader;
+	Matrix4f m_lightMatrix;
+	
 	std::vector<BaseLight*> m_lights;
 	std::map<std::string, unsigned int> m_samplerMap;
+	
 };
 
 #endif // RENDERINGENGINE_H

@@ -11,6 +11,8 @@ public:
 	
 	Matrix4f GetViewProjection() const;
 	virtual void AddToEngine(CoreEngine* engine);
+	
+	inline void SetProjection(const Matrix4f& projection) { m_projection = projection; }
 protected:
 private:
 	Matrix4f m_projection;

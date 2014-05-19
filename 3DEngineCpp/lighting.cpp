@@ -13,6 +13,7 @@ void BaseLight::AddToEngine(CoreEngine* engine)
 BaseLight::~BaseLight()
 {
 	if(m_shader) delete m_shader;
+	if(m_shadowInfo) delete m_shadowInfo;
 }
 
 void BaseLight::SetShader(Shader* shader)
@@ -21,10 +22,17 @@ void BaseLight::SetShader(Shader* shader)
 	m_shader = shader; 
 }
 
+void BaseLight::SetShadowInfo(ShadowInfo* shadowInfo)
+{
+	if(m_shadowInfo) delete m_shadowInfo;
+	m_shadowInfo = shadowInfo; 
+}
+
 DirectionalLight::DirectionalLight(const Vector3f& color, float intensity) :
 	BaseLight(color, intensity)
 {
 	SetShader(new Shader("forward-directional"));
+	SetShadowInfo(new ShadowInfo(Matrix4f().InitOrthographic(-40, 40, -40, 40, -40, 40)));
 }
 
 PointLight::PointLight(const Vector3f& color, float intensity, const Attenuation& atten) :

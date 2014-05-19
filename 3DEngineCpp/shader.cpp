@@ -108,7 +108,9 @@ void Shader::UpdateUniforms(const Transform& transform, const Material& material
 		{
 			std::string unprefixedName = uniformName.substr(2, uniformName.length());
 			
-			if(uniformType == "sampler2D")
+			if(unprefixedName == "lightMatrix")
+				SetUniformMatrix4f(uniformName, renderingEngine->GetLightMatrix() * worldMatrix);
+			else if(uniformType == "sampler2D")
 			{
 				int samplerSlot = renderingEngine->GetSamplerSlot(unprefixedName);
 				renderingEngine->GetTexture(unprefixedName)->Bind(samplerSlot);

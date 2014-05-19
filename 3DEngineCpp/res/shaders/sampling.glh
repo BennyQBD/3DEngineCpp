@@ -3,3 +3,8 @@ vec2 CalcParallaxTexCoords(sampler2D dispMap, mat3 tbnMatrix, vec3 directionToEy
 {
 	return texCoords.xy + (directionToEye * tbnMatrix).xy * (texture2D(dispMap, texCoords.xy).r * scale + bias);
 }
+
+float SampleShadowMap(sampler2D shadowMap, vec2 coords, float compare)
+{
+	return step(compare, texture2D(shadowMap, coords.xy).r);
+}

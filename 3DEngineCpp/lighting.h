@@ -6,6 +6,18 @@
 
 class CoreEngine;
 
+class ShadowInfo
+{
+public:
+	ShadowInfo(const Matrix4f& projection) :
+		m_projection(projection) {}
+		
+	inline Matrix4f GetProjection() { return m_projection; }
+protected:
+private:
+	Matrix4f m_projection;
+};
+
 class BaseLight : public GameComponent
 {
 public:
@@ -15,19 +27,24 @@ public:
 	BaseLight(const Vector3f& color = Vector3f(0,0,0), float intensity = 0) :
 		color(color),
 		intensity(intensity),
-		m_shader(0) {}
+		m_shader(0),
+		m_shadowInfo(0) {}
 	
 	virtual ~BaseLight();
 	
 	virtual void AddToEngine(CoreEngine* engine);	
 	inline Shader* GetShader() { return m_shader; }
-	
+	inline ShadowInfo* GetShadowInfo() { return m_shadowInfo; }
+
+protected:
 	void SetShader(Shader* shader);
+	void SetShadowInfo(ShadowInfo* shadowInfo);
 private:
 	BaseLight(BaseLight& other) {}
 	void operator=(BaseLight& other) {}
 
 	Shader* m_shader;
+	ShadowInfo* m_shadowInfo;
 };
 
 struct DirectionalLight : public BaseLight
