@@ -64,6 +64,14 @@ void TestGame::Init()
 		->AddComponent(new FreeMove()));
 	
 	directionalLightObject->GetTransform().SetRot(Quaternion(Vector3f(1,0,0), ToRadians(-45)));
+	
+	GameObject* box = new GameObject();
+	box->AddComponent(new MeshRenderer(new Mesh("./res/models/cube.obj"), new Material(new Texture("bricks2.jpg"), 1, 8,
+	                                                                                   new Texture("bricks2_normal.png"),
+	                                                                                   new Texture("bricks2_disp.jpg"), 0.04f, -1.0f)));
+	box->GetTransform().SetPos(Vector3f(14,0,5));
+	box->GetTransform().SetRot(Quaternion(Vector3f(0,1,0), ToRadians(30.0f)));
+	AddToScene(box);
 }
 
 int main()

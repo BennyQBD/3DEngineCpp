@@ -77,10 +77,16 @@ void RenderingEngine::Render(GameObject* object)
 			
 			m_lightMatrix = s_biasMatrix * m_altCamera->GetViewProjection();
 			
+			SetVector3f("shadowTexelSize", Vector3f(1.0f/1024.0f, 1.0f/1024.0f, 0.0f));
+			SetFloat("shadowBias", shadowInfo->GetBias()/1024.0f);
+			bool flipFaces = shadowInfo->GetFlipFaces();
+			
 			Camera* temp = m_mainCamera;
 			m_mainCamera = m_altCamera;
 			
+			if(flipFaces) glCullFace(GL_FRONT);
 			object->RenderAll(m_shadowMapShader, this);
+			if(flipFaces) glCullFace(GL_BACK);
 			
 			m_mainCamera = temp;
 		}

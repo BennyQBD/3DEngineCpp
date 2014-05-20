@@ -9,13 +9,19 @@ class CoreEngine;
 class ShadowInfo
 {
 public:
-	ShadowInfo(const Matrix4f& projection) :
-		m_projection(projection) {}
+	ShadowInfo(const Matrix4f& projection, float bias, bool flipFaces) :
+		m_projection(projection),
+		m_bias(bias),
+		m_flipFaces(flipFaces) {}
 		
 	inline Matrix4f GetProjection() { return m_projection; }
+	inline float GetBias() { return m_bias; }
+	inline bool GetFlipFaces() { return m_flipFaces; }
 protected:
 private:
 	Matrix4f m_projection;
+	float m_bias;
+	bool m_flipFaces;
 };
 
 class BaseLight : public GameComponent
