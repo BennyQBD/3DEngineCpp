@@ -94,6 +94,9 @@ void TextureData::InitRenderTargets(GLenum* attachments)
 	
 	glDrawBuffers(m_numTextures, drawBuffers);
 	
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		std::cerr << "Framebuffer creation failed!" << std::endl;
