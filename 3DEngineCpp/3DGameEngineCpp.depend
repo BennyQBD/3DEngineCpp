@@ -30,7 +30,7 @@
 	"mappedValues.h"
 	<map>
 
-1400156103 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.h
+1400869478 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.h
 	"referenceCounter.h"
 	<GL/glew.h>
 	<string>
@@ -82,7 +82,7 @@
 1396656876 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/transform.h
 	"math3d.h"
 
-1400598918 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.h
+1400870627 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/lighting.h
 	"math3d.h"
 	"gameComponent.h"
 
@@ -97,7 +97,7 @@
 
 1396656876 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/sdl_backend.h
 
-1400597093 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.cpp
+1400864258 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/main.cpp
 	"3DEngine.h"
 	"freeLook.h"
 	"freeMove.h"
@@ -164,7 +164,7 @@
 1396656876 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/stb_image.h
 	<stdio.h>
 
-1400156300 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.cpp
+1400859940 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/texture.cpp
 	"texture.h"
 	"stb_image.h"
 	<iostream>
@@ -244,7 +244,7 @@
 	"gameComponent.h"
 	"mesh.h"
 
-1400331489 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.h
+1400869337 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.h
 	"camera.h"
 	"lighting.h"
 	"mappedValues.h"
@@ -252,14 +252,14 @@
 	<vector>
 	<map>
 
-1400602119 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.cpp
+1400869949 source:/home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/renderingEngine.cpp
 	"renderingEngine.h"
 	"window.h"
 	"gameObject.h"
 	"shader.h"
 	<GL/glew.h>
 	"mesh.h"
-	<cstring>
+	<cassert>
 
 1395225285 /home/batman/Workspaces/C Workspaces/3DEngineCpp/3DEngineCpp/testGame.h
 

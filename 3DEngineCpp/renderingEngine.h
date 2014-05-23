@@ -40,6 +40,9 @@ private:
 	RenderingEngine(const RenderingEngine& other) {}
 	void operator=(const RenderingEngine& other) {}
 	
+	void BlurShadowMap(Texture* shadowMap, float blurAmount);
+	void ApplyFilter(Shader* filter, Texture* source, Texture* dest);
+	
 	Camera* m_mainCamera;
 	Camera* m_altCamera;
 	GameObject* m_altCameraObject;
@@ -52,6 +55,8 @@ private:
 	BaseLight* m_activeLight;
 	Shader* m_defaultShader;
 	Shader* m_shadowMapShader;
+	Shader* m_nullFilter;
+	Shader* m_gausBlurFilter;
 	Matrix4f m_lightMatrix;
 	
 	std::vector<BaseLight*> m_lights;

@@ -32,7 +32,7 @@ DirectionalLight::DirectionalLight(const Vector3f& color, float intensity) :
 	BaseLight(color, intensity)
 {
 	SetShader(new Shader("forward-directional"));
-	SetShadowInfo(new ShadowInfo(Matrix4f().InitOrthographic(-40, 40, -40, 40, -40, 40), 1.0f, true));
+	SetShadowInfo(new ShadowInfo(Matrix4f().InitOrthographic(-40, 40, -40, 40, -40, 40), true));
 }
 
 PointLight::PointLight(const Vector3f& color, float intensity, const Attenuation& atten) :
