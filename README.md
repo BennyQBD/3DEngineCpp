@@ -85,3 +85,7 @@ cmake -G "Visual Studio 12" ../
 - In Visual Studio, set the Startup project to 3DEngineCpp
 - Move the res folder into the build folder
 - Run
+
+##Additional Credits##
+- mxaddict for setting up the awesome CMake build system
+- Everyone who's created issues and pull requests!
