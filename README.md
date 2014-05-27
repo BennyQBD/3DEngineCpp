@@ -8,7 +8,7 @@ It's like the 3D Game Engine, except in C++
 - [GLEW](http://glew.sourceforge.net/)
 - [SDL2](http://www.libsdl.org/)
 - [ASSIMP](http://assimp.sourceforge.net/)
-- BUILD TOOLCHAIN
+- BUILD TOOLCHAIN (Can be any one of the following, doesn't need to be all of them)
 	- Linux
 		- make, gcc, g++ ( Install with your package manager )
 		- [CodeBlocks](http://www.codeblocks.org/)
