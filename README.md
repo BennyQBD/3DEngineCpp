@@ -1,50 +1,81 @@
 3DEngineCpp
-===========
+==
 
 It's like the 3D Game Engine, except in C++
 
 ##Build Dependencies##
-- GLEW
-- SDL2
-- ASSIMP
+- [CMAKE](http://www.cmake.org/)
+- [GLEW](http://glew.sourceforge.net/)
+- [SDL2](http://www.libsdl.org/)
+- [ASSIMP](http://assimp.sourceforge.net/)
+- BUILD TOOLCHAIN
+	- Linux
+		- make, gcc, g++ ( Install with your package manager )
+		- [CodeBlocks](http://www.codeblocks.org/)
+	- Mac OS X
+		- make, gcc, g++ ( Install with preferred package manager like [HOMEBREW](http://brew.sh/) )
+		- Xcode ( Download from Mac AppStore )
+		- [CodeBlocks](http://www.codeblocks.org/)
+	- WINDOWS
+		- [Visual Studio](http://www.visualstudio.com/)
+		- [CodeBlocks](http://www.codeblocks.org/)
 
-##Build Instructions##
+###NOTES for Dependencies###
+On Unix/Linux/Mac you can likely install CMAKE, GLEW, SDL2 and ASSIMP with your package manager
+```shell
+# On ubuntu just run
+sudo apt-get install cmake libglew-dev libsdl2-dev libassimp-dev
 
-###Windows###
-- Open 3DGameEngineCpp.sln in Microsoft Visual Studio 2012 or newer.
-- Select build target (Debug or Release), and either click "Build" or hit 'F7'
-- Click "Run" or hit 'Ctrl-F5'.
-- Everything should work from that. If not, see section on reporting a build error.
+# On Mac with HomeBrew just run
+brew install cmake glew sdl2 assimp
+```
 
-###Mac###
-I do not have a Mac, and therefore cannot write effective step by step instructions for building on a Mac. However, there are a few things that must be considered:
-- Make sure you are building with C++11. If you are not, the OS dependent code in time.cpp will fall back on an inefficient default timer. While technically working, it does not produce smooth results.
+##Simple Build Instructions##
+###Mac OSX/Linux/Unix###
+Open a Terminal and run:
+```Shell
+# install dependencies
+./Unix-Build.sh [Build Target, Debug or Release (Optional)] [Any arguments for CMake (Optional)]
+#For instance, you can use the CMake argument -G "Xcode" to generate an Xcode project during build,
+#or you can use -G "CodeBlocks - Unix Makefiles" to generate a CodeBlocks Project.
+#See http://www.cmake.org/ for more details about CMake arguments
+```
 
-####HELP WANTED:####
-- If anyone can provide an XCode project that's set up to build, that'd be great!
-- If anyone can provide high resolution timing code for Mac, that would make Mac build considerations significantly simpler! (See time.cpp for reference)
+###Windows/MinGW###
+- Run "Windows-GenVisualStudioProject.bat"
+- Go to the build folder, and open 3DEngineCpp.sln with Visual Studio 2012 or newer (For older versions of Visual Studio, use manual build instructions)
+- Right click on the 3DEngineCpp project, and select "Set as start up project"
+- Build and Run
 
-###Linux###
-- Open a Terminal and install the build dependencies. Syntax on Ubuntu Linux: sudo apt-get install libglew-dev libsdl2-dev libassimp-dev
-  
-    - NOTE: The syntax for this depends on both your package manager and your Linux distribution. If you're not sure how to install the dependencies, check with your distribution and package manager for details.
+##Manual Build Instructions##
+###Linux/Unix###
+Open a Terminal and run:
+```Shell
+# install dependencies
+cd build
+cmake ../
+make
+```
 
-- For building/running, there are two possible options:
+###Mac OSX###
+Open a Terminal and run:
+```Shell
+# install dependencies
+cd build
+cmake ../
+make
+```
 
-    A) Through Code::Blocks:
-    - Go to the "3DGameEngineCpp" folder and open 3DGameEngine.cbp with Code::Blocks.
-     
-    - Select build target (Debug or Release), and either click "Build" or hit 'Ctrl-F9'
-    
-    - Click "Run" or hit 'F9'.
-        
-    B) Through Terminal:
-    - Open a Terminal and navigate to the "3DGameEngineCpp" folder.
-    
-    - Type "make" (NOTE: You can add "debug" or "release" as an argument to specify a desired build target)
-        
-    - Copy the "res" folder to "bin/Debug" or "bin/Release" depending on the desired build target
-        
-    - Navigate to "bin/Debug" or "bin/Release" depending on the desired build target, and type "./3DGameEngine"
-      
-- Everything should work after completing either option. If not, see section on reporting a build error.
+###Windows/MinGW###
+Open a Terminal and run:
+```Shell
+# install dependencies
+# Install GLEW in %PROGRAMFILES%/GLEW or SET %GLEW_ROOT_DIR% to where GLEW is on your machine (Example: D:\PATH_TO_GLEW)
+# Install SDL2 in %PROGRAMFILES%/SDL2 or SET %SDL2_ROOT_DIR% to where SDL2 is on your machine (Example: D:\PATH_TO_SDL2)
+# Install ASSIMP in %PROGRAMFILES%/ASSIMP or SET %ASSIMP_ROOT_DIR% to where ASSIMP is on your machine (Example: D:\PATH_TO_ASSIMP)
+cd build
+# REPLACE "Visual Studio 12" with your preferred build toolchain (Maybe you want "Codeblocks - MinGW Makefiles")
+# BTW VS 10 is VS 2010, VS 11 is VS 2012 and VS 12 is VS 2013, BLAME MicroSoft for the naming! LOL! 
+cmake -G "Visual Studio 12" ../
+# open the generated SLN file (or cbp file if using CodeBlocks) and build!
+```
