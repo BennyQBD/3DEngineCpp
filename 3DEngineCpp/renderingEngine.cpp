@@ -128,7 +128,7 @@ void RenderingEngine::Render(GameObject* object)
 			
 			m_mainCamera = temp;
 			
-			BlurShadowMap(GetTexture("shadowMap"), shadowInfo->GetShadowSoftness());
+			//BlurShadowMap(GetTexture("shadowMap"), shadowInfo->GetShadowSoftness());
 		}
 	
 		Window::BindAsRenderTarget();
