@@ -87,5 +87,5 @@ cmake -G "Visual Studio 12" ../
 - Run
 
 ##Additional Credits##
-- mxaddict for setting up the awesome CMake build system
+- [@mxaddict](https://github.com/mxaddict) for setting up the awesome CMake build system
 - Everyone who's created or contributed to issues and pull requests, which make the project better!
