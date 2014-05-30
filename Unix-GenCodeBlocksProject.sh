@@ -8,9 +8,7 @@ else
 	BUILD_TARGET="$1"
 fi
 
-#All remaining parameters are used as parameters to CMake
-
 cd build
-cmake -DCMAKE_BUILD_TYPE="$BUILD_TARGET" -G "CodeBlocks - Unix Makefiles" "${@:2}" ../
+cmake -DCMAKE_BUILD_TYPE="$BUILD_TARGET" -G "CodeBlocks - Unix Makefiles" ../
 
 mv ../res/ ./

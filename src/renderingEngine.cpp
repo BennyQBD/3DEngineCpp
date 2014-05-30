@@ -50,6 +50,9 @@ RenderingEngine::RenderingEngine()
 RenderingEngine::~RenderingEngine() 
 {
 	if(m_defaultShader) delete m_defaultShader;
+	if(m_shadowMapShader) delete m_shadowMapShader;
+	if(m_nullFilter) delete m_nullFilter;
+	if(m_gausBlurFilter) delete m_gausBlurFilter;
 	if(m_altCameraObject) delete m_altCameraObject;
 	if(m_planeMaterial) delete m_planeMaterial;
 	if(m_plane) delete m_plane;
