@@ -8,7 +8,7 @@ It's like the 3D Game Engine, except in C++
 - [GLEW](http://glew.sourceforge.net/)
 - [SDL2](http://www.libsdl.org/)
 - [ASSIMP](http://assimp.sourceforge.net/)
-- BUILD TOOLCHAIN
+- BUILD TOOLCHAIN (Can be any one of the following, doesn't need to be all of them)
 	- Linux
 		- make, gcc, g++ ( Install with your package manager )
 		- [CodeBlocks](http://www.codeblocks.org/)
@@ -35,13 +35,15 @@ brew install cmake glew sdl2 assimp
 Open a Terminal and run:
 ```Shell
 # install dependencies
+
 ./Unix-Build.sh [Build Target, Debug or Release (Optional)] [Any arguments for CMake (Optional)]
+
 #For instance, you can use the CMake argument -G "Xcode" to generate an Xcode project during build,
 #or you can use -G "CodeBlocks - Unix Makefiles" to generate a CodeBlocks Project.
 #See http://www.cmake.org/ for more details about CMake arguments
 ```
 
-###Windows/MinGW###
+###Windows###
 - Run "Windows-GenVisualStudioProject.bat"
 - Go to the build folder, and open 3DEngineCpp.sln with Visual Studio 2012 or newer (For older versions of Visual Studio, use manual build instructions)
 - Right click on the 3DEngineCpp project, and select "Set as start up project"
@@ -79,3 +81,11 @@ cd build
 cmake -G "Visual Studio 12" ../
 # open the generated SLN file (or cbp file if using CodeBlocks) and build!
 ```
+- Copy the DLLs in /lib/_bin/ to /build/Debug/ and /build/Release/
+- In Visual Studio, set the Startup project to 3DEngineCpp
+- Move the res folder into the build folder
+- Run
+
+##Additional Credits##
+- [@mxaddict](https://github.com/mxaddict) for setting up the awesome CMake build system
+- Everyone who's created or contributed to issues and pull requests, which make the project better!
