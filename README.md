@@ -31,7 +31,6 @@ brew install cmake glew sdl2 assimp
 ```
 
 ##Simple Build Instructions##
-####NOTE: CMake must be installed for this; otherwise the scripts will fail!####
 ###Mac OSX/Linux/Unix###
 Open a Terminal and run:
 ```Shell
@@ -45,13 +44,13 @@ Open a Terminal and run:
 ```
 
 ###Windows###
+- Make sure CMake has been installed.
 - Run "Windows-GenVisualStudioProject.bat"
 - Go to the build folder, and open 3DEngineCpp.sln with Visual Studio 2012 or newer (For older versions of Visual Studio, use manual build instructions)
 - Right click on the 3DEngineCpp project, and select "Set as start up project"
 - Build and Run
 
 ##Manual Build Instructions##
-####NOTE: CMake must be installed for this####
 ###Linux/Unix###
 Open a Terminal and run:
 ```Shell
