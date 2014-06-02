@@ -51,7 +51,7 @@ float linstep(float low, float high, float v)
 
 float SampleVarianceShadowMap(sampler2D shadowMap, vec2 coords, float compare, float varianceMin, float lightBleedReductionAmount)
 {
-	vec2 moments = texture2D(shadowMap, coords.xy).xy;
+	vec2 moments = vec2(1.0) - texture2D(shadowMap, coords.xy).xy;
 	
 	float p = step(compare, moments.x);
 	float variance = max(moments.y - moments.x * moments.x, varianceMin);
