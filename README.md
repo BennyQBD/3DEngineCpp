@@ -31,6 +31,7 @@ brew install cmake glew sdl2 assimp
 ```
 
 ##Simple Build Instructions##
+####NOTE: CMake must be installed for this; otherwise the scripts will fail!####
 ###Mac OSX/Linux/Unix###
 Open a Terminal and run:
 ```Shell
@@ -50,6 +51,7 @@ Open a Terminal and run:
 - Build and Run
 
 ##Manual Build Instructions##
+####NOTE: CMake must be installed for this####
 ###Linux/Unix###
 Open a Terminal and run:
 ```Shell
