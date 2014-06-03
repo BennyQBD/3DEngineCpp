@@ -12,7 +12,8 @@ class RenderingEngine;
 class GameObject
 {
 public:
-	GameObject() : 
+	GameObject(const Vector3f& pos = Vector3f(0,0,0), const Quaternion& rot = Quaternion(0,0,0,1), float scale = 1.0f) : 
+		m_transform(pos, rot, scale),
 		m_coreEngine(0) {}
 		
 	virtual ~GameObject();

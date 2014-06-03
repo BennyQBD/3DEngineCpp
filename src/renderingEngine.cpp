@@ -23,6 +23,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	m_plane(Mesh("./res/models/plane.obj")),
 	m_window(&window),
 	m_tempTarget(window.GetWidth(), window.GetHeight(), 0, GL_TEXTURE_2D, GL_NEAREST, GL_RGBA, GL_RGBA, false, GL_COLOR_ATTACHMENT0),
+	m_planeMaterial("renderingEngine_filterPlane", m_tempTarget, 1, 8),
 	m_defaultShader("forward-ambient"),
 	m_shadowMapShader("shadowMapGenerator"),
 	m_nullFilter("filter-null"),
@@ -49,7 +50,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	m_altCameraObject.AddComponent(m_altCamera);
 	m_altCamera->GetTransform()->Rotate(Vector3f(0,1,0),ToRadians(180.0f));
 	                  
-	m_planeMaterial = Material(m_tempTarget, 1, 8);
+	//m_planeMaterial("renderingEngine_filterPlane", m_tempTarget, 1, 8);
 	m_planeTransform.SetScale(1.0f);
 	m_planeTransform.Rotate(Quaternion(Vector3f(1,0,0), ToRadians(90.0f)));
 	m_planeTransform.Rotate(Quaternion(Vector3f(0,0,1), ToRadians(180.0f)));

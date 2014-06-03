@@ -39,12 +39,12 @@ private:
 	static const int NUM_SHADOW_MAPS = 10;
 	static const Matrix4f BIAS_MATRIX;
 
-	Material                            m_planeMaterial;
 	Transform                           m_planeTransform;
 	Mesh                                m_plane;
 	
 	const Window*                       m_window;
 	Texture                             m_tempTarget;
+	Material                            m_planeMaterial;
 	Texture                             m_shadowMaps[NUM_SHADOW_MAPS];
 	Texture                             m_shadowMapTempTargets[NUM_SHADOW_MAPS];
 	
