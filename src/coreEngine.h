@@ -19,17 +19,18 @@ public:
 	inline RenderingEngine* GetRenderingEngine() { return m_renderingEngine; }
 protected:
 private:
-	CoreEngine(const CoreEngine& other) {}
-	void operator=(const CoreEngine& other) {}
+	bool             m_isRunning;
+	int              m_width;
+	int              m_height;
+	double           m_frameTime;
+	Game*            m_game;
+	RenderingEngine* m_renderingEngine;
+	Window*          m_window;
 	
 	void Run();
 	
-	bool m_isRunning;
-	int m_width;
-	int m_height;
-	double m_frameTime;
-	Game* m_game;
-	RenderingEngine* m_renderingEngine;
+	CoreEngine(const CoreEngine& other) {}
+	void operator=(const CoreEngine& other) {}
 };
 
 #endif // COREENGINE_H

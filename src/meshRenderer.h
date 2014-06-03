@@ -7,28 +7,20 @@
 class MeshRenderer : public GameComponent
 {
 public:
-	MeshRenderer(Mesh* mesh, Material* material)
-	{
-		m_mesh = mesh;
-		m_material = material;
-	}
-	
-	virtual ~MeshRenderer()
-	{
-		if(m_mesh) delete m_mesh;
-		if(m_material) delete m_material;
-	}
+	MeshRenderer(const Mesh& mesh, const Material& material) :
+		m_mesh(mesh),
+		m_material(material) {}
 
-	virtual void Render(Shader* shader, RenderingEngine* renderingEngine) 
+	virtual void Render(const Shader& shader, const RenderingEngine& renderingEngine) const
 	{
-		shader->Bind();
-		shader->UpdateUniforms(GetTransform(), *m_material, renderingEngine);
-		m_mesh->Draw();
+		shader.Bind();
+		shader.UpdateUniforms(GetTransform(), m_material, renderingEngine);
+		m_mesh.Draw();
 	}
 protected:
 private:
-	Mesh* m_mesh;
-	Material* m_material;
+	Mesh m_mesh;
+	Material m_material;
 };
 
 #endif // MESHRENDERER_H_INCLUDED

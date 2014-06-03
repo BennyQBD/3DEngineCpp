@@ -5,67 +5,67 @@
 #include "lighting.h"
 #include "mappedValues.h"
 #include "material.h"
+#include "mesh.h"
+#include "window.h"
 #include <vector>
 #include <map>
 class GameObject;
-class Mesh;
 
 class RenderingEngine : public MappedValues
 {
 public:
-	RenderingEngine();
+	RenderingEngine(const Window& window);
+	virtual ~RenderingEngine() {}
 	
-	void Render(GameObject* object);
+	void Render(const GameObject& object);
 	
-	inline Camera& GetMainCamera() { return *m_mainCamera; }
-	inline BaseLight* GetActiveLight() { return m_activeLight; }
+	inline void AddLight(const BaseLight& light) { m_lights.push_back(&light); }
+	inline void AddCamera(const Camera& camera) { m_mainCamera = &camera; }
 	
-	inline void AddLight(BaseLight* light) { m_lights.push_back(light); }
-	inline void AddCamera(Camera* camera) { m_mainCamera = camera; }
-	
-	inline unsigned int GetSamplerSlot(const std::string& samplerName) { return m_samplerMap[samplerName]; }
-	inline Matrix4f GetLightMatrix() { return m_lightMatrix; }
-	
-	virtual void UpdateUniformStruct(const Transform& transform, const Material& material, Shader* shader, 
-		const std::string& uniformName, const std::string& uniformType) 
+	virtual void UpdateUniformStruct(const Transform& transform, const Material& material, const Shader& shader, 
+		const std::string& uniformName, const std::string& uniformType) const
 	{
 		throw uniformType + " is not supported by the rendering engine";
 	}
 	
-	virtual ~RenderingEngine();
+	inline const Camera& GetMainCamera()                               const { return *m_mainCamera; }
+	inline const BaseLight& GetActiveLight()                           const { return *m_activeLight; }
+	inline unsigned int GetSamplerSlot(const std::string& samplerName) const { return m_samplerMap.find(samplerName)->second; }
+	inline const Matrix4f& GetLightMatrix()                            const { return m_lightMatrix; }
+	
 protected:
+	inline void SetSamplerSlot(const std::string& name, unsigned int value) { m_samplerMap[name] = value; }
 private:
-	static const int s_numShadowMaps = 10;
-	static const Matrix4f s_biasMatrix;
+	static const int NUM_SHADOW_MAPS = 10;
+	static const Matrix4f BIAS_MATRIX;
 
-	RenderingEngine(const RenderingEngine& other) {}
-	void operator=(const RenderingEngine& other) {}
+	Material                            m_planeMaterial;
+	Transform                           m_planeTransform;
+	Mesh                                m_plane;
 	
-	void BlurShadowMap(int shadowMapIndex, float blurAmount);
-	void ApplyFilter(Shader* filter, Texture* source, Texture* dest);
+	const Window*                       m_window;
+	Texture                             m_tempTarget;
+	Texture                             m_shadowMaps[NUM_SHADOW_MAPS];
+	Texture                             m_shadowMapTempTargets[NUM_SHADOW_MAPS];
 	
-	Camera* m_mainCamera;
-	Camera* m_altCamera;
-	GameObject* m_altCameraObject;
+	Shader                              m_defaultShader;
+	Shader                              m_shadowMapShader;
+	Shader                              m_nullFilter;
+	Shader                              m_gausBlurFilter;
+	Matrix4f                            m_lightMatrix;
 	
-	Material* m_planeMaterial;
-	Transform m_planeTransform;
-	Mesh* m_plane;
-	Texture* m_tempTarget;
-	
-	Texture* m_shadowMaps[s_numShadowMaps];
-	Texture* m_shadowMapTempTargets[s_numShadowMaps];
-	
-	BaseLight* m_activeLight;
-	Shader* m_defaultShader;
-	Shader* m_shadowMapShader;
-	Shader* m_nullFilter;
-	Shader* m_gausBlurFilter;
-	Matrix4f m_lightMatrix;
-	
-	std::vector<BaseLight*> m_lights;
+	GameObject                          m_altCameraObject;
+	Camera*                             m_altCamera;
+	const Camera*                       m_mainCamera;
+	const BaseLight*                    m_activeLight;
+	std::vector<const BaseLight*>       m_lights;
 	std::map<std::string, unsigned int> m_samplerMap;
 	
+	void BlurShadowMap(int shadowMapIndex, float blurAmount);
+	void ApplyFilter(const Shader& filter, const Texture& source, const Texture& dest);
+	
+	RenderingEngine(const RenderingEngine& other) {}
+	void operator=(const RenderingEngine& other) {}
 };
 
 #endif // RENDERINGENGINE_H

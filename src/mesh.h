@@ -12,9 +12,9 @@ public:
 	MeshData(int indexSize);
 	virtual ~MeshData();
 	
-	inline unsigned int GetVBO() { return m_vbo; }
-	inline unsigned int GetIBO() { return m_ibo; }
-	inline int GetSize() { return m_size; }
+	inline unsigned int GetVBO() const { return m_vbo; }
+	inline unsigned int GetIBO() const { return m_ibo; }
+	inline int GetSize()         const { return m_size; }
 protected:	
 private:
 	MeshData(MeshData& other) {}
@@ -28,23 +28,23 @@ private:
 class Mesh
 {
 public:
-	Mesh(const std::string& fileName);
+	Mesh(const std::string& fileName = "./res/models/cube.obj");
 	Mesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals);
+	Mesh(const Mesh& mesh);
 	virtual ~Mesh();
 
 	void Draw() const;
 protected:
 private:
 	static std::map<std::string, MeshData*> s_resourceMap;
-	
-	Mesh(Mesh& mesh) {}
-	void operator=(Mesh& mesh) {}
-	
-	void CalcNormals(Vertex* vertices, int vertSize, int* indices, int indexSize);
+
+	void CalcNormals(Vertex* vertices, int vertSize, int* indices, int indexSize) const;
 	void InitMesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals = true);
 
 	std::string m_fileName;
 	MeshData* m_meshData;
+	
+	void operator=(Mesh& mesh) {}
 };
 
 #endif

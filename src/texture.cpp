@@ -2,6 +2,7 @@
 #include "stb_image.h"
 #include <iostream>
 #include <cassert>
+#include <cstring>
 
 std::map<std::string, TextureData*> Texture::s_resourceMap;
 
@@ -106,18 +107,17 @@ void TextureData::InitRenderTargets(GLenum* attachments)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void TextureData::Bind(int textureNum)
+void TextureData::Bind(int textureNum) const
 {
 	glBindTexture(m_textureTarget, m_textureID[textureNum]);
 }
 
-void TextureData::BindAsRenderTarget()
+void TextureData::BindAsRenderTarget() const
 {
 	glBindTexture(GL_TEXTURE_2D,0);
 	glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
 	glViewport(0, 0, m_width, m_height);
 }
-
 
 Texture::Texture(const std::string& fileName, GLenum textureTarget, GLfloat filter, GLenum internalFormat, GLenum format, bool clamp, GLenum attachment)
 {
@@ -152,6 +152,21 @@ Texture::Texture(int width, int height, unsigned char* data, GLenum textureTarge
 	m_textureData = new TextureData(textureTarget, width, height, 1, &data, &filter, &internalFormat, &format, clamp, &attachment);
 }
 
+Texture::Texture(const Texture& texture) :
+	m_textureData(texture.m_textureData),
+	m_fileName(texture.m_fileName)
+{
+	m_textureData->AddReference();
+}
+
+void Texture::operator=(Texture texture)
+{
+	char* temp[sizeof(Texture)/sizeof(char)];
+	memcpy(temp, this, sizeof(Texture));
+	memcpy(this, &texture, sizeof(Texture));
+	memcpy(&texture, temp, sizeof(Texture));
+}
+
 Texture::~Texture()
 {
 	if(m_textureData && m_textureData->RemoveReference())
@@ -170,7 +185,7 @@ void Texture::Bind(unsigned int unit) const
 	m_textureData->Bind(0);
 }
 
-void Texture::BindAsRenderTarget()
+void Texture::BindAsRenderTarget() const
 {
 	m_textureData->BindAsRenderTarget();
 }

@@ -4,10 +4,8 @@
 class ReferenceCounter
 {
 public:
-	ReferenceCounter() 
-	{
-		m_refCount = 1;
-	}
+	ReferenceCounter() :
+		m_refCount(1) {}
 	
 	inline int GetReferenceCount() { return m_refCount; }
 	

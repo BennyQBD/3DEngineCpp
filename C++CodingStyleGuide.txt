@@ -1,0 +1,597 @@
+This document details what I currently believe is an efficient coding style for C/C++, and is also
+the coding style I use in my projects. The purpose of this document is to inform you of this, both
+so that you may consider your own coding style, and so any code contributed to the project can be
+consistent with the project's code style.
+
+Note: This document is a work in progress, and is subject to updates and changes as more of
+      the code style is detailed.
+
+Formatting/General:
+	-Use real tabs for indentation. Use spaces for any alignment.
+		Reasoning: It's easy to do, and allows programmers to work with their preferred tab width.
+		           For instance, notice how this text file stays nicely formatted regardless of 
+		           your tab width setting.
+		
+	-Braces use Allman-style indentation.
+		Use this:
+		void MyFunction(int arg1,
+		                int arg2)
+		{
+			while(x == y)
+			{
+				//code goes here
+			}
+		
+			if(x)
+			{
+				//code here
+			}
+			else
+			{
+				//code here
+			}
+			
+			if(x == y &&
+			   y == z) 
+			{ 
+				//code here
+			}
+		}
+
+		Instead of:
+		void MyFunction(int arg1,
+		                int arg2)
+		{
+			while(x == y) {
+				//code goes here
+			}
+		
+			if(x) {
+				//code here
+			} else { //Should this 'else' be on a new line or not?
+				//code here
+			}
+				       
+			if(x == y &&
+			   y == z) { 
+			             //How should this visual separation be handled?
+				//code here
+			}
+		}
+		
+		Reasoning: Allman-style has fewer ambiguous indentation cases than K&R style.
+		           For instance, there's no ambiguity on how to indent else blocks, or
+		           on whether to leave a blank line after something with multi-line arguments.
+		           It's also marginally more consistent, as there's no exceptions for function brackets,
+		           for instance.
+		           
+		           Note that the benefits of using Allman-style over K&R style or vice-versa are minor 
+		           at best. This style guide had to choose one, and chose Allman-style for the reasons 
+		           listed above.
+		           
+	-If braces are optional, add braces anyways.
+		Use this:
+			if(x)
+			{
+				//code here
+			}	
+			else
+			{
+				//code here
+			}
+		Instead of:
+			if(x)
+				//code here
+			else
+				//code here
+		
+		Reasoning: Consistency. Control structures are not written differently based on code length,
+		           and programmers do not have to think about cases where braces may or may not be necessary.
+		           This also visually emphasises where these control structures are.
+	
+	-Do not pad parenthesis with spaces.
+		Use this:   int a = (b + (c + d));
+		Instead of: int a = ( b + ( c + d ) );
+		
+		Reasoning: Padded spaces can distract from any visual cues that the spaces might give about
+		           mathematical calculations or parenthised expressions. Without padding, there is 
+		           no such distraction.
+	
+	-Specify precision when defining floating point numbers. Do not rely on auto-conversion, 
+	 unless explicitly necessary.
+		Use this:   float f = 0.1337f; float g = 1.0f;
+		Instead of: float f = 0.1337;  float g = 1.f;
+		
+		Reasoning: Floats without the end prefix are actually slightly different numbers.
+		           This can lead to subtle bugs with floating point precision. Explicitly
+		           specifying precision helps, but does not entirely eliminate these issues.
+	
+	-Comments should be avoided if using descriptive function and variable names can achieve
+	 the same effect. The only valid usage of a comment is explaining why a certain piece
+	 of code is used.
+	 	Use this:
+	 		int numCookies = 10;
+	 		yourCookies = numCookies / 2;
+	 		myCookies = numCookies / 2;
+	 		//This way no one gets upset.
+	 	Instead of:
+	 		int x = 10; //Number of cookies to allocate
+	 		y = x / 2;  //Number of cookies given to you
+	 		z = x / 2;  //Number of cookies given to me
+	 		
+	 	Reasoning: If you have comments explaining how your code works, they'll need to be updated
+	 	           every time the code changes. This is subject to human error, and incorrect comments
+	 	           are far worse than no comments at all. They're also extraneous, because the code already
+	 	           explains how it works. The reasoning for why the code works or is used, on the other hand, 
+	 	           rarely changes. Since there should be relatively few places where the reasoning for the code
+	 	           needs explaining, this also puts more emphasis when there actually is a comment, and
+	 	           reduces the chance of human error.
+	
+	-Single-line comments are preferred over multi-line comments if possible.
+		Use this:   
+			//This is a comment
+			//over a few lines
+		Instead of:
+			/* This is a comment
+			over a few lines */
+			
+		Because:
+			/* 
+				This is commented
+				/* 
+					This is also commented 
+				*/
+				This is NOT commented
+			*/ <-------------------------- And this is a compiler error
+			
+		Reasoning: Multi-line comments can be a useful tool for adding/removing code during debugging.
+		           If the code already includes multi-line comments, then those will "block" any other
+		           multi line comments, and code below that will remain uncommented. That can make
+		           removing large sections of coding difficult, so they should be avoided if reasonable.
+	
+	-Do not use 'using namespace x' or similar constructs. Type the full name of the function/variable
+	 desired, namespace and all.
+	 	Use this: 
+	 		std::cout << "Hello World!" << std::endl;
+	 	Instead of:
+	 		using namespace std;
+	 		cout << "Hello World!" << endl;
+	 		
+	 	Reasoning: Explicitly typing namespaces avoids any chance of unintentional namespace conflicts,
+	 	           such as accidentally using glm::vec3 instead of ben::vec3, or vice-versa.
+	 
+	
+Variables:
+	-Variable names start with lower case, and use camelCase for additional words.
+		Use this:   float myFloat;
+		
+		Reasoning: Simple to type and read, and leaves characters like underscores available
+		           for other visual cues.
+		           
+	-Variables are prefixed by scope, as follows:
+		Local Variables - No prefix
+		Member Variables - m_
+		Static Variables - s_
+		Global Variables - g_
+	
+		Reasoning: This gives an obvious visual cue about any code that reads or modifies program state,
+		           which can be a valuable tool in debugging issues involving program state.
+		           
+	-No type-based Hungarian Notation, not even for pointers.
+		Use this:   long time;  int* numberList;
+		Instead of: long ltime; int* pnumberList;
+		
+		Reasoning: Type-based Hungarian Notation is redundant, since the type is already defined when
+		           the variable is declared. This mandates a complete refactor whenever a variable's type 
+		           is changed, which can be complex and costly depending on how much it is used. It is also
+		           subject to human error, as you must manually ensure that variable names are consistent 
+		           with variable types.
+		
+	-Variables should not be stored as pointers, unless explicitly necessary.
+		Use this:
+			int value;
+		
+		Instead of:
+			int* value;
+		
+		Reasoning: This makes pointers a visual cue that something more complex is going on, since the data
+		           must be stored as a pointer.
+		           
+	-Any pointer variables should have the * written next to the type.
+		Use this:
+			int* value;
+			
+		Instead of:
+			int *value;
+			
+		Reasoning: Pointers are more clear if thought of as a type.
+		           
+	-'const' should be used whenever and wherever possible, except where otherwise noted. 'const' variables
+	 should be written in all caps, with underscores separating words.
+		Use this:   const float START_VAL = 0.37f;
+		Instead of: float startVal = 0.37f;
+		
+		Reasoning: Clear indicator that value should not be changed. Useful for both preventing bugs
+		           and enabling compiler optimizations.
+	
+	
+Functions/Methods:
+	-Function names start with upper case, and use CamelCase for additional words.
+		Use this:   void MyFunction();
+		
+		Reasoning: Having upper case gives functions a distinct visual difference from local variables.
+	
+	-Function parameters should be typed as follows:
+		Primitive types          - As they are.         Ex: (float x)
+		Classes/Structs          - As const references. Ex: (const Vector3f& x) 
+		Modified Classes/Structs - As pointers.         Ex: (Vector3f* x)
+		
+		Use this:
+			void TransformAndRotate(float angle, const Matrix4f& transform, 
+			                        Vector3f* posResult, Quaternion* rotResult);
+		Instead of:
+			void TransformAndRotate(const float& angle, Matrix4f transform, 
+			                        Vector3f& posResult, Quaternion& rotResult);
+		
+		Reasoning: Prevents accidentally invoking the copy constructor when passing parameters.
+		           If data is passed as a pointer, it gives both a visual and syntactical indication
+		           that it is intended to be modified.
+	
+	-A function should return data that is intended to be modified as a pointer. Never return a non-const 
+	 reference.
+		Use this:
+			inline Quaternion* GetRot() { return &m_rot; }
+		Instead of:
+			inline Quaternion& GetRot() { return m_rot; }
+			
+		Reasoning: Using pointer syntax makes it obvious that the code is working with mutable data.
+	
+	-If a function is returning data that is not created by the function, and is not intended to be
+	 modified, it should be returned as a const reference.
+	 	Use this:
+			inline const Quaternion& GetRot() const { return m_rot; }
+			inline const Vector3f& GetPos() const { return m_pos; }
+		Instead of:
+			inline Quaternion GetRot() const { return m_rot; }
+			inline const Vector3f* GetPos() const { return &m_pos; }
+			
+		Reasoning: This prevents unintentionally invoking the copy constructor.
+	
+	-Detailed function names are generally preferred over function overloading.
+		Use this:
+			Quaternion CalcRotationFromAngleAxis(const Vector3f& axis, float angle);
+			Quaternion CalcRotationFromEulerAngles(float angleX, float angleY, float angleZ);
+			Quaternion CalcRotationFromVectors(const Vector3f& forward, const Vector3f& up);
+		Instead of:
+			Quaternion CalcRotation(const Vector3f& axis, float angle);
+			Quaternion CalcRotation(float angleX, float angleY, float angleZ);
+			Quaternion CalcRotation(const Vector3f& forward, const Vector3f& up);
+			
+		Reasoning: Both more clear what the function is supposed to be doing, and less prone 
+		           to accidentally calling the wrong version of the function.
+	
+	-Function overloading is preferred for creating 'const' versions of a function.
+		Use this:
+			class Temp
+			{
+			public:
+				int* GetValue();
+				const int& GetValue() const;
+			};
+		Instead of:
+			class Temp
+			{
+			public:
+				int* GetMutableValue();
+				const int& GetConstValue() const;
+			};
+			
+		Reasoning: Avoids unnecessarily descriptive names, as any issues with selecting the const version
+		           should be handled by the compiler.
+		           
+	-A function that allocates memory is also responsible for freeing that memory. The only
+	 exception to this is constructors or other initialization functions, which can have
+	 their memory freed in a corresponding destructor or other deinitialization function.
+		Use this:
+			void MyFunc1()
+			{
+				int* test = new int[100];
+				MyFunc2(test, 100);
+				delete test;
+			}
+		
+			void MyFunc2(int* numberArray, int numElements)
+			{
+				//Do stuff
+			}
+		Instead of:
+			void MyFunc1()
+			{
+				int* test = new int[100];
+				MyFunc2(test, 100);
+			}
+		
+			void MyFunc2(int* numberArray, int numElements)
+			{
+				//Do stuff
+				delete numberArray;
+			}
+		
+		Reasoning: This specifies a clear and consistent location where memory should be deleted. 
+		           By having functions manage their own memory, it greatly reduces the chance for memory 
+		           leaks or other unwanted memory issues.
+		
+Classes:
+	-Class names start with upper case, and use CamelCase for additional words.
+		Use this:   class MyClass;
+		
+		Reasoning: Distinct visual indicator that these are a more advanced data container.
+	
+	-Accessibility should be explicitly defined.
+		Use this:
+			class Temp
+			{
+			private:
+				int  m_myValue;
+				void MyFunction();
+			};
+		Instead of:
+			class Temp
+			{
+				int  m_myValue;
+				void MyFunction();
+			};
+			
+			Reasoning: More explicit about what is intended. Also prevents unintentional
+			           code breaking in the event a class is switched to a struct, or vice-versa.
+	
+	-Class ordering:
+		-public variables
+		-public methods
+		-protected variables
+		-protected methods
+		-private variables
+		-private methods
+		
+		Reasoning: Makes class interface easily to find.
+		
+	-No public data. If you need something public, write a getter for it.
+		Use this:
+			class Temp
+			{
+			public:
+				inline int GetNumExamples() const { return m_numExamples; }
+			private:
+				int m_numExamples;
+			};
+		Instead of:
+			class Temp
+			{
+			public:
+				int m_numExamples;
+			};
+			
+		Reasoning: 1) Public data can be both read from and written to. There isn't an effective tool
+		           for either changing or expanding on this. For instance, you cannot add a check to
+		           make sure valid values are being assigned to public data. You also cannot prevent
+		           a value from being assigned to.
+		           
+		           2) If all data is accessed through getters, then there is consistency in the code.
+		           You will not need to think about whether a value is public or in a getter, because
+		           it will always be in a getter.
+		           
+		           3) Having data public commits to a certain binary format of your data structure.
+		           For instance, lets say you have a Vector3f class, which looks like this:
+		           
+		           class Vector3f
+		           {
+		           public:
+		               float x;
+		               float y;
+		               float z;
+		           }
+		           
+		           In this case, most properties of public data are desirable, and unlikely to need
+		           modification. However, this also locks you into only representing data as a set of
+		           3 floats. It is more difficult to change the representation to an array of floats, 
+		           which may be desirable. It also prevents you from changing to a different vector
+		           format entirely. For instance, you cannot make use of SSE vector hardware without
+		           changing your vector class to store in SSE's vector format, and that is not easily
+		           done without breaking existing code unless your Vector3f class uses getters/setters.
+	
+	-Getters/Setters should be specified last in the methods list.
+		Reasoning: This puts puts more visual emphasis on functions which aren't getters and setters,
+		           since they will be both visually above and visually separated from getters/setters
+		           
+	-Getters should be grouped with getters, setters should be grouped with setters.
+		Use this:
+			GetX();
+			GetY();
+			GetZ();
+			
+			SetX(...);
+			SetY(...);
+			SetZ(...);
+		Instead of:
+			GetX();
+			SetX(...);
+			GetY();
+			SetY(...);
+			GetZ();
+			SetZ(...);
+			
+		Reasoning: To be added
+		
+	-Any basic Getters/Setters which only return/assign to a member variable should be inline, 
+	 and declared in the header.
+	 	Use this:   
+	 		inline int GetNumHammers() const { return m_numHammers; }
+	 	Instead of: 
+	 		int GetNumHammers() const;
+	 		
+	 		...
+	 		
+	 		int ClassName::GetNumHammers() const
+			{
+				return m_numHammers;
+			}
+			
+		Reasoning: As this is a common programming pattern, it gives a visual cue that this basic
+		           pattern is taking place, and makes it easier to distinguish between "basic" getters
+		           and setters and more advanced getters and setters, which might do something more
+		           interesting. This also gives the compiler an opportunity to optimize out basic getter
+		           and setter calls, which effectively eliminates the (marginal) performance cost of
+		           using getters and setters.
+	
+	-In constructors, initialization lists are preferred to simply assigning parameters, if possible.
+		Use this:
+			class Bakery
+			{
+			public:
+				Bakery(int numCookies, int numPastries) :
+					m_numCookies(numCookies),
+					m_numPastries(numPastries) {}
+			private:
+				int m_numCookies;
+				int m_numPastries;
+			};
+		Instead of:
+			class Bakery
+			{
+			public:
+				Bakery(int numCookies, int numPastries)
+				{
+					m_numCookies = numCookies;
+					m_numPastries = numPastries;
+				}
+			private:
+				int m_numCookies;
+				int m_numPastries;
+			};
+			
+		Reasoning: Avoids accidentally and/or unnecessarily calling an overridden assignment operator.
+		           Also blends better with initialization of super classes.
+		           
+	-A constructor that consists only of an initialization list can be declared in the header.
+		Reasoning: This produces a separation from necessary programming constructs, such as
+		           constructors, and implementation logic, as the implementation logic will
+		           be more isolated in the .cpp file.
+	
+	-Any destructor should be virtual.
+		Reasoning: Non-virtual destructors are not called by any derived classes.
+		           By making all destructors virtual, this prevents this issue from ever occuring.
+	
+	-Any class with a destructor, copy constructor, or overridden assignment operator needs all 3 defined.
+		Reasoning: There's a good chance that any allocated memory will not be handled properly by all 3,
+		           for instance if a pointer is copied, it may be deleted when the object is destroyed,
+		           which leaves another object with an invalid pointer. If the default behaviour is intended,
+		           then define the functions anyways. That way it's explicit that the behaviour is
+		           intended, and it's not a programmer oversight.	
+	
+	-Any virtual function should be declared as virtual everywhere it is overriden, even if unnecessary.
+		Use this:
+			class TempA
+			{
+				virtual void MyVirtualFunction();
+			};
+			
+			class TempB : public TempA
+			{
+				virtual void MyVirtualFunction();
+			};
+		Instead of:
+			class TempA
+			{
+				virtual void MyVirtualFunction();
+			};
+			
+			class TempB : public TempA
+			{
+				void MyVirtualFunction();
+			};
+			
+		Reasoning: This makes it obvious that the function is overriden, and is intended to be overriden.
+		           
+Structs:
+	-Classes should be used instead of structs, even for simple data container classes.
+		Use this:
+			class Bakery
+			{
+			public:
+				Bakery(int numCookies, int numPastries) :
+					m_numCookies(numCookies),
+					m_numPastries(numPastries) {}
+			
+				inline int GetNumCookies() const { return m_numCookies; }
+				inline int GetNumPastries() const { return m_numPastries; }
+				
+				inline void SetNumCookies(int numCookies) { m_numCookies = numCookies; }
+				inline void SetNumPastries(int numPastries) { m_numPastries = numPastries; }
+			private:
+				int m_numCookies;
+				int m_numPastries;
+			};
+		Instead of:
+			struct Bakery
+			{
+				int numCookies;
+				int numPastries;
+			};
+			
+		Reasoning: Classes can be easily expanded to have more purpose and functionality using
+		           the conventions defined for classes above. A simple struct is more difficult
+		           to later expand because it exposes public data, and any convention which 
+		           attempts to alleviate that ultimately ends up reinventing classes. Even if it 
+		           is certain that the struct will never be expanded, it should still be defined 
+		           as a class simply to be consistent with the rest of the data structures in the 
+		           program.
+			           
+			           
+Enums:
+	-All values are written in upper-case.
+		Reasoning: Obvious visual indicator that these are predefined constant values.
+	-All values are prefixed with the "enum name," followed by an underscore.
+		Reasoning: C compatible way to indicate which enum a value belongs to
+	-Should end in a value called size.
+		Reasoning: Easy way to determine number of elements in an enum.
+	
+	Use this:
+		enum
+		{
+			START_LOC1,
+			START_LOC2,
+			START_LOC3,
+			START_SIZE
+		};
+	
+	-If an enum is associated with a particular class or namespace, it should be placed
+	 in that particular class or namespace. However, it should not have a unique namespace
+	 created just to "name" the enum.
+	 	Reasoning: To be added
+	 
+		
+Defines/Macros:
+	-Written in all upper-case, seperated by under scores.
+		Use this:   #define HAT_ID 7
+	
+		Reasoning: Obvious visual indicator that these are predefined constant values
+	
+	-A function is preferred over a macro, unless a macro offers an explicit benefit that functions do not.
+		Use this:
+			int CalcSomething(int a, int b)
+			{
+				return a * b / 70;
+			}
+		Instead of:
+			#define CALC_SOMETHING(a, b) (a * b / 70)
+			
+		Reasoning: This limits macro usage to things that cannot be achieved with functions. This
+		           means that simply using a macro indicates something is being performed that a
+		           function cannot, which is a useful visual indicator of program functionality.
+		          
+		          
+Files:
+	-File names should be in camelCase, starting with a lower case letter.
+		Reasoning: To be added
+	
+		

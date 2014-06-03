@@ -7,10 +7,12 @@
 class Camera : public GameComponent
 {
 public:
-	Camera(const Matrix4f& projection);
+	Camera(const Matrix4f& projection) :
+		m_projection(projection) {}
+	
+	virtual void AddToEngine(CoreEngine* engine) const;
 	
 	Matrix4f GetViewProjection() const;
-	virtual void AddToEngine(CoreEngine* engine);
 	
 	inline void SetProjection(const Matrix4f& projection) { m_projection = projection; }
 protected:

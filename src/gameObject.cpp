@@ -5,18 +5,26 @@
 GameObject::~GameObject()
 {
 	for(unsigned int i = 0; i < m_components.size(); i++)
+	{
 		if(m_components[i])
+		{	
 			delete m_components[i];
+		}
+	}
 	
 	for(unsigned int i = 0; i < m_children.size(); i++)
-		if(m_children[i])
+	{
+		if(m_children[i]) 
+		{
 			delete m_children[i];
+		}
+	}
 }
 
 GameObject* GameObject::AddChild(GameObject* child)
 {
 	m_children.push_back(child); 
-	child->GetTransform().SetParent(&m_transform);
+	child->GetTransform()->SetParent(&m_transform);
 	child->SetEngine(m_coreEngine);
 	return this;
 }
@@ -28,12 +36,14 @@ GameObject* GameObject::AddComponent(GameComponent* component)
 	return this;
 }
 
-void GameObject::InputAll(float delta)
+void GameObject::ProcessInputAll(const Input& input, float delta)
 {
-	Input(delta);
+	ProcessInput(input, delta);
 
 	for(unsigned int i = 0; i < m_children.size(); i++)
-		m_children[i]->InputAll(delta);
+	{
+		m_children[i]->ProcessInputAll(input, delta);
+	}
 }
 
 void GameObject::UpdateAll(float delta)
@@ -41,35 +51,45 @@ void GameObject::UpdateAll(float delta)
 	Update(delta);
 
 	for(unsigned int i = 0; i < m_children.size(); i++)
+	{
 		m_children[i]->UpdateAll(delta);
+	}
 }
 
-void GameObject::RenderAll(Shader* shader, RenderingEngine* renderingEngine)
+void GameObject::RenderAll(const Shader& shader, const RenderingEngine& renderingEngine) const
 {
 	Render(shader, renderingEngine);
 
 	for(unsigned int i = 0; i < m_children.size(); i++)
+	{
 		m_children[i]->RenderAll(shader, renderingEngine);
+	}
 }
 
-void GameObject::Input(float delta)
+void GameObject::ProcessInput(const Input& input, float delta)
 {
 	m_transform.Update();
 
 	for(unsigned int i = 0; i < m_components.size(); i++)
-		m_components[i]->Input(delta);
+	{
+		m_components[i]->ProcessInput(input, delta);
+	}
 }
 
 void GameObject::Update(float delta)
 {
 	for(unsigned int i = 0; i < m_components.size(); i++)
+	{
 		m_components[i]->Update(delta);
+	}
 }
 
-void GameObject::Render(Shader* shader, RenderingEngine* renderingEngine)
+void GameObject::Render(const Shader& shader, const RenderingEngine& renderingEngine) const
 {
 	for(unsigned int i = 0; i < m_components.size(); i++)
+	{
 		m_components[i]->Render(shader, renderingEngine);
+	}
 }
 
 void GameObject::SetEngine(CoreEngine* engine)
@@ -79,10 +99,14 @@ void GameObject::SetEngine(CoreEngine* engine)
 		m_coreEngine = engine;
 		
 		for(unsigned int i = 0; i < m_components.size(); i++)
+		{
 			m_components[i]->AddToEngine(engine);
+		}
 
 		for(unsigned int i = 0; i < m_children.size(); i++)
+		{
 			m_children[i]->SetEngine(engine);
+		}
 	}
 }
 

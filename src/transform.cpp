@@ -1,29 +1,26 @@
 #include "transform.h"
 
-Transform::Transform(const Vector3f& pos, const Quaternion& rot, float scale)
-{
-	m_pos = pos;
-	m_rot = rot;
-	m_scale = scale;
-	m_initializedOldStuff = false;
-	m_parent = 0;
-	
-	m_parentMatrix = Matrix4f().InitIdentity();
-}
-
 bool Transform::HasChanged()
 {	
 	if(m_parent != 0 && m_parent->HasChanged())
+	{
 		return true;
+	}
 	
 	if(m_pos != m_oldPos)
+	{
 		return true;
+	}
 
 	if(m_rot != m_oldRot)
+	{
 		return true;
+	}
 	
 	if(m_scale != m_scale)
+	{
 		return true;
+	}
 		
 	return false;
 }
@@ -73,10 +70,22 @@ Matrix4f Transform::GetTransformation() const
 	return GetParentMatrix() * result;
 }
 
-Matrix4f Transform::GetParentMatrix() const
+const Matrix4f& Transform::GetParentMatrix() const
 {
 	if(m_parent != 0 && m_parent->HasChanged())
+	{
 		m_parentMatrix = m_parent->GetTransformation();
+	}
 		
 	return m_parentMatrix;
+}
+
+Quaternion Transform::GetTransformedRot() const
+{
+	Quaternion parentRot = Quaternion(0,0,0,1);
+	
+	if(m_parent)
+		parentRot = m_parent->GetTransformedRot();
+	
+	return parentRot * m_rot;
 }

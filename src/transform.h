@@ -6,7 +6,13 @@
 class Transform
 {
 public:
-	Transform(const Vector3f& pos = Vector3f(0,0,0), const Quaternion& rot = Quaternion(0,0,0,1), float scale = 1.0f);
+	Transform(const Vector3f& pos = Vector3f(0,0,0), const Quaternion& rot = Quaternion(0,0,0,1), float scale = 1.0f) :
+		m_pos(pos),
+		m_rot(rot),
+		m_scale(scale),
+		m_parent(0),
+		m_parentMatrix(Matrix4f().InitIdentity()),
+		m_initializedOldStuff(false) {}
 
 	Matrix4f GetTransformation() const;
 	bool HasChanged();
@@ -20,22 +26,13 @@ public:
 		return Quaternion(Matrix4f().InitRotationFromDirection((point - m_pos).Normalized(), up)); 
 	}
 	
-	inline Vector3f& GetPos() { return m_pos; }
-	inline const Vector3f& GetPos() const { return m_pos; }
-	inline Quaternion& GetRot() { return m_rot; }
-	inline const Quaternion& GetRot() const { return m_rot; }
-	inline float GetScale() const { return m_scale; }
-
-	inline Vector3f GetTransformedPos() const { return Vector3f(GetParentMatrix().Transform(m_pos)); }
-	inline Quaternion GetTransformedRot() const
-	{
-		Quaternion parentRot = Quaternion(0,0,0,1);
-		
-		if(m_parent)
-			parentRot = m_parent->GetTransformedRot();
-		
-		return parentRot * m_rot;
-	}
+	inline Vector3f* GetPos()                   { return &m_pos; }
+	inline const Vector3f& GetPos()       const { return m_pos; }
+	inline Quaternion* GetRot()                 { return &m_rot; }
+	inline const Quaternion& GetRot()     const { return m_rot; }
+	inline float GetScale()               const { return m_scale; }
+	inline Vector3f GetTransformedPos()   const { return Vector3f(GetParentMatrix().Transform(m_pos)); }
+	Quaternion GetTransformedRot()        const;
 
 	inline void SetPos(const Vector3f& pos) { m_pos = pos; }
 	inline void SetRot(const Quaternion& rot) { m_rot = rot; }
@@ -43,7 +40,7 @@ public:
 	inline void SetParent(Transform* parent) { m_parent = parent; }
 protected:
 private:
-	Matrix4f GetParentMatrix() const;
+	const Matrix4f& GetParentMatrix() const;
 
 	Vector3f m_pos;
 	Quaternion m_rot;

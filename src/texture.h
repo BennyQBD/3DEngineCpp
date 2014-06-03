@@ -11,11 +11,11 @@ class TextureData : public ReferenceCounter
 public:
 	TextureData(GLenum textureTarget, int width, int height, int numTextures, unsigned char** data, GLfloat* filters, GLenum* internalFormat, GLenum* format, bool clamp, GLenum* attachments);
 	
-	void Bind(int textureNum);
-	void BindAsRenderTarget();
+	void Bind(int textureNum) const;
+	void BindAsRenderTarget() const;
 	
-	inline int GetWidth() { return m_width; }
-	inline int GetHeight() { return m_height; }
+	inline int GetWidth()  const { return m_width; }
+	inline int GetHeight() const { return m_height; }
 	
 	virtual ~TextureData();
 protected:	
@@ -40,19 +40,21 @@ class Texture
 public:
 	Texture(const std::string& fileName, GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR, GLenum internalFormat = GL_RGBA, GLenum format = GL_RGBA, bool clamp = false, GLenum attachment = GL_NONE);
 	Texture(int width = 0, int height = 0, unsigned char* data = 0, GLenum textureTarget = GL_TEXTURE_2D, GLfloat filter = GL_LINEAR, GLenum internalFormat = GL_RGBA, GLenum format = GL_RGBA, bool clamp = false, GLenum attachment = GL_NONE);
+	Texture(const Texture& texture);
+	void operator=(Texture texture);
 	virtual ~Texture();
 
 	void Bind(unsigned int unit = 0) const;	
-	void BindAsRenderTarget();
+	void BindAsRenderTarget() const;
 	
-	inline int GetWidth() { return m_textureData->GetWidth(); }
-	inline int GetHeight() { return m_textureData->GetWidth(); }
+	inline int GetWidth()  const { return m_textureData->GetWidth(); }
+	inline int GetHeight() const { return m_textureData->GetWidth(); }
+	
+	bool operator==(const Texture& texture) const { return m_textureData == texture.m_textureData; }
+	bool operator!=(const Texture& texture) const { return !operator==(texture); }
 protected:
 private:
 	static std::map<std::string, TextureData*> s_resourceMap;
-
-	Texture(Texture& texture) {}
-	void operator=(Texture& texture) {}
 
 	TextureData* m_textureData;
 	std::string m_fileName;

@@ -1,44 +1,40 @@
 #include "freeLook.h"
 #include "window.h"
 
-bool mouseLocked = false;
-
-FreeLook::FreeLook(float sensitivity, int unlockMouseKey)
+void FreeLook::ProcessInput(const Input& input, float delta)
 {
-	m_sensitivity = sensitivity;
-	m_unlockMouseKey = unlockMouseKey;
-}
-
-void FreeLook::Input(float delta)
-{
-	if(Input::GetKey(m_unlockMouseKey))
+	if(input.GetKey(m_unlockMouseKey))
 	{
-		Input::SetCursor(true);
-		mouseLocked = false;
+		input.SetCursor(true);
+		m_mouseLocked = false;
 	}
 
-	if(mouseLocked)
+	if(m_mouseLocked)
 	{
-		Vector2f centerPosition = Vector2f((float)Window::GetWidth()/2.0f, (float)Window::GetHeight()/2.0f);
-		Vector2f deltaPos = Input::GetMousePosition() - centerPosition;
+		Vector2f deltaPos = input.GetMousePosition() - m_windowCenter;
 		
 		bool rotY = deltaPos.GetX() != 0;
 		bool rotX = deltaPos.GetY() != 0;
 			
 		if(rotY)
-			GetTransform().Rotate(Vector3f(0,1,0), ToRadians(deltaPos.GetX() * m_sensitivity));
+		{
+			GetTransform()->Rotate(Vector3f(0,1,0), ToRadians(deltaPos.GetX() * m_sensitivity));
+		}
 		if(rotX)
-			GetTransform().Rotate(GetTransform().GetRot().GetRight(), ToRadians(deltaPos.GetY() * m_sensitivity));
+		{
+			GetTransform()->Rotate(GetTransform()->GetRot()->GetRight(), ToRadians(deltaPos.GetY() * m_sensitivity));
+		}
 			
 		if(rotY || rotX)
-			Input::SetMousePosition(centerPosition);
+		{
+			input.SetMousePosition(m_windowCenter);
+		}
 	}
 
-	if(Input::GetMouseDown(Input::LEFT_MOUSE))
+	if(input.GetMouseDown(Input::MOUSE_LEFT_BUTTON))
 	{
-		Vector2f centerPosition = Vector2f((float)Window::GetWidth()/2.0f, (float)Window::GetHeight()/2.0f);
-		Input::SetCursor(false);
-		Input::SetMousePosition(centerPosition);
-		mouseLocked = true;
+		input.SetCursor(false);
+		input.SetMousePosition(m_windowCenter);
+		m_mouseLocked = true;
 	}
 }

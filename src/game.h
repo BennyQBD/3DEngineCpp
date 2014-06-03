@@ -10,12 +10,10 @@ public:
 	Game() {}
 	virtual ~Game() {}
 
-	virtual void Init() {}
-	void Input(float delta);
+	virtual void Init(const Window& window) {}
+	void ProcessInput(const Input& input, float delta);
 	void Update(float delta);
 	void Render(RenderingEngine* renderingEngine);
-	
-	inline GameObject& GetRoot() { return m_root; }
 	
 	inline void SetEngine(CoreEngine* engine) { m_root.SetEngine(engine); }
 protected:

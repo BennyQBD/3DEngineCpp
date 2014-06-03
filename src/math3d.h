@@ -14,6 +14,18 @@ inline T Clamp(const T &a, const T &min, const T &max)
 	else return a;
 }
 
+//template<typename T>
+//inline T ToRadians(const T &value)
+//{
+//	return (T)((value) * MATH_PI / (T)(180));
+//}
+//
+//template<typename T>
+//inline T ToDegrees(const T &value)
+//{
+//	return (T)((value) * (T)(180) / MATH_PI);
+//}
+
 template<typename T, unsigned int D>
 class Vector
 {
@@ -31,13 +43,13 @@ public:
 	
 	inline T Max() const
 	{
-		T Max = (*this)[0];
+		T maxVal = (*this)[0];
 		
 		for(int i = 0; i < D; i++)
-			if((*this)[i] > Max)
-				Max = (*this)[i];
+			if((*this)[i] > maxVal)
+				maxVal = (*this)[i];
 		
-		return Max;
+		return maxVal;
 	}
 	
 	inline T LengthSq() const { return this->Dot(*this); }
