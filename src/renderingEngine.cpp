@@ -20,7 +20,7 @@ const Matrix4f RenderingEngine::BIAS_MATRIX = Matrix4f().InitScale(Vector3f(0.5,
 //This matrix will convert 3D coordinates from the range (-1, 1) to the range (0, 1).
 
 RenderingEngine::RenderingEngine(const Window& window) :
-	m_plane(Mesh("./res/models/plane.obj")),
+	m_plane(Mesh("plane.obj")),
 	m_window(&window),
 	m_tempTarget(window.GetWidth(), window.GetHeight(), 0, GL_TEXTURE_2D, GL_NEAREST, GL_RGBA, GL_RGBA, false, GL_COLOR_ATTACHMENT0),
 	m_planeMaterial("renderingEngine_filterPlane", m_tempTarget, 1, 8),

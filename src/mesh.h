@@ -28,7 +28,7 @@ private:
 class Mesh
 {
 public:
-	Mesh(const std::string& fileName = "./res/models/cube.obj");
+	Mesh(const std::string& fileName = "cube.obj");
 	Mesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals);
 	Mesh(const Mesh& mesh);
 	virtual ~Mesh();
