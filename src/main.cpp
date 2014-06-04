@@ -23,13 +23,13 @@ void TestGame::Init(const Window& window)
 		->AddComponent(new MeshRenderer(Mesh("plane4.obj"), Material("bricks"))));
 		
 	AddToScene((new GameObject(Vector3f(7,0,7)))
-		->AddComponent(new PointLight(Vector3f(0,1,0),0.4f,Attenuation(0,0,1))));
+		->AddComponent(new PointLight(Vector3f(0,1,0), 0.4f, Attenuation(0,0,1))));
 	
 	AddToScene((new GameObject(Vector3f(10,1.0f,5), Quaternion(Vector3f(1,0,0), ToRadians(-60.0f)) * Quaternion(Vector3f(0,1,0), ToRadians(90.0f))))
-		->AddComponent(new SpotLight(Vector3f(0,1,1),0.4f,Attenuation(0,0,0.02f),ToRadians(91.1f), 7, 1.0f, 0.5f)));
+		->AddComponent(new SpotLight(Vector3f(0,1,1), 0.4f, Attenuation(0,0,0.02f), ToRadians(91.1f), 7, 1.0f, 0.5f)));
 	
 	AddToScene((new GameObject(Vector3f(), Quaternion(Vector3f(1,0,0), ToRadians(-45))))
-		->AddComponent(new DirectionalLight(Vector3f(1,1,1), 0.4f, 10, 80.0f, 1.0f)));
+		->AddComponent(new DirectionalLight(Vector3f(1,1,1), 0.4f, 0, 80.0f, 1.0f)));
 	
 	AddToScene((new GameObject(Vector3f(0, 2, 0), Quaternion(Vector3f(0,1,0), 0.4f), 1.0f))
 		->AddComponent(new MeshRenderer(Mesh("plane3.obj"), Material("bricks2")))

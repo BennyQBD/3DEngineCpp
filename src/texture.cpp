@@ -1,5 +1,6 @@
 #include "texture.h"
 #include "stb_image.h"
+#include "math3d.h"
 #include <iostream>
 #include <cassert>
 #include <cstring>
@@ -44,10 +45,23 @@ void TextureData::InitTextures(unsigned char** data, GLfloat* filters, GLenum* i
 			glTexParameterf(m_textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP);
 		}
 		
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-		
 		glTexImage2D(m_textureTarget, 0, internalFormat[i], m_width, m_height, 0, format[i], GL_UNSIGNED_BYTE, data[i]);
+		
+		if(filters[i] == GL_NEAREST_MIPMAP_NEAREST ||
+			filters[i] == GL_NEAREST_MIPMAP_LINEAR ||
+			filters[i] == GL_LINEAR_MIPMAP_NEAREST ||
+			filters[i] == GL_LINEAR_MIPMAP_LINEAR)
+		{
+			glGenerateMipmap(m_textureTarget);
+			GLfloat maxAnisotropy;
+			glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
+			glTexParameterf(m_textureTarget, GL_TEXTURE_MAX_ANISOTROPY_EXT, Clamp(0.0f, 8.0f, maxAnisotropy));
+		}
+		else
+		{
+			glTexParameteri(m_textureTarget, GL_TEXTURE_BASE_LEVEL, 0);
+			glTexParameteri(m_textureTarget, GL_TEXTURE_MAX_LEVEL, 0);
+		}
 	}
 }
 
