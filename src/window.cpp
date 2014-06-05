@@ -25,6 +25,9 @@ Window::Window(int width, int height, const std::string& title) :
 	//SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
 	SDL_GL_SetSwapInterval(1);
 
+	//Apparently this is necessary to build with Xcode
+	glewExperimental = GL_TRUE;
+	
 	GLenum res = glewInit();
 	if(res != GLEW_OK)
 	{
