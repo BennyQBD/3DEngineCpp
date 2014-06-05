@@ -62,7 +62,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 		m_shadowMapTempTargets[i] = Texture(shadowMapSize, shadowMapSize, 0, GL_TEXTURE_2D, GL_LINEAR, GL_RG32F, GL_RGBA, true, GL_COLOR_ATTACHMENT0);
 	}
 	
-	m_lightMatrix = Matrix4f().InitScale(Vector3f(0,0,0));
+	m_lightMatrix = Matrix4f().InitScale(Vector3f(0,0,0));	
 }
 
 void RenderingEngine::BlurShadowMap(int shadowMapIndex, float blurAmount)

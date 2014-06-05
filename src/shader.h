@@ -64,7 +64,10 @@ private:
 	void AddShaderUniforms(const std::string& shaderText);
 	void AddUniform(const std::string& uniformName, const std::string& uniformType, const std::vector<UniformStruct>& structs);
 	void CompileShader() const;
+	void ConvertVertexShaderToGLSL330(std::string* shaderText);
+	void ConvertFragmentShaderToGLSL330(std::string* shaderText);
 
+	static int s_supportedGLSLLevel;
 	int m_program;
 	std::vector<int>                    m_shaders;
 	std::vector<std::string>            m_uniformNames;
