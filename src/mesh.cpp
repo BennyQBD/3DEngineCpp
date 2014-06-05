@@ -18,32 +18,24 @@ bool IndexedModel::IsValid() const
 		&& m_normals.size() == m_tangents.size();
 }
 
-unsigned int IndexedModel::AddVertex(const Vector3f& vert)
+void IndexedModel::AddVertex(const Vector3f& vert)
 {
-	int result = m_positions.size();
 	m_positions.push_back(vert);
-	return result;
 }
 
-unsigned int IndexedModel::AddTexCoord(const Vector2f& texCoord)
+void IndexedModel::AddTexCoord(const Vector2f& texCoord)
 {
-	int result =  m_texCoords.size();
 	m_texCoords.push_back(texCoord);
-	return result;
 }
 
-unsigned int IndexedModel::AddNormal(const Vector3f& normal)
+void IndexedModel::AddNormal(const Vector3f& normal)
 {
-	int result =  m_normals.size();
 	m_normals.push_back(normal);
-	return result;
 }
 	
-unsigned int IndexedModel::AddTangent(const Vector3f& tangent)
+void IndexedModel::AddTangent(const Vector3f& tangent)
 {
-	int result =  m_tangents.size();
 	m_tangents.push_back(tangent);
-	return result;
 }
 
 IndexedModel IndexedModel::Finalize()
@@ -53,19 +45,11 @@ IndexedModel IndexedModel::Finalize()
 		return *this;
 	}
 	
-	if(m_texCoords.size() < m_positions.size())
+	if(m_texCoords.size() == 0)
 	{
 		for(unsigned int i = m_texCoords.size(); i < m_positions.size(); i++)
 		{
 			m_texCoords.push_back(Vector2f(0.0f, 0.0f));
-		}
-	}
-	
-	if(m_indices.size() == 0)
-	{
-		for(unsigned int i = 0; i < m_positions.size(); i++)
-		{
-			m_indices.push_back(i);
 		}
 	}
 	
@@ -82,13 +66,11 @@ IndexedModel IndexedModel::Finalize()
 	return *this;
 }
 
-unsigned int IndexedModel::AddFace(unsigned int vertIndex0, unsigned int vertIndex1, unsigned int vertIndex2)
+void IndexedModel::AddFace(unsigned int vertIndex0, unsigned int vertIndex1, unsigned int vertIndex2)
 {
-	int result = m_indices.size() / 3;
 	m_indices.push_back(vertIndex0);
 	m_indices.push_back(vertIndex1);
 	m_indices.push_back(vertIndex2);
-	return result;
 }
 
 void IndexedModel::CalcNormals()

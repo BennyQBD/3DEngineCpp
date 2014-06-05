@@ -26,19 +26,19 @@ public:
 
 	IndexedModel Finalize();
 
-	unsigned int AddVertex(const Vector3f& vert);
-	inline unsigned int AddVertex(float x, float y, float z) { return AddVertex(Vector3f(x, y, z)); }
+	void AddVertex(const Vector3f& vert);
+	inline void AddVertex(float x, float y, float z) { AddVertex(Vector3f(x, y, z)); }
 	
-	unsigned int AddTexCoord(const Vector2f& texCoord);
-	inline unsigned int AddTexCoord(float x, float y) { return AddTexCoord(Vector2f(x, y)); }
+	void AddTexCoord(const Vector2f& texCoord);
+	inline void AddTexCoord(float x, float y) { AddTexCoord(Vector2f(x, y)); }
 	
-	unsigned int AddNormal(const Vector3f& normal);
-	inline unsigned int AddNormal(float x, float y, float z) { return AddNormal(Vector3f(x, y, z)); }
+	void AddNormal(const Vector3f& normal);
+	inline void AddNormal(float x, float y, float z) { AddNormal(Vector3f(x, y, z)); }
 	
-	unsigned int AddTangent(const Vector3f& tangent);
-	inline unsigned int AddTangent(float x, float y, float z) { return AddTangent(Vector3f(x, y, z)); }
+	void AddTangent(const Vector3f& tangent);
+	inline void AddTangent(float x, float y, float z) { AddTangent(Vector3f(x, y, z)); }
 	
-	unsigned int AddFace(unsigned int vertIndex0, unsigned int vertIndex1, unsigned int vertIndex2);
+	void AddFace(unsigned int vertIndex0, unsigned int vertIndex1, unsigned int vertIndex2);
 
 	inline const std::vector<unsigned int>& GetIndices() const { return m_indices; }
 	inline const std::vector<Vector3f>& GetPositions()   const { return m_positions; }
