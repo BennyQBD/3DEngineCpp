@@ -11,5 +11,6 @@
 #include "window.h"
 #include "coreEngine.h"
 #include "game.h"
+#undef main
 
 #endif // 3DENGINE_H_INCLUDED
