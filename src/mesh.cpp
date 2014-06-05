@@ -11,25 +11,235 @@
 
 std::map<std::string, MeshData*> Mesh::s_resourceMap;
 
-MeshData::MeshData(int indexSize) : 
-	ReferenceCounter(),
-	m_size(indexSize)
+bool IndexedModel::IsValid() const
 {
-	glGenBuffers(1, &m_vbo);
-	glGenBuffers(1, &m_ibo);
+	return m_positions.size() == m_texCoords.size()
+		&& m_texCoords.size() == m_normals.size()
+		&& m_normals.size() == m_tangents.size();
+}
+
+unsigned int IndexedModel::AddVertex(const Vector3f& vert)
+{
+	int result = m_positions.size();
+	m_positions.push_back(vert);
+	return result;
+}
+
+unsigned int IndexedModel::AddTexCoord(const Vector2f& texCoord)
+{
+	int result =  m_texCoords.size();
+	m_texCoords.push_back(texCoord);
+	return result;
+}
+
+unsigned int IndexedModel::AddNormal(const Vector3f& normal)
+{
+	int result =  m_normals.size();
+	m_normals.push_back(normal);
+	return result;
+}
+	
+unsigned int IndexedModel::AddTangent(const Vector3f& tangent)
+{
+	int result =  m_tangents.size();
+	m_tangents.push_back(tangent);
+	return result;
+}
+
+IndexedModel IndexedModel::Finalize()
+{
+	if(IsValid())
+	{
+		return *this;
+	}
+	
+	if(m_texCoords.size() < m_positions.size())
+	{
+		for(unsigned int i = m_texCoords.size(); i < m_positions.size(); i++)
+		{
+			m_texCoords.push_back(Vector2f(0.0f, 0.0f));
+		}
+	}
+	
+	if(m_indices.size() == 0)
+	{
+		for(unsigned int i = 0; i < m_positions.size(); i++)
+		{
+			m_indices.push_back(i);
+		}
+	}
+	
+	if(m_normals.size() == 0)
+	{
+		CalcNormals();
+	}
+	
+	if(m_tangents.size() == 0)
+	{
+		CalcTangents();
+	}
+	
+	return *this;
+}
+
+unsigned int IndexedModel::AddFace(unsigned int vertIndex0, unsigned int vertIndex1, unsigned int vertIndex2)
+{
+	int result = m_indices.size() / 3;
+	m_indices.push_back(vertIndex0);
+	m_indices.push_back(vertIndex1);
+	m_indices.push_back(vertIndex2);
+	return result;
+}
+
+void IndexedModel::CalcNormals()
+{
+	m_normals.clear();
+	m_normals.reserve(m_positions.size());
+	
+	for(unsigned int i = 0; i < m_positions.size(); i++)
+		m_normals.push_back(Vector3f(0,0,0));
+
+	for(unsigned int i = 0; i < m_indices.size(); i += 3)
+	{
+		int i0 = m_indices[i];
+		int i1 = m_indices[i + 1];
+		int i2 = m_indices[i + 2];
+			
+		Vector3f v1 = m_positions[i1] - m_positions[i0];
+		Vector3f v2 = m_positions[i2] - m_positions[i0];
+		
+		Vector3f normal = v1.Cross(v2).Normalized();
+		
+		m_normals[i0] = m_normals[i0] + normal;
+		m_normals[i1] = m_normals[i1] + normal;
+		m_normals[i2] = m_normals[i2] + normal;
+	}
+	
+	for(unsigned int i = 0; i < m_normals.size(); i++)
+		m_normals[i] = m_normals[i].Normalized();
+}
+
+void IndexedModel::CalcTangents()
+{
+	m_tangents.clear();
+	m_tangents.reserve(m_positions.size());
+	
+	for(unsigned int i = 0; i < m_positions.size(); i++)
+		m_tangents.push_back(Vector3f(0,0,0));
+		
+	for(unsigned int i = 0; i < m_indices.size(); i += 3)
+    {
+		int i0 = m_indices[i];
+		int i1 = m_indices[i + 1];
+		int i2 = m_indices[i + 2];
+    
+        Vector3f edge1 = m_positions[i1] - m_positions[i0];
+        Vector3f edge2 = m_positions[i2] - m_positions[i0];
+        
+        float deltaU1 = m_texCoords[i1].GetX() - m_texCoords[i0].GetX();
+        float deltaU2 = m_texCoords[i2].GetX() - m_texCoords[i0].GetX();
+        float deltaV1 = m_texCoords[i1].GetY() - m_texCoords[i0].GetY();
+        float deltaV2 = m_texCoords[i2].GetY() - m_texCoords[i0].GetY();
+        
+        float dividend = (deltaU1 * deltaV2 - deltaU2 * deltaV1);
+        float f = dividend == 0.0f ? 0.0f : 1.0f/dividend;
+        
+        Vector3f tangent = Vector3f(0,0,0);
+        
+        tangent.SetX(f * (deltaV2 * edge1.GetX() - deltaV1 * edge2.GetX()));
+        tangent.SetY(f * (deltaV2 * edge1.GetY() - deltaV1 * edge2.GetY()));
+        tangent.SetZ(f * (deltaV2 * edge1.GetZ() - deltaV1 * edge2.GetZ()));
+
+//Bitangent example, in Java
+//		Vector3f bitangent = new Vector3f(0,0,0);
+//		
+//		bitangent.setX(f * (-deltaU2 * edge1.getX() - deltaU1 * edge2.getX()));
+//		bitangent.setX(f * (-deltaU2 * edge1.getY() - deltaU1 * edge2.getY()));
+//		bitangent.setX(f * (-deltaU2 * edge1.getZ() - deltaU1 * edge2.getZ()));
+
+		m_tangents[i0] += tangent;
+		m_tangents[i1] += tangent;
+		m_tangents[i2] += tangent;	
+    }
+
+    for(unsigned int i = 0; i < m_tangents.size(); i++)
+		m_tangents[i] = m_tangents[i].Normalized();
+}
+
+
+MeshData::MeshData(const IndexedModel& model) : 
+	ReferenceCounter(),
+	m_drawCount(model.GetIndices().size())
+{
+	if(!model.IsValid())
+	{
+		std::cout << "Error: Invalid mesh! Must have same number of positions, texCoords, normals, and tangents! "
+			<< "(Maybe you forgot to Finalize() your IndexedModel?)" << std::endl;
+		assert(0 != 0);
+	}
+	glGenVertexArrays(1, &m_vertexArrayObject);
+	glBindVertexArray(m_vertexArrayObject);
+
+	glGenBuffers(NUM_BUFFERS, m_vertexArrayBuffers);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[POSITION_VB]);
+	glBufferData(GL_ARRAY_BUFFER, model.GetPositions().size() * sizeof(model.GetPositions()[0]), &model.GetPositions()[0], GL_STATIC_DRAW);
+	
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[TEXCOORD_VB]);
+	glBufferData(GL_ARRAY_BUFFER, model.GetTexCoords().size() * sizeof(model.GetTexCoords()[0]), &model.GetTexCoords()[0], GL_STATIC_DRAW);
+	
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[NORMAL_VB]);
+	glBufferData(GL_ARRAY_BUFFER, model.GetNormals().size() * sizeof(model.GetNormals()[0]), &model.GetNormals()[0], GL_STATIC_DRAW);
+	
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexArrayBuffers[TANGENT_VB]);
+	glBufferData(GL_ARRAY_BUFFER, model.GetTangents().size() * sizeof(model.GetTangents()[0]), &model.GetTangents()[0], GL_STATIC_DRAW);
+	
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexArrayBuffers[INDEX_VB]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.GetIndices().size() * sizeof(model.GetIndices()[0]), &model.GetIndices()[0], GL_STATIC_DRAW);
+	
+	glBindVertexArray(0);
 }
 
 MeshData::~MeshData() 
 { 
-	if(m_vbo) glDeleteBuffers(1, &m_vbo);
-	if(m_ibo) glDeleteBuffers(1, &m_ibo);
+	glDeleteVertexArrays(1, &m_vertexArrayObject);
+}
+
+void MeshData::Draw() const
+{
+	glBindVertexArray(m_vertexArrayObject);
+	
+	glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
+	
+	glBindVertexArray(0);
 }
 
 
-Mesh::Mesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals) :
-	m_fileName("")
+Mesh::Mesh(const std::string& meshName, const IndexedModel& model) :
+	m_fileName(meshName)
 {
-	InitMesh(vertices, vertSize, indices, indexSize, calcNormals);
+	std::map<std::string, MeshData*>::const_iterator it = s_resourceMap.find(meshName);
+	if(it != s_resourceMap.end())
+	{
+		std::cout << "Error adding mesh " << meshName << ": Mesh already exists by the same name!" << std::endl;
+		assert(0 != 0);
+	}
+	else
+	{
+		m_meshData = new MeshData(model);
+		s_resourceMap.insert(std::pair<std::string, MeshData*>(meshName, m_meshData));
+	}
 }
 
 Mesh::Mesh(const std::string& fileName) :
@@ -60,8 +270,11 @@ Mesh::Mesh(const std::string& fileName) :
 		
 		const aiMesh* model = scene->mMeshes[0];
 		
-		std::vector<Vertex> vertices;
-		std::vector<int> indices;
+		std::vector<Vector3f> positions;
+		std::vector<Vector2f> texCoords;
+		std::vector<Vector3f> normals;
+		std::vector<Vector3f> tangents;
+		std::vector<unsigned int> indices;
 
 		const aiVector3D aiZeroVector(0.0f, 0.0f, 0.0f);
 		for(unsigned int i = 0; i < model->mNumVertices; i++) 
@@ -71,12 +284,10 @@ Mesh::Mesh(const std::string& fileName) :
 			const aiVector3D texCoord = model->HasTextureCoords(0) ? model->mTextureCoords[0][i] : aiZeroVector;
 			const aiVector3D tangent = model->mTangents[i];
 
-			Vertex vert(Vector3f(pos.x, pos.y, pos.z),
-					    Vector2f(texCoord.x, texCoord.y),
-					    Vector3f(normal.x, normal.y, normal.z),
-					    Vector3f(tangent.x, tangent.y, tangent.z));
-			
-			vertices.push_back(vert);
+			positions.push_back(Vector3f(pos.x, pos.y, pos.z));
+			texCoords.push_back(Vector2f(texCoord.x, texCoord.y));
+			normals.push_back(Vector3f(normal.x, normal.y, normal.z));
+			tangents.push_back(Vector3f(tangent.x, tangent.y, tangent.z));
 		}
 
 		for(unsigned int i = 0; i < model->mNumFaces; i++)
@@ -88,8 +299,7 @@ Mesh::Mesh(const std::string& fileName) :
 			indices.push_back(face.mIndices[2]);
 		}
 		
-		InitMesh(&vertices[0], vertices.size(), (int*)&indices[0], indices.size(), false);
-		
+		m_meshData = new MeshData(IndexedModel(indices, positions, texCoords, normals, tangents));
 		s_resourceMap.insert(std::pair<std::string, MeshData*>(fileName, m_meshData));
 	}
 }
@@ -114,62 +324,7 @@ Mesh::~Mesh()
 	}
 }
 
-void Mesh::InitMesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals)
-{
-	m_meshData = new MeshData(indexSize);
-
-	if(calcNormals)
-	{
-		CalcNormals(vertices, vertSize, indices, indexSize);
-	}
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_meshData->GetVBO());
-	glBufferData(GL_ARRAY_BUFFER, vertSize * sizeof(Vertex), vertices, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_meshData->GetIBO());
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * sizeof(int), indices, GL_STATIC_DRAW);
-}
-
 void Mesh::Draw() const
 {
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_meshData->GetVBO());
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(Vector3f));
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vector3f) + sizeof(Vector2f)));
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(Vector3f) + sizeof(Vector2f) + sizeof(Vector3f)));
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_meshData->GetIBO());
-	glDrawElements(GL_TRIANGLES, m_meshData->GetSize(), GL_UNSIGNED_INT, 0);
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(3);
-}
-
-void Mesh::CalcNormals(Vertex* vertices, int vertSize, int* indices, int indexSize) const
-{
-	for(int i = 0; i < indexSize; i += 3)
-	{
-		int i0 = indices[i];
-		int i1 = indices[i + 1];
-		int i2 = indices[i + 2];
-			
-		Vector3f v1 = vertices[i1].GetPos() - vertices[i0].GetPos();
-		Vector3f v2 = vertices[i2].GetPos() - vertices[i0].GetPos();
-		
-		Vector3f normal = v1.Cross(v2).Normalized();
-		
-		vertices[i0].SetNormal(vertices[i0].GetNormal() + normal);
-		vertices[i1].SetNormal(vertices[i1].GetNormal() + normal);
-		vertices[i2].SetNormal(vertices[i2].GetNormal() + normal);
-	}
-	
-	for(int i = 0; i < vertSize; i++)
-		vertices[i].SetNormal(vertices[i].GetNormal().Normalized());
+	m_meshData->Draw();
 }

@@ -1,35 +1,92 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "vertex.h"
+#include "math3d.h"
 #include "referenceCounter.h"
 #include <string>
+#include <vector>
 #include <map>
+#include <GL/glew.h>
+
+class IndexedModel
+{
+public:
+	IndexedModel() {}
+	IndexedModel(const std::vector<unsigned int> indices, const std::vector<Vector3f>& positions, const std::vector<Vector2f>& texCoords,
+		const std::vector<Vector3f>& normals = std::vector<Vector3f>(), const std::vector<Vector3f>& tangents = std::vector<Vector3f>()) :
+			m_indices(indices),
+			m_positions(positions),
+			m_texCoords(texCoords),
+			m_normals(normals),
+			m_tangents(tangents) {}
+
+	bool IsValid() const;
+	void CalcNormals();
+	void CalcTangents();
+
+	IndexedModel Finalize();
+
+	unsigned int AddVertex(const Vector3f& vert);
+	inline unsigned int AddVertex(float x, float y, float z) { return AddVertex(Vector3f(x, y, z)); }
+	
+	unsigned int AddTexCoord(const Vector2f& texCoord);
+	inline unsigned int AddTexCoord(float x, float y) { return AddTexCoord(Vector2f(x, y)); }
+	
+	unsigned int AddNormal(const Vector3f& normal);
+	inline unsigned int AddNormal(float x, float y, float z) { return AddNormal(Vector3f(x, y, z)); }
+	
+	unsigned int AddTangent(const Vector3f& tangent);
+	inline unsigned int AddTangent(float x, float y, float z) { return AddTangent(Vector3f(x, y, z)); }
+	
+	unsigned int AddFace(unsigned int vertIndex0, unsigned int vertIndex1, unsigned int vertIndex2);
+
+	inline const std::vector<unsigned int>& GetIndices() const { return m_indices; }
+	inline const std::vector<Vector3f>& GetPositions()   const { return m_positions; }
+	inline const std::vector<Vector2f>& GetTexCoords()   const { return m_texCoords; }
+	inline const std::vector<Vector3f>& GetNormals()     const { return m_normals; }
+	inline const std::vector<Vector3f>& GetTangents()    const { return m_tangents; }
+private:
+	std::vector<unsigned int> m_indices;
+    std::vector<Vector3f> m_positions;
+    std::vector<Vector2f> m_texCoords;
+    std::vector<Vector3f> m_normals;
+    std::vector<Vector3f> m_tangents;  
+};
 
 class MeshData : public ReferenceCounter
 {
 public:
-	MeshData(int indexSize);
+	MeshData(const IndexedModel& model);
 	virtual ~MeshData();
 	
-	inline unsigned int GetVBO() const { return m_vbo; }
-	inline unsigned int GetIBO() const { return m_ibo; }
-	inline int GetSize()         const { return m_size; }
+	void Draw() const;
 protected:	
 private:
 	MeshData(MeshData& other) {}
 	void operator=(MeshData& other) {}
 
-	unsigned int m_vbo;
-	unsigned int m_ibo;
-	int m_size;
+	enum
+	{
+		POSITION_VB,
+		TEXCOORD_VB,
+		NORMAL_VB,
+		TANGENT_VB,
+		
+		INDEX_VB,
+		
+		NUM_BUFFERS
+	};
+	
+	GLuint m_vertexArrayObject;
+	GLuint m_vertexArrayBuffers[NUM_BUFFERS];
+	int m_drawCount;
 };
 
 class Mesh
 {
 public:
 	Mesh(const std::string& fileName = "cube.obj");
-	Mesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals);
+	Mesh(const std::string& meshName, const IndexedModel& model);
 	Mesh(const Mesh& mesh);
 	virtual ~Mesh();
 
@@ -38,13 +95,31 @@ protected:
 private:
 	static std::map<std::string, MeshData*> s_resourceMap;
 
-	void CalcNormals(Vertex* vertices, int vertSize, int* indices, int indexSize) const;
-	void InitMesh(Vertex* vertices, int vertSize, int* indices, int indexSize, bool calcNormals = true);
-
 	std::string m_fileName;
 	MeshData* m_meshData;
 	
 	void operator=(Mesh& mesh) {}
 };
+
+//class MeshBuilder
+//{
+//public:
+//	MeshBuilder() {}
+//	
+//	void AddVertex(const Vector3f& vert);
+////	inline void AddVertex(float x, float y, float z) { AddVertex(Vector3f(x, y, z)); }
+//	
+//	void AddTexCoord(const Vector2f& texCoord);
+////	inline void AddTexCoord(float x, float y) { AddTexCoord(Vector2f(x, y)); }
+//	
+//	void AddFace(unsigned int vertIndex0, unsigned int vertIndex1, unsigned int vertIndex2);
+//	
+//	Mesh FinalizeMesh(const std::string& meshName);
+//	
+//	inline IndexedModel* GetModel() { return &m_model; }
+//protected:
+//private:
+//	IndexedModel m_model;
+//};
 
 #endif
