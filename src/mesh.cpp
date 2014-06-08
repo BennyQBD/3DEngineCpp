@@ -189,8 +189,6 @@ MeshData::MeshData(const IndexedModel& model) :
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vertexArrayBuffers[INDEX_VB]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.GetIndices().size() * sizeof(model.GetIndices()[0]), &model.GetIndices()[0], GL_STATIC_DRAW);
-	
-	glBindVertexArray(0);
 }
 
 MeshData::~MeshData() 
@@ -201,10 +199,7 @@ MeshData::~MeshData()
 void MeshData::Draw() const
 {
 	glBindVertexArray(m_vertexArrayObject);
-	
 	glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
-	
-	glBindVertexArray(0);
 }
 
 

@@ -45,6 +45,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_DEPTH_CLAMP);
+	glEnable(GL_MULTISAMPLE);
 
 	m_altCamera = new Camera(Matrix4f().InitIdentity());
 	m_altCameraObject.AddComponent(m_altCamera);
