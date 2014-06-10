@@ -46,7 +46,7 @@ void TestGame::Init(const Window& window)
 		->AddChild((new GameObject(Vector3f(0, 0, 25)))
 			->AddComponent(new MeshRenderer(Mesh("plane3.obj"), Material("bricks2")))
 			->AddChild((new GameObject())
-				->AddComponent(new Camera(Matrix4f().InitPerspective(ToRadians(70.0f), window.GetAspect(), 0.1f, 1000.0f)))
+				->AddComponent(new CameraComponent(Matrix4f().InitPerspective(ToRadians(70.0f), window.GetAspect(), 0.1f, 1000.0f)))
 				->AddComponent(new FreeLook(window.GetCenter()))
 				->AddComponent(new FreeMove()))));
 	
@@ -63,6 +63,31 @@ int main()
 	CoreEngine engine(800, 600, 60, &game);
 	engine.CreateWindow("3D Game Engine");
 	engine.Start();
+
+//	Window window(800, 600, "My Window");
+//	RenderingEngine engine(window);
+//	
+//	Material bricks2("bricks2", Texture("bricks2.jpg"), 1, 8, Texture("bricks2_normal.png"), Texture("bricks2_disp.jpg"), 0.04f, -1.0f);
+//	GameObject root;
+//	Transform cameraTransform;
+//	Camera camera(Matrix4f().InitPerspective(ToRadians(70.0f), window.GetAspect(), 0.1f, 1000.0f), &cameraTransform);
+//	
+//	root.AddChild((new GameObject(Vector3f(0, 2, 0), Quaternion(Vector3f(0,1,0), 0.4f), 1.0f))
+//		->AddComponent(new MeshRenderer(Mesh("plane3.obj"), Material("bricks2")))
+//		->AddChild((new GameObject(Vector3f(0, 0, 25)))
+//			->AddComponent(new MeshRenderer(Mesh("plane3.obj"), Material("bricks2")))
+//			//->AddChild((new GameObject())
+//				->AddComponent(new FreeLook(window.GetCenter()))
+//				->AddComponent(new FreeMove())));
+//	
+//	while(!window.IsCloseRequested())
+//	{
+//		window.Update();
+//		root.ProcessInputAll(window.GetInput(), 0.01f);
+//		root.UpdateAll(0.01f);
+//		engine.Render(root, camera);
+//		window.SwapBuffers();
+//	}
 	
 	return 0;
 }

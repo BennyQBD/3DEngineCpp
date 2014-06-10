@@ -9,6 +9,7 @@
 #include "math3d.h"
 #include "material.h"
 #include "transform.h"
+#include "camera.h"
 
 class RenderingEngine;
 class DirectionalLight;
@@ -83,7 +84,7 @@ public:
 	virtual ~Shader();
 
 	void Bind() const;
-	virtual void UpdateUniforms(const Transform& transform, const Material& material, const RenderingEngine& renderingEngine) const;
+	virtual void UpdateUniforms(const Transform& transform, const Material& material, const RenderingEngine& renderingEngine, const Camera& camera) const;
 
 	void SetUniformi(const std::string& uniformName, int value) const;
 	void SetUniformf(const std::string& uniformName, float value) const;

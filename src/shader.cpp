@@ -129,10 +129,10 @@ void Shader::Bind() const
 	glUseProgram(m_shaderData->GetProgram());
 }
 
-void Shader::UpdateUniforms(const Transform& transform, const Material& material, const RenderingEngine& renderingEngine) const
+void Shader::UpdateUniforms(const Transform& transform, const Material& material, const RenderingEngine& renderingEngine, const Camera& camera) const
 {
 	Matrix4f worldMatrix = transform.GetTransformation();
-	Matrix4f projectedMatrix = renderingEngine.GetMainCamera().GetViewProjection() * worldMatrix;
+	Matrix4f projectedMatrix = camera.GetViewProjection() * worldMatrix;
 	
 	for(unsigned int i = 0; i < m_shaderData->GetUniformNames().size(); i++)
 	{
@@ -182,7 +182,7 @@ void Shader::UpdateUniforms(const Transform& transform, const Material& material
 		else if(uniformName.substr(0, 2) == "C_")
 		{
 			if(uniformName == "C_eyePos")
-				SetUniformVector3f(uniformName, renderingEngine.GetMainCamera().GetTransform().GetTransformedPos());
+				SetUniformVector3f(uniformName, camera.GetTransform().GetTransformedPos());
 			else
 				throw "Invalid Camera Uniform: " + uniformName;
 		}

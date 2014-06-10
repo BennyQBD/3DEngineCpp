@@ -98,7 +98,7 @@ void CoreEngine::Run()
 
 		if(render)
 		{
-			m_game->Render(m_renderingEngine);
+			m_game->Render(m_renderingEngine, *m_mainCamera);
 			m_window->SwapBuffers();
 			frames++;
 		}

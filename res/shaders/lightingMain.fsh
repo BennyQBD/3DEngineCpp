@@ -1,9 +1,22 @@
 #include "sampling.glh"
 
+bool InRange(float val)
+{
+	return val >= 0.0 && val <= 1.0;
+}
+
 float CalcShadowAmount(sampler2D shadowMap, vec4 initialShadowMapCoords)
 {
 	vec3 shadowMapCoords = (initialShadowMapCoords.xyz/initialShadowMapCoords.w);
-	return SampleVarianceShadowMap(shadowMap, shadowMapCoords.xy, shadowMapCoords.z, R_shadowVarianceMin, R_shadowLightBleedingReduction);
+	
+	if(InRange(shadowMapCoords.z) && InRange(shadowMapCoords.x) && InRange(shadowMapCoords.y))
+	{
+		return SampleVarianceShadowMap(shadowMap, shadowMapCoords.xy, shadowMapCoords.z, R_shadowVarianceMin, R_shadowLightBleedingReduction);
+	}
+	else
+	{
+		return 1.0;
+	}
 }
 
 void main()

@@ -11,10 +11,10 @@ public:
 		m_mesh(mesh),
 		m_material(material) {}
 
-	virtual void Render(const Shader& shader, const RenderingEngine& renderingEngine) const
+	virtual void Render(const Shader& shader, const RenderingEngine& renderingEngine, const Camera& camera) const
 	{
 		shader.Bind();
-		shader.UpdateUniforms(GetTransform(), m_material, renderingEngine);
+		shader.UpdateUniforms(GetTransform(), m_material, renderingEngine, camera);
 		m_mesh.Draw();
 	}
 protected:

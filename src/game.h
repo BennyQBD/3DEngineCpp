@@ -3,6 +3,7 @@
 
 #include "gameObject.h"
 #include "coreEngine.h"
+#include "camera.h"
 
 class Game
 {
@@ -13,7 +14,7 @@ public:
 	virtual void Init(const Window& window) {}
 	void ProcessInput(const Input& input, float delta);
 	void Update(float delta);
-	void Render(RenderingEngine* renderingEngine);
+	void Render(RenderingEngine* renderingEngine, const Camera& camera);
 	
 	inline void SetEngine(CoreEngine* engine) { m_root.SetEngine(engine); }
 protected:

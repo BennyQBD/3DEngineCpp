@@ -12,7 +12,13 @@ Matrix4f Camera::GetViewProjection() const
 	return m_projection * cameraRotation * cameraTranslation;
 }
 
-void Camera::AddToEngine(CoreEngine* engine) const
+void CameraComponent::AddToEngine(CoreEngine* engine) const
 {
-	engine->GetRenderingEngine()->AddCamera(*this);
+	engine->SetCamera(m_camera);
+}
+
+void CameraComponent::SetParent(GameObject* parent)
+{
+	GameComponent::SetParent(parent);
+	m_camera.SetTransform(GetTransform());
 }

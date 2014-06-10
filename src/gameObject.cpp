@@ -56,13 +56,13 @@ void GameObject::UpdateAll(float delta)
 	}
 }
 
-void GameObject::RenderAll(const Shader& shader, const RenderingEngine& renderingEngine) const
+void GameObject::RenderAll(const Shader& shader, const RenderingEngine& renderingEngine, const Camera& camera) const
 {
-	Render(shader, renderingEngine);
+	Render(shader, renderingEngine, camera);
 
 	for(unsigned int i = 0; i < m_children.size(); i++)
 	{
-		m_children[i]->RenderAll(shader, renderingEngine);
+		m_children[i]->RenderAll(shader, renderingEngine, camera);
 	}
 }
 
@@ -84,11 +84,11 @@ void GameObject::Update(float delta)
 	}
 }
 
-void GameObject::Render(const Shader& shader, const RenderingEngine& renderingEngine) const
+void GameObject::Render(const Shader& shader, const RenderingEngine& renderingEngine, const Camera& camera) const
 {
 	for(unsigned int i = 0; i < m_components.size(); i++)
 	{
-		m_components[i]->Render(shader, renderingEngine);
+		m_components[i]->Render(shader, renderingEngine, camera);
 	}
 }
 
