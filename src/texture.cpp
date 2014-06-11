@@ -41,8 +41,8 @@ void TextureData::InitTextures(unsigned char** data, GLfloat* filters, GLenum* i
 		
 		if(clamp)
 		{
-			glTexParameterf(m_textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP);
-			glTexParameterf(m_textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			glTexParameterf(m_textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameterf(m_textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		}
 		
 		glTexImage2D(m_textureTarget, 0, internalFormat[i], m_width, m_height, 0, format[i], GL_UNSIGNED_BYTE, data[i]);
