@@ -28,6 +28,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	m_shadowMapShader("shadowMapGenerator"),
 	m_nullFilter("filter-null"),
 	m_gausBlurFilter("filter-gausBlur7x1"),
+	m_fxaaFilter("filter-fxaa"),
 	m_altCameraTransform(Vector3f(0,0,0), Quaternion(Vector3f(0,1,0),ToRadians(180.0f))),
 	m_altCamera(Matrix4f().InitIdentity(), &m_altCameraTransform)
 {
@@ -39,6 +40,12 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	SetSamplerSlot("filterTexture", 0);
 	
 	SetVector3f("ambient", Vector3f(0.2f, 0.2f, 0.2f));
+	
+	SetFloat("fxaaSpanMax", 8.0f);
+	SetFloat("fxaaReduceMin", 1.0f/128.0f);
+	SetFloat("fxaaReduceMul", 1.0f/4.0f);
+
+	SetTexture("displayTexture", Texture(m_window->GetWidth(), m_window->GetHeight(), 0, GL_TEXTURE_2D, GL_NEAREST, GL_RGBA, GL_RGBA, false, GL_COLOR_ATTACHMENT0));
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -47,7 +54,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_DEPTH_CLAMP);
-	glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_MULTISAMPLE);
 	                  
 	//m_planeMaterial("renderingEngine_filterPlane", m_tempTarget, 1, 8);
 	m_planeTransform.SetScale(1.0f);
@@ -67,22 +74,22 @@ RenderingEngine::RenderingEngine(const Window& window) :
 void RenderingEngine::BlurShadowMap(int shadowMapIndex, float blurAmount)
 {
 	SetVector3f("blurScale", Vector3f(blurAmount/(m_shadowMaps[shadowMapIndex].GetWidth()), 0.0f, 0.0f));
-	ApplyFilter(m_gausBlurFilter, m_shadowMaps[shadowMapIndex], m_shadowMapTempTargets[shadowMapIndex]);
+	ApplyFilter(m_gausBlurFilter, m_shadowMaps[shadowMapIndex], &m_shadowMapTempTargets[shadowMapIndex]);
 	
 	SetVector3f("blurScale", Vector3f(0.0f, blurAmount/(m_shadowMaps[shadowMapIndex].GetHeight()), 0.0f));
-	ApplyFilter(m_gausBlurFilter, m_shadowMapTempTargets[shadowMapIndex], m_shadowMaps[shadowMapIndex]);
+	ApplyFilter(m_gausBlurFilter, m_shadowMapTempTargets[shadowMapIndex], &m_shadowMaps[shadowMapIndex]);
 }
 
-void RenderingEngine::ApplyFilter(const Shader& filter, const Texture& source, const Texture& dest)
+void RenderingEngine::ApplyFilter(const Shader& filter, const Texture& source, const Texture* dest)
 {
-	assert(source != dest);
+	assert(&source != dest);
 	if(dest == 0)
 	{
 		m_window->BindAsRenderTarget();
 	}
 	else
 	{
-		dest.BindAsRenderTarget();
+		dest->BindAsRenderTarget();
 	}
 	
 	SetTexture("filterTexture", source);
@@ -105,7 +112,8 @@ void RenderingEngine::ApplyFilter(const Shader& filter, const Texture& source, c
 
 void RenderingEngine::Render(const GameObject& object, const Camera& mainCamera)
 {
-	m_window->BindAsRenderTarget();
+	GetTexture("displayTexture").BindAsRenderTarget();
+	//m_window->BindAsRenderTarget();
 	//m_tempTarget->BindAsRenderTarget();
 
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -172,7 +180,8 @@ void RenderingEngine::Render(const GameObject& object, const Camera& mainCamera)
 			SetFloat("shadowLightBleedingReduction", 0.0f);
 		}
 	
-		m_window->BindAsRenderTarget();
+		GetTexture("displayTexture").BindAsRenderTarget();
+		//m_window->BindAsRenderTarget();
 		
 //		glEnable(GL_SCISSOR_TEST);
 //		TODO: Make use of scissor test to limit light area
@@ -191,4 +200,7 @@ void RenderingEngine::Render(const GameObject& object, const Camera& mainCamera)
 		
 //		glDisable(GL_SCISSOR_TEST);
 	}
+	
+	SetVector3f("inverseFilterTextureSize", Vector3f(1.0f/GetTexture("displayTexture").GetWidth(), 1.0f/GetTexture("displayTexture").GetHeight(), 0.0f));
+	ApplyFilter(m_fxaaFilter, GetTexture("displayTexture"), 0);
 }

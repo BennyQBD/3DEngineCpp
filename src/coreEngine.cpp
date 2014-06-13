@@ -74,7 +74,8 @@ void CoreEngine::Run()
 
 		if(frameCounter >= 1.0)
 		{
-			printf("%i\n",frames);
+			//printf("%i\n",frames);
+			printf("%f ms\n",1000.0/((double)frames));
 			frames = 0;
 			frameCounter = 0;
 		}

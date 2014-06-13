@@ -52,6 +52,7 @@ private:
 	Shader                              m_shadowMapShader;
 	Shader                              m_nullFilter;
 	Shader                              m_gausBlurFilter;
+	Shader                              m_fxaaFilter;
 	Matrix4f                            m_lightMatrix;
 	
 	Transform                           m_altCameraTransform;
@@ -61,7 +62,7 @@ private:
 	std::map<std::string, unsigned int> m_samplerMap;
 	
 	void BlurShadowMap(int shadowMapIndex, float blurAmount);
-	void ApplyFilter(const Shader& filter, const Texture& source, const Texture& dest);
+	void ApplyFilter(const Shader& filter, const Texture& source, const Texture* dest);
 	
 //	RenderingEngine(const RenderingEngine& other) {}
 //	void operator=(const RenderingEngine& other) {}
