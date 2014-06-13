@@ -1,4 +1,8 @@
 #version 120
+// FXAA shader, GLSL code adapted from:
+// http://horde3d.org/wiki/index.php5?title=Shading_Technique_-_FXAA
+// Whitepaper describing the technique:
+// http://developer.download.nvidia.com/assets/gamedev/files/sdk/11/FXAA_WhitePaper.pdf
 
 varying vec2 texCoord0;
 uniform sampler2D R_filterTexture;
