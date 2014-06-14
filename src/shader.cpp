@@ -273,7 +273,7 @@ void ShaderData::ConvertFragmentShaderToGLSL330(std::string* shaderText)
 
 	String_ReplaceAll(shaderText, "varying", "in");
 	String_ReplaceAll(shaderText, "texture2D", "texture");
-	String_FindAndReplace(shaderText, "gl_FragColor", "OUT_Fragment_Color");
+	String_ReplaceAll(shaderText, "gl_FragColor", "OUT_Fragment_Color");
 
 	std::string newFragout = "out vec4 OUT_Fragment_Color;\n";
 	size_t start = shaderText->find("\n");
