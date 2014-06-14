@@ -15,7 +15,7 @@ class RenderingEngine : public MappedValues
 {
 public:
 	RenderingEngine(const Window& window);
-//	virtual ~RenderingEngine() {}
+	virtual ~RenderingEngine() {}
 	
 	void Render(const GameObject& object, const Camera& mainCamera);
 	
@@ -64,8 +64,9 @@ private:
 	void BlurShadowMap(int shadowMapIndex, float blurAmount);
 	void ApplyFilter(const Shader& filter, const Texture& source, const Texture* dest);
 	
-//	RenderingEngine(const RenderingEngine& other) {}
-//	void operator=(const RenderingEngine& other) {}
+	RenderingEngine(const RenderingEngine& other) :
+		m_altCamera(Matrix4f(),0){}
+	void operator=(const RenderingEngine& other) {}
 };
 
 #endif // RENDERINGENGINE_H
