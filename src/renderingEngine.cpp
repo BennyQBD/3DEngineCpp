@@ -43,9 +43,9 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	
 	SetFloat("fxaaSpanMax", 8.0f);
 	SetFloat("fxaaReduceMin", 1.0f/128.0f);
-	SetFloat("fxaaReduceMul", 1.0f/8.0f);
+	SetFloat("fxaaReduceMul", 1.0f/4.0f);
 
-	SetTexture("displayTexture", Texture(m_window->GetWidth(), m_window->GetHeight(), 0, GL_TEXTURE_2D, GL_LINEAR, GL_RGBA, GL_RGBA, false, GL_COLOR_ATTACHMENT0));
+	SetTexture("displayTexture", Texture(m_window->GetWidth(), m_window->GetHeight(), 0, GL_TEXTURE_2D, GL_NEAREST, GL_RGBA, GL_RGBA, false, GL_COLOR_ATTACHMENT0));
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
