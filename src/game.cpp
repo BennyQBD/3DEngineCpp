@@ -12,7 +12,7 @@ void Game::Update(float delta)
 	m_root.UpdateAll(delta);
 }
 
-void Game::Render(RenderingEngine* renderingEngine, const Camera& camera)
+void Game::Render(RenderingEngine* renderingEngine)
 {
-	renderingEngine->Render(m_root, camera);
+	renderingEngine->Render(m_root);
 }

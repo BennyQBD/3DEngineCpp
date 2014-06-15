@@ -60,8 +60,10 @@ void TestGame::Init(const Window& window)
 int main()
 {
 	TestGame game;
-	CoreEngine engine(800, 600, 60, &game);
-	engine.CreateWindow("3D Game Engine");
+	Window window(800, 600, "3D Game Engine");
+	RenderingEngine renderer(window);
+	
+	CoreEngine engine(60, &window, &renderer, &game);
 	engine.Start();
 
 //	Window window(800, 600, "My Window");

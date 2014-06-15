@@ -7,27 +7,21 @@
 
 #include <stdio.h>
 
-CoreEngine::CoreEngine(int width, int height, double frameRate, Game* game) :
+CoreEngine::CoreEngine(double frameRate, Window* window, RenderingEngine* renderingEngine, Game* game) :
 	m_isRunning(false),
-	m_width(width),
-	m_height(height),
 	m_frameTime(1.0/frameRate),
-	m_game(game),
-	m_renderingEngine(NULL) 
+	m_window(window),
+	m_renderingEngine(renderingEngine),
+	m_game(game)
 {
+	//We're telling the game about this engine so it can send the engine any information it needs
+	//to the various subsystems.
 	m_game->SetEngine(this);
-}
 	
-CoreEngine::~CoreEngine()
-{
-	if(m_window) delete m_window;
-	if(m_renderingEngine) delete m_renderingEngine;
-}
-
-void CoreEngine::CreateWindow(const std::string& title)
-{
-	m_window = new Window(m_width, m_height, title);
-	m_renderingEngine = new RenderingEngine(*m_window);
+	//Game is initialized here because this is the point where all rendering systems
+	//are initialized, and so creating meshes/textures/etc. will not fail due
+	//to missing context.
+	m_game->Init(*m_window);
 }
 
 void CoreEngine::Start()
@@ -37,36 +31,19 @@ void CoreEngine::Start()
 		return;
 	}
 		
-	Run();
-}
-
-void CoreEngine::Stop()
-{
-	if(!m_isRunning)
-	{
-		return;
-	}
-		
-	m_isRunning = false;
-}
-
-void CoreEngine::Run()
-{
 	m_isRunning = true;
 
-	m_game->Init(*m_window);
-
-	double lastTime = Time::GetTime();
-	double unprocessedTime = 0;
-	double frameCounter = 0;
-	int frames = 0;
+	double lastTime = Time::GetTime(); //Current time at the start of the last frame
+	double frameCounter = 0;           //Total passed time since last frame counter display
+	double unprocessedTime = 0;        //Amount of passed time that the engine hasn't accounted for
+	int frames = 0;                    //Number of frames rendered since last
 
 	while(m_isRunning)
 	{
-		bool render = false;
+		bool render = false;           //Whether or not the game needs to be rerendered.
 
-		double startTime = Time::GetTime();
-		double passedTime = startTime - lastTime;
+		double startTime = Time::GetTime();       //Current time at the start of the frame.
+		double passedTime = startTime - lastTime; //Amount of passed time since last frame.
 		lastTime = startTime;
 
 		unprocessedTime += passedTime;
@@ -74,39 +51,63 @@ void CoreEngine::Run()
 
 		if(frameCounter >= 1.0)
 		{
+			//The framecounter code here is a temporary, basic profiling tool.
+			//When proper profiling tools are implemented, this should probably be removed.
+			
 			//printf("%i\n",frames);
 			printf("%f ms\n",1000.0/((double)frames));
 			frames = 0;
 			frameCounter = 0;
 		}
 
+		//The engine works on a fixed update system, where each update is 1/frameRate seconds of time.
+		//Because of this, there can be a situation where there is, for instance, a fixed update of 16ms, 
+		//but 20ms of actual time has passed. To ensure all time is accounted for, all passed time is
+		//stored in unprocessedTime, and then the engine processes as much time as it can. Any
+		//unaccounted time can then be processed later, since it will remain stored in unprocessedTime.
 		while(unprocessedTime > m_frameTime)
 		{
-			render = true;
-
+			m_window->Update();
+			
 			if(m_window->IsCloseRequested())
 			{
 				Stop();
 			}
-
-			m_window->Update();
-
+			
+			//Input must be processed here because the window may have found new
+			//input events from the OS when it updated. Since inputs can trigger
+			//new game actions, the game also needs to be updated immediately 
+			//afterwards.
 			m_game->ProcessInput(m_window->GetInput(), (float)m_frameTime);
 			m_game->Update((float)m_frameTime);
+			
+			//Since any updates can put onscreen objects in a new place, the flag
+			//must be set to rerender the scene.
+			render = true;
 
 			unprocessedTime -= m_frameTime;
 		}
 
 		if(render)
 		{
-			m_game->Render(m_renderingEngine, *m_mainCamera);
+			m_game->Render(m_renderingEngine);
+			
+			//The newly rendered image will be in the window's backbuffer,
+			//so the buffers must be swapped to display the new image.
 			m_window->SwapBuffers();
 			frames++;
 		}
 		else
 		{
+			//If no rendering is needed, sleep for some time so the OS
+			//can use the processor for other tasks.
 			Util::Sleep(1);
 		}
 	}
+}
+
+void CoreEngine::Stop()
+{
+	m_isRunning = false;
 }
 

@@ -115,7 +115,7 @@ void RenderingEngine::ApplyFilter(const Shader& filter, const Texture& source, c
 	SetTexture("filterTexture", 0);
 }
 
-void RenderingEngine::Render(const GameObject& object, const Camera& mainCamera)
+void RenderingEngine::Render(const GameObject& object)
 {
 	GetTexture("displayTexture").BindAsRenderTarget();
 	//m_window->BindAsRenderTarget();
@@ -123,7 +123,7 @@ void RenderingEngine::Render(const GameObject& object, const Camera& mainCamera)
 
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	object.RenderAll(m_defaultShader, *this, mainCamera);
+	object.RenderAll(m_defaultShader, *this, *m_mainCamera);
 	
 	for(unsigned int i = 0; i < m_lights.size(); i++)
 	{
@@ -144,8 +144,8 @@ void RenderingEngine::Render(const GameObject& object, const Camera& mainCamera)
 		if(shadowInfo.GetShadowMapSizeAsPowerOf2() != 0)
 		{
 			m_altCamera.SetProjection(shadowInfo.GetProjection());
-			ShadowCameraTransform shadowCameraTransform = m_activeLight->CalcShadowCameraTransform(mainCamera.GetTransform().GetTransformedPos(), 
-				mainCamera.GetTransform().GetTransformedRot());
+			ShadowCameraTransform shadowCameraTransform = m_activeLight->CalcShadowCameraTransform(m_mainCamera->GetTransform().GetTransformedPos(), 
+				m_mainCamera->GetTransform().GetTransformedRot());
 			m_altCamera.GetTransform()->SetPos(shadowCameraTransform.GetPos());
 			m_altCamera.GetTransform()->SetRot(shadowCameraTransform.GetRot());
 			
@@ -197,7 +197,7 @@ void RenderingEngine::Render(const GameObject& object, const Camera& mainCamera)
 		glDepthMask(GL_FALSE);
 		glDepthFunc(GL_EQUAL);
 
-		object.RenderAll(m_activeLight->GetShader(), *this, mainCamera);
+		object.RenderAll(m_activeLight->GetShader(), *this, *m_mainCamera);
 		
 		glDepthMask(GL_TRUE);
 		glDepthFunc(GL_LESS);

@@ -5,34 +5,24 @@
 #include <string>
 class Game;
 
+//This is the central part of the game engine. It's purpose is to manage interaction 
+//between the various sub-engines (such as the rendering and physics engines) and the game itself.
 class CoreEngine
 {
 public:
-	CoreEngine(int width, int height, double frameRate, Game* game);
-	virtual ~CoreEngine();
+	CoreEngine(double frameRate, Window* window, RenderingEngine* renderingEngine, Game* game);
 	
-	void CreateWindow(const std::string& title);
-	
-	void Start();
-	void Stop();
+	void Start(); //Starts running the game; contains central game loop.
+	void Stop();  //Stops running the game, and disables all subsystems.
 	
 	inline RenderingEngine* GetRenderingEngine() { return m_renderingEngine; }
-	void SetCamera(const Camera& camera) { m_mainCamera = &camera; }
 protected:
 private:
-	bool             m_isRunning;
-	int              m_width;
-	int              m_height;
-	double           m_frameTime;
-	Game*            m_game;
-	RenderingEngine* m_renderingEngine;
-	Window*          m_window;
-	const Camera*    m_mainCamera;
-	
-	void Run();
-	
-	CoreEngine(const CoreEngine& other) {}
-	void operator=(const CoreEngine& other) {}
+	bool             m_isRunning;       //Whether or not the engine is running
+	double           m_frameTime;       //How long, in seconds, one frame should take
+	Window*          m_window;          //Used to display the game
+	RenderingEngine* m_renderingEngine; //Used to render the game. Stored as pointer so the user can pass in a derived class.
+	Game*            m_game;            //The game itself. Stored as pointer so the user can pass in a derived class.
 };
 
 #endif // COREENGINE_H
