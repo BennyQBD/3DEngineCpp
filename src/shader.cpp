@@ -15,7 +15,7 @@
 // Variable Initializations
 //--------------------------------------------------------------------------------
 std::map<std::string, ShaderData*> Shader::s_resourceMap;
-int ShaderData::s_supportedGLSLLevel = 0;
+int ShaderData::s_supportedOpenGLLevel = 0;
 
 //--------------------------------------------------------------------------------
 // Forward declarations
@@ -42,7 +42,7 @@ ShaderData::ShaderData(const std::string& fileName)
         exit(1);
     }
     
-    if(s_supportedGLSLLevel == 0)
+    if(s_supportedOpenGLLevel == 0)
     {
 		int majorVersion;
 		int minorVersion;
@@ -50,13 +50,13 @@ ShaderData::ShaderData(const std::string& fileName)
 		glGetIntegerv(GL_MAJOR_VERSION, &majorVersion); 
 		glGetIntegerv(GL_MINOR_VERSION, &minorVersion);
 		
-		s_supportedGLSLLevel = majorVersion * 100 + minorVersion * 10;
+		s_supportedOpenGLLevel = majorVersion * 100 + minorVersion * 10;
 	}
     
     std::string vertexShaderText = LoadShader(fileName + ".vs");
     std::string fragmentShaderText = LoadShader(fileName + ".fs");
     
-    if(s_supportedGLSLLevel >= 320)
+    if(s_supportedOpenGLLevel >= 320)
     {
 		ConvertVertexShaderToGLSL150(&vertexShaderText);
 		ConvertFragmentShaderToGLSL150(&fragmentShaderText);
@@ -65,7 +65,7 @@ ShaderData::ShaderData(const std::string& fileName)
     AddVertexShader(vertexShaderText);
     AddFragmentShader(fragmentShaderText);
     
-    std::string attributeKeyword = s_supportedGLSLLevel < 320 ? "attribute" : "in";
+    std::string attributeKeyword = s_supportedOpenGLLevel < 320 ? "attribute" : "in";
     AddAllAttributes(vertexShaderText, attributeKeyword);
     
     CompileShader();

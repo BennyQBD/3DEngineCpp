@@ -30,7 +30,16 @@ void main()
 	float inverseDirAdjustment = 1.0/(min(abs(dir.x), abs(dir.y)) + dirReduce);
 	
 	dir = min(vec2(R_fxaaSpanMax, R_fxaaSpanMax), 
-		max(vec2(-R_fxaaSpanMax, -R_fxaaSpanMax), dir * inverseDirAdjustment)) * texCoordOffset;
+		max(vec2(-R_fxaaSpanMax, -R_fxaaSpanMax), dir * inverseDirAdjustment));
+	
+	dir.x = dir.x * step(1.0, abs(dir.x));
+	dir.y = dir.y * step(1.0, abs(dir.y));
+	
+	//float dirStep = max(step(1.0, abs(dir.x)), step(1.0, abs(dir.y)));
+	//dir.x = dir.x * dirStep;
+	//dir.y = dir.y * dirStep;
+	
+	dir = dir * texCoordOffset;
 
 	vec3 result1 = (1.0/2.0) * (
 		texture2D(R_filterTexture, texCoord0.xy + (dir * vec2(1.0/3.0 - 0.5))).xyz +
