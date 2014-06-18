@@ -38,6 +38,9 @@ void CoreEngine::Start()
 	double unprocessedTime = 0;        //Amount of passed time that the engine hasn't accounted for
 	int frames = 0;                    //Number of frames rendered since last
 
+	ProfileTimer sleepTimer;
+	ProfileTimer swapBufferTimer;
+	ProfileTimer windowUpdateTimer;
 	while(m_isRunning)
 	{
 		bool render = false;           //Whether or not the game needs to be rerendered.
@@ -51,11 +54,19 @@ void CoreEngine::Start()
 
 		if(frameCounter >= 1.0)
 		{
-			//The framecounter code here is a temporary, basic profiling tool.
-			//When proper profiling tools are implemented, this should probably be removed.
+			double totalTime = ((1000.0 * frameCounter)/((double)frames));
+			double totalMeasuredTime = 0.0;
 			
-			//printf("%i\n",frames);
-			printf("%f ms\n",1000.0/((double)frames));
+			totalMeasuredTime += m_game->DisplayInputTime((double)frames);
+			totalMeasuredTime += m_game->DisplayUpdateTime((double)frames);
+			totalMeasuredTime += m_renderingEngine->DisplayRenderTime((double)frames);
+			totalMeasuredTime += sleepTimer.DisplayAndReset("Sleep Time: ", (double)frames);
+			totalMeasuredTime += windowUpdateTimer.DisplayAndReset("Window Update Time: ", (double)frames);
+			totalMeasuredTime += swapBufferTimer.DisplayAndReset("Buffer Swap Time: ", (double)frames);
+			totalMeasuredTime += m_renderingEngine->DisplayWindowSyncTime((double)frames);
+			
+			printf("Other Time:                             %f ms\n", (totalTime - totalMeasuredTime));
+			printf("Total Time:                             %f ms\n\n", totalTime);
 			frames = 0;
 			frameCounter = 0;
 		}
@@ -67,12 +78,14 @@ void CoreEngine::Start()
 		//unaccounted time can then be processed later, since it will remain stored in unprocessedTime.
 		while(unprocessedTime > m_frameTime)
 		{
+			windowUpdateTimer.StartInvocation();
 			m_window->Update();
 			
 			if(m_window->IsCloseRequested())
 			{
 				Stop();
 			}
+			windowUpdateTimer.StopInvocation();
 			
 			//Input must be processed here because the window may have found new
 			//input events from the OS when it updated. Since inputs can trigger
@@ -94,14 +107,18 @@ void CoreEngine::Start()
 			
 			//The newly rendered image will be in the window's backbuffer,
 			//so the buffers must be swapped to display the new image.
+			swapBufferTimer.StartInvocation();
 			m_window->SwapBuffers();
+			swapBufferTimer.StopInvocation();
 			frames++;
 		}
 		else
 		{
 			//If no rendering is needed, sleep for some time so the OS
 			//can use the processor for other tasks.
+			sleepTimer.StartInvocation();
 			Util::Sleep(1);
+			sleepTimer.StopInvocation();
 		}
 	}
 }
