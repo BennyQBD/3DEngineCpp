@@ -16,6 +16,7 @@
 //--------------------------------------------------------------------------------
 std::map<std::string, ShaderData*> Shader::s_resourceMap;
 int ShaderData::s_supportedOpenGLLevel = 0;
+std::string ShaderData::s_glslVersion = "";
 
 //--------------------------------------------------------------------------------
 // Forward declarations
@@ -32,7 +33,7 @@ static void String_ReplaceAll(std::string* replaceIn, const std::string& replace
 //--------------------------------------------------------------------------------
 // Constructors/Destructors
 //--------------------------------------------------------------------------------
-ShaderData::ShaderData(const std::string& fileName)
+ShaderData::ShaderData(const std::string& fileName, bool useNewShaderSystem)
 {
 	m_program = glCreateProgram();
 
@@ -51,27 +52,68 @@ ShaderData::ShaderData(const std::string& fileName)
 		glGetIntegerv(GL_MINOR_VERSION, &minorVersion);
 		
 		s_supportedOpenGLLevel = majorVersion * 100 + minorVersion * 10;
+		
+		if(s_supportedOpenGLLevel >= 330)
+		{
+			std::ostringstream convert;
+			convert << s_supportedOpenGLLevel;
+		
+			s_glslVersion = convert.str();
+		}
+		else if(s_supportedOpenGLLevel >= 320)
+		{
+			s_glslVersion = "150";
+		}
+		else if(s_supportedOpenGLLevel >= 310)
+		{
+			s_glslVersion = "140";
+		}
+		else if(s_supportedOpenGLLevel >= 300)
+		{
+			s_glslVersion = "130";
+		}
+		else if(s_supportedOpenGLLevel >= 210)
+		{
+			s_glslVersion = "120";
+		}
+		else if(s_supportedOpenGLLevel >= 200)
+		{
+			s_glslVersion = "110";
+		}
 	}
     
-    std::string vertexShaderText = LoadShader(fileName + ".vs");
-    std::string fragmentShaderText = LoadShader(fileName + ".fs");
+    std::string vertexShaderText;
+    std::string fragmentShaderText;
     
-    if(s_supportedOpenGLLevel >= 320)
+    if(!useNewShaderSystem)
     {
-		ConvertVertexShaderToGLSL150(&vertexShaderText);
-		ConvertFragmentShaderToGLSL150(&fragmentShaderText);
+		 vertexShaderText = LoadShader(fileName + ".vs");
+		 fragmentShaderText = LoadShader(fileName + ".fs");
+		
+		if(s_supportedOpenGLLevel >= 320)
+		{
+			ConvertVertexShaderToGLSL150(&vertexShaderText);
+			ConvertFragmentShaderToGLSL150(&fragmentShaderText);
+		}
+    }
+    else
+    {
+		std::string shaderText = LoadShader(fileName + ".glsl");
+
+		vertexShaderText   = "#version 150\n#define VS_BUILD\n#define GLSL_VERSION " + s_glslVersion + "\n" + shaderText;
+		fragmentShaderText = "#version 150\n#define FS_BUILD\n#define GLSL_VERSION " + s_glslVersion + "\n" + shaderText;
     }
     
     AddVertexShader(vertexShaderText);
-    AddFragmentShader(fragmentShaderText);
-    
-    std::string attributeKeyword = s_supportedOpenGLLevel < 320 ? "attribute" : "in";
-    AddAllAttributes(vertexShaderText, attributeKeyword);
-    
-    CompileShader();
-    
-    AddShaderUniforms(vertexShaderText);
-    AddShaderUniforms(fragmentShaderText);
+	AddFragmentShader(fragmentShaderText);
+	
+	std::string attributeKeyword = s_supportedOpenGLLevel < 320 ? "attribute" : "in";
+	AddAllAttributes(vertexShaderText, attributeKeyword);
+	
+	CompileShader();
+	
+	AddShaderUniforms(vertexShaderText);
+	AddShaderUniforms(fragmentShaderText);
 }
 
 ShaderData::~ShaderData()
@@ -84,7 +126,7 @@ ShaderData::~ShaderData()
 	glDeleteProgram(m_program);
 }
 
-Shader::Shader(const std::string& fileName)
+Shader::Shader(const std::string& fileName, bool useNewShaderSystem)
 {
 	m_fileName = fileName;
 
@@ -96,7 +138,7 @@ Shader::Shader(const std::string& fileName)
 	}
 	else
 	{
-		m_shaderData = new ShaderData(fileName);
+		m_shaderData = new ShaderData(fileName, useNewShaderSystem);
 		s_resourceMap.insert(std::pair<std::string, ShaderData*>(fileName, m_shaderData));
 	}
 }

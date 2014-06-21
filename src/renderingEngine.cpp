@@ -24,11 +24,11 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	m_window(&window),
 	m_tempTarget(window.GetWidth(), window.GetHeight(), 0, GL_TEXTURE_2D, GL_NEAREST, GL_RGBA, GL_RGBA, false, GL_COLOR_ATTACHMENT0),
 	m_planeMaterial("renderingEngine_filterPlane", m_tempTarget, 1, 8),
-	m_defaultShader("forward-ambient"),
-	m_shadowMapShader("shadowMapGenerator"),
-	m_nullFilter("filter-null"),
-	m_gausBlurFilter("filter-gausBlur7x1"),
-	m_fxaaFilter("filter-fxaa"),
+	m_defaultShader("forward-ambient", true),
+	m_shadowMapShader("shadowMapGenerator", true),
+	m_nullFilter("filter-null", true),
+	m_gausBlurFilter("filter-gausBlur7x1", true),
+	m_fxaaFilter("filter-fxaa", true),
 	m_altCameraTransform(Vector3f(0,0,0), Quaternion(Vector3f(0,1,0),ToRadians(180.0f))),
 	m_altCamera(Matrix4f().InitIdentity(), &m_altCameraTransform)
 {
