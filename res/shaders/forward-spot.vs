@@ -1,3 +1,6 @@
+#version 120
+#include "lighting.vsh"
+
 /*
  * Copyright (C) 2014 Benny Bobaganoosh
  *
@@ -13,6 +16,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#version 120
-#include "lighting.vsh"

@@ -1,3 +1,7 @@
+uniform vec3 C_eyePos;
+uniform float specularIntensity;
+uniform float specularPower;
+
 /*
  * Copyright (C) 2014 Benny Bobaganoosh
  *
@@ -13,10 +17,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-uniform vec3 C_eyePos;
-uniform float specularIntensity;
-uniform float specularPower;
 
 struct BaseLight
 {

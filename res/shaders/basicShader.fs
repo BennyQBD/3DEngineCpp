@@ -1,3 +1,5 @@
+#version 120
+
 /*
  * Copyright (C) 2014 Benny Bobaganoosh
  *
@@ -13,8 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#version 120
 
 varying vec2 texCoord0;
 uniform sampler2D diffuse;

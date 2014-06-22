@@ -1,3 +1,5 @@
+#version 120
+
 /*
  * Copyright (C) 2014 Benny Bobaganoosh
  *
@@ -13,8 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-#version 120
+
 // FXAA shader, GLSL code adapted from:
 // http://horde3d.org/wiki/index.php5?title=Shading_Technique_-_FXAA
 // Whitepaper describing the technique:

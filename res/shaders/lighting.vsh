@@ -1,3 +1,8 @@
+attribute vec3 position;
+attribute vec2 texCoord;
+attribute vec3 normal;
+attribute vec3 tangent;
+
 /*
  * Copyright (C) 2014 Benny Bobaganoosh
  *
@@ -13,11 +18,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-attribute vec3 position;
-attribute vec2 texCoord;
-attribute vec3 normal;
-attribute vec3 tangent;
 
 varying vec2 texCoord0;
 varying vec3 worldPos0;

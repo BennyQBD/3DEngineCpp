@@ -1,3 +1,5 @@
+#version 120
+
 /*
  * Copyright (C) 2014 Benny Bobaganoosh
  *
@@ -14,7 +16,6 @@
  * limitations under the License.
  */
 
-#version 120
 #include "lighting.fsh"
 
 uniform PointLight R_pointLight;
