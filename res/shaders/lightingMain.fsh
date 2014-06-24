@@ -46,6 +46,7 @@ float CalcShadowAmount(sampler2D shadowMap, vec4 initialShadowMapCoords)
 	}
 }
 
+DeclareFragOutput(0, vec4);
 void main()
 {
 	vec3 directionToEye = normalize(C_eyePos - worldPos0);
@@ -53,5 +54,5 @@ void main()
 	vec3 normal = normalize(tbnMatrix * (255.0/128.0 * texture2D(normalMap, texCoords).xyz - 1));
     
     vec4 lightingAmt = CalcLightingEffect(normal, worldPos0) * CalcShadowAmount(R_shadowMap, shadowMapCoords0);
-    gl_FragColor = texture2D(diffuse, texCoords) * lightingAmt;
+    SetFragOutput(0, texture2D(diffuse, texCoords) * lightingAmt);
 }
