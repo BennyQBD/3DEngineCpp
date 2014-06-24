@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-varying vec2 texCoord0;
-varying vec3 worldPos0;
-varying vec4 shadowMapCoords0;
-varying mat3 tbnMatrix;
+#include "common.glh"
+#include "forwardlighting.glh"
 
-uniform sampler2D diffuse;
-uniform sampler2D normalMap;
-uniform sampler2D dispMap;
-
-uniform float dispMapScale;
-uniform float dispMapBias;
-
-uniform sampler2D R_shadowMap;
-uniform float R_shadowVarianceMin;
-uniform float R_shadowLightBleedingReduction;
+#if defined(VS_BUILD)
+#include "forwardlighting.vsh"
+#elif defined(FS_BUILD)
 
 #include "lighting.glh"
+
+uniform vec3 C_eyePos;
+uniform float specularIntensity;
+uniform float specularPower;
+
+uniform PointLight R_pointLight;
+
+vec4 CalcLightingEffect(vec3 normal, vec3 worldPos)
+{
+	return CalcPointLight(R_pointLight, normal, worldPos,
+	                      specularIntensity, specularPower, C_eyePos);
+}
+
+#include "lightingMain.fsh"
+#endif
