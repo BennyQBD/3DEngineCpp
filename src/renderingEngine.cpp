@@ -69,7 +69,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_DEPTH_CLAMP);
+	//glEnable(GL_DEPTH_CLAMP);
 	//glEnable(GL_MULTISAMPLE);
 	                  
 	//m_planeMaterial("renderingEngine_filterPlane", m_tempTarget, 1, 8);
@@ -180,7 +180,9 @@ void RenderingEngine::Render(const GameObject& object)
 				glCullFace(GL_FRONT);
 			}
 			
+			glEnable(GL_DEPTH_CLAMP);
 			object.RenderAll(m_shadowMapShader, *this, m_altCamera);
+			glDisable(GL_DEPTH_CLAMP);
 			
 			if(flipFaces) 
 			{

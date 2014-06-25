@@ -34,6 +34,9 @@ void TestGame::Init(const Window& window)
 {
 	Material bricks("bricks", Texture("bricks.jpg"), 0.0f, 0, Texture("bricks_normal.jpg"), Texture("bricks_disp.png"), 0.03f, -0.5f);
 	Material bricks2("bricks2", Texture("bricks2.jpg"), 0.0f, 0, Texture("bricks2_normal.png"), Texture("bricks2_disp.jpg"), 0.04f, -1.0f);
+	
+	//Material skin("humanFace", Texture("human.jpg"), 0.0f, 0, Texture("human_normal_inv.jpg"));
+	//Material skin("humanFace", Texture("human.jpg"), 0.08f, 8, Texture("human_normal_inv.jpg"));
 
 	IndexedModel square;
 	{
@@ -64,7 +67,7 @@ void TestGame::Init(const Window& window)
 			->AddChild((new GameObject())
 				->AddComponent(new CameraComponent(Matrix4f().InitPerspective(ToRadians(70.0f), window.GetAspect(), 0.1f, 1000.0f)))
 				->AddComponent(new FreeLook(window.GetCenter()))
-				->AddComponent(new FreeMove()))));
+				->AddComponent(new FreeMove(10.0f)))));
 	
 	AddToScene((new GameObject(Vector3f(24,-12,5), Quaternion(Vector3f(0,1,0), ToRadians(30.0f))))
 		->AddComponent(new MeshRenderer(Mesh("cube.obj"), Material("bricks2"))));
@@ -79,8 +82,12 @@ int main()
 	Window window(800, 600, "3D Game Engine");
 	RenderingEngine renderer(window);
 	
+	//window.SetFullScreen(true);
+	
 	CoreEngine engine(60, &window, &renderer, &game);
 	engine.Start();
+	
+	//window.SetFullScreen(false);
 
 //	Window window(800, 600, "My Window");
 //	RenderingEngine engine(window);
