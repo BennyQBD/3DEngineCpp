@@ -15,6 +15,7 @@
  */
 
 #include "mesh.h"
+#include "profiling.h"
 #include <GL/glew.h>
 #include <iostream>
 
@@ -215,7 +216,10 @@ MeshData::~MeshData()
 void MeshData::Draw() const
 {
 	glBindVertexArray(m_vertexArrayObject);
-	glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
+	
+	#if PROFILING_DISABLE_MESH_DRAWING == 0
+		glDrawElements(GL_TRIANGLES, m_drawCount, GL_UNSIGNED_INT, 0);
+	#endif
 }
 
 

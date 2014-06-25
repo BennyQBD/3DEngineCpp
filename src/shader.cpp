@@ -15,6 +15,11 @@
  */
 
 #include "shader.h"
+#include "profiling.h"
+#include "lighting.h"
+#include "util.h"
+#include "renderingEngine.h"
+
 #include <cassert>
 #include <fstream>
 #include <iostream>
@@ -22,10 +27,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <sstream>
-
-#include "lighting.h"
-#include "util.h"
-#include "renderingEngine.h"
 
 //--------------------------------------------------------------------------------
 // Variable Initializations
@@ -48,6 +49,11 @@ static std::string LoadShader(const std::string& fileName);
 //--------------------------------------------------------------------------------
 ShaderData::ShaderData(const std::string& fileName)
 {
+	std::string actualFileName = fileName;
+	#if PROFILING_DISABLE_SHADING != 0
+		actualFileName = "nullShader";
+	#endif
+	
 	m_program = glCreateProgram();
 
 	if (m_program == 0) 
@@ -100,7 +106,7 @@ ShaderData::ShaderData(const std::string& fileName)
 		}
 	}
     
-	std::string shaderText = LoadShader(fileName + ".glsl");
+	std::string shaderText = LoadShader(actualFileName + ".glsl");
 
 	std::string vertexShaderText = "#version " + s_glslVersion + "\n#define VS_BUILD\n#define GLSL_VERSION " + s_glslVersion + "\n" + shaderText;
 	std::string fragmentShaderText = "#version " + s_glslVersion + "\n#define FS_BUILD\n#define GLSL_VERSION " + s_glslVersion + "\n" + shaderText;

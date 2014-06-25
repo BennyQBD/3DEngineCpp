@@ -19,6 +19,11 @@
 
 #include <string>
 
+#define PROFILING_DISABLE_MESH_DRAWING 0
+#define PROFILING_DISABLE_SHADING 0
+#define PROFILING_SET_1x1_VIEWPORT 0
+#define PROFILING_SET_2x2_TEXTURE 0
+
 class ProfileTimer
 {
 public:
@@ -30,8 +35,8 @@ public:
 	void StartInvocation();
 	void StopInvocation();
 	
-	double DisplayAndReset(const std::string& message, double dividend = 0, int displayedMessageLength = 40);
-	double GetTimeAndReset(double dividend = 0);
+	double DisplayAndReset(const std::string& message, double divisor = 0, int displayedMessageLength = 40);
+	double GetTimeAndReset(double divisor = 0);
 protected:
 private:
 	int    m_numInvocations;
