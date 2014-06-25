@@ -68,6 +68,8 @@ void CoreEngine::Start()
 		unprocessedTime += passedTime;
 		frameCounter += passedTime;
 
+		//The engine displays profiling statistics after every second because it needs to display them at some point.
+		//The choice of once per second is arbitrary, and can be changed as needed.
 		if(frameCounter >= 1.0)
 		{
 			double totalTime = ((1000.0 * frameCounter)/((double)frames));

@@ -60,6 +60,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	SetFloat("fxaaSpanMax", 8.0f);
 	SetFloat("fxaaReduceMin", 1.0f/128.0f);
 	SetFloat("fxaaReduceMul", 1.0f/8.0f);
+	SetFloat("fxaaAspectDistortion", 150.0f);
 
 	SetTexture("displayTexture", Texture(m_window->GetWidth(), m_window->GetHeight(), 0, GL_TEXTURE_2D, GL_LINEAR, GL_RGBA, GL_RGBA, true, GL_COLOR_ATTACHMENT0));
 
@@ -71,6 +72,7 @@ RenderingEngine::RenderingEngine(const Window& window) :
 	glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_DEPTH_CLAMP);
 	//glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_FRAMEBUFFER_SRGB);
 	                  
 	//m_planeMaterial("renderingEngine_filterPlane", m_tempTarget, 1, 8);
 	m_planeTransform.SetScale(1.0f);
@@ -225,7 +227,10 @@ void RenderingEngine::Render(const GameObject& object)
 //		glDisable(GL_SCISSOR_TEST);
 	}
 	
-	SetVector3f("inverseFilterTextureSize", Vector3f(1.0f/GetTexture("displayTexture").GetWidth(), 1.0f/GetTexture("displayTexture").GetHeight(), 0.0f));
+	float displayTextureAspect = (float)GetTexture("displayTexture").GetWidth()/(float)GetTexture("displayTexture").GetHeight();
+	float displayTextureHeightAdditive = displayTextureAspect * GetFloat("fxaaAspectDistortion");
+	SetVector3f("inverseFilterTextureSize", Vector3f(1.0f/(float)GetTexture("displayTexture").GetWidth(), 
+	                                                 1.0f/((float)GetTexture("displayTexture").GetHeight() + displayTextureHeightAdditive), 0.0f));
 	m_renderProfileTimer.StopInvocation();
 	
 	m_windowSyncProfileTimer.StartInvocation();

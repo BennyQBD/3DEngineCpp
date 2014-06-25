@@ -64,7 +64,7 @@ public:
 	void BindAsRenderTarget() const;
 	
 	inline int GetWidth()  const { return m_textureData->GetWidth(); }
-	inline int GetHeight() const { return m_textureData->GetWidth(); }
+	inline int GetHeight() const { return m_textureData->GetHeight(); }
 	
 	bool operator==(const Texture& texture) const { return m_textureData == texture.m_textureData; }
 	bool operator!=(const Texture& texture) const { return !operator==(texture); }
