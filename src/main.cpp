@@ -48,31 +48,31 @@ void TestGame::Init(const Window& window)
 	}
 	Mesh customMesh("square", square.Finalize());
 	
-	AddToScene((new GameObject(Vector3f(0, -1, 5), Quaternion(), 32.0f))
+	AddToScene((new Entity(Vector3f(0, -1, 5), Quaternion(), 32.0f))
 		->AddComponent(new MeshRenderer(Mesh("terrain02.obj"), Material("bricks"))));
 		
-	AddToScene((new GameObject(Vector3f(7,0,7)))
+	AddToScene((new Entity(Vector3f(7,0,7)))
 		->AddComponent(new PointLight(Vector3f(0,1,0), 0.4f, Attenuation(0,0,1))));
 	
-	AddToScene((new GameObject(Vector3f(20,-11.0f,5), Quaternion(Vector3f(1,0,0), ToRadians(-60.0f)) * Quaternion(Vector3f(0,1,0), ToRadians(90.0f))))
+	AddToScene((new Entity(Vector3f(20,-11.0f,5), Quaternion(Vector3f(1,0,0), ToRadians(-60.0f)) * Quaternion(Vector3f(0,1,0), ToRadians(90.0f))))
 		->AddComponent(new SpotLight(Vector3f(0,1,1), 0.4f, Attenuation(0,0,0.02f), ToRadians(91.1f), 7, 1.0f, 0.5f)));
 	
-	AddToScene((new GameObject(Vector3f(), Quaternion(Vector3f(1,0,0), ToRadians(-45))))
+	AddToScene((new Entity(Vector3f(), Quaternion(Vector3f(1,0,0), ToRadians(-45))))
 		->AddComponent(new DirectionalLight(Vector3f(1,1,1), 0.4f, 10, 80.0f, 1.0f)));
 	
-	AddToScene((new GameObject(Vector3f(0, 2, 0), Quaternion(Vector3f(0,1,0), 0.4f), 1.0f))
+	AddToScene((new Entity(Vector3f(0, 2, 0), Quaternion(Vector3f(0,1,0), 0.4f), 1.0f))
 		->AddComponent(new MeshRenderer(Mesh("plane3.obj"), Material("bricks2")))
-		->AddChild((new GameObject(Vector3f(0, 0, 25)))
+		->AddChild((new Entity(Vector3f(0, 0, 25)))
 			->AddComponent(new MeshRenderer(Mesh("plane3.obj"), Material("bricks2")))
-			->AddChild((new GameObject())
+			->AddChild((new Entity())
 				->AddComponent(new CameraComponent(Matrix4f().InitPerspective(ToRadians(70.0f), window.GetAspect(), 0.1f, 1000.0f)))
 				->AddComponent(new FreeLook(window.GetCenter()))
 				->AddComponent(new FreeMove(10.0f)))));
 	
-	AddToScene((new GameObject(Vector3f(24,-12,5), Quaternion(Vector3f(0,1,0), ToRadians(30.0f))))
+	AddToScene((new Entity(Vector3f(24,-12,5), Quaternion(Vector3f(0,1,0), ToRadians(30.0f))))
 		->AddComponent(new MeshRenderer(Mesh("cube.obj"), Material("bricks2"))));
 		
-	AddToScene((new GameObject(Vector3f(0,0,7), Quaternion(), 1.0f))
+	AddToScene((new Entity(Vector3f(0,0,7), Quaternion(), 1.0f))
 		->AddComponent(new MeshRenderer(Mesh("square"), Material("bricks2"))));
 }
 

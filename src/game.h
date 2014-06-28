@@ -17,7 +17,7 @@
 #ifndef MYGAME_H
 #define MYGAME_H
 
-#include "gameObject.h"
+#include "entity.h"
 #include "coreEngine.h"
 #include "profiling.h"
 
@@ -37,14 +37,14 @@ public:
 	
 	inline void SetEngine(CoreEngine* engine) { m_root.SetEngine(engine); }
 protected:
-	void AddToScene(GameObject* child) { m_root.AddChild(child); }
+	void AddToScene(Entity* child) { m_root.AddChild(child); }
 private:
 	Game(Game& game) {}
 	void operator=(Game& game) {}
 	
 	ProfileTimer m_updateTimer;
 	ProfileTimer m_inputTimer;
-	GameObject   m_root;
+	Entity       m_root;
 };
 
 #endif

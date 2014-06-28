@@ -16,7 +16,7 @@
 
 #include "renderingEngine.h"
 #include "window.h"
-#include "gameObject.h"
+#include "entity.h"
 #include "shader.h"
 #include <GL/glew.h>
 #include "mesh.h"
@@ -133,7 +133,7 @@ void RenderingEngine::ApplyFilter(const Shader& filter, const Texture& source, c
 	SetTexture("filterTexture", 0);
 }
 
-void RenderingEngine::Render(const GameObject& object)
+void RenderingEngine::Render(const Entity& object)
 {
 	m_renderProfileTimer.StartInvocation();
 	GetTexture("displayTexture").BindAsRenderTarget();

@@ -26,7 +26,7 @@
 #include "profiling.h"
 #include <vector>
 #include <map>
-class GameObject;
+class Entity;
 
 class RenderingEngine : public MappedValues
 {
@@ -34,7 +34,7 @@ public:
 	RenderingEngine(const Window& window);
 	virtual ~RenderingEngine() {}
 	
-	void Render(const GameObject& object);
+	void Render(const Entity& object);
 	
 	inline void AddLight(const BaseLight& light) { m_lights.push_back(&light); }
 	inline void SetMainCamera(const Camera& camera) { m_mainCamera = &camera; }

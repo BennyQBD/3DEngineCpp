@@ -14,51 +14,51 @@
  * limitations under the License.
  */
 
-#ifndef GAMEOBJECT_H
-#define GAMEOBJECT_H
+#ifndef ENTITYOBJECT_H
+#define ENTITYOBJECT_H
 
 #include <vector>
 #include "transform.h"
 #include "input.h"
 class Camera;
 class CoreEngine;
-class GameComponent;
+class EntityComponent;
 class Shader;
 class RenderingEngine;
 
-class GameObject
+class Entity
 {
 public:
-	GameObject(const Vector3f& pos = Vector3f(0,0,0), const Quaternion& rot = Quaternion(0,0,0,1), float scale = 1.0f) : 
+	Entity(const Vector3f& pos = Vector3f(0,0,0), const Quaternion& rot = Quaternion(0,0,0,1), float scale = 1.0f) : 
 		m_transform(pos, rot, scale),
 		m_coreEngine(0) {}
 		
-	virtual ~GameObject();
+	virtual ~Entity();
 	
-	GameObject* AddChild(GameObject* child);
-	GameObject* AddComponent(GameComponent* component);
+	Entity* AddChild(Entity* child);
+	Entity* AddComponent(EntityComponent* component);
 	
 	void ProcessInputAll(const Input& input, float delta);
 	void UpdateAll(float delta);
 	void RenderAll(const Shader& shader, const RenderingEngine& renderingEngine, const Camera& camera) const;
 	
-	std::vector<GameObject*> GetAllAttached();
+	std::vector<Entity*> GetAllAttached();
 	
 	inline Transform* GetTransform() { return &m_transform; }
 	void SetEngine(CoreEngine* engine);
 protected:
 private:
-	std::vector<GameObject*>    m_children;
-	std::vector<GameComponent*> m_components;
-	Transform                   m_transform;
-	CoreEngine*                 m_coreEngine;
+	std::vector<Entity*>          m_children;
+	std::vector<EntityComponent*> m_components;
+	Transform                     m_transform;
+	CoreEngine*                   m_coreEngine;
 
 	void ProcessInput(const Input& input, float delta);
 	void Update(float delta);
 	void Render(const Shader& shader, const RenderingEngine& renderingEngine, const Camera& camera) const;
 	
-	GameObject(const GameObject& other) {}
-	void operator=(const GameObject& other) {}
+	Entity(const Entity& other) {}
+	void operator=(const Entity& other) {}
 };
 
 #endif // GAMEOBJECT_H

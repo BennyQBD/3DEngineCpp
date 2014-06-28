@@ -18,7 +18,7 @@
 #define CAMERA_H
 
 #include "math3d.h"
-#include "gameComponent.h"
+#include "entityComponent.h"
 
 //Cameras represent a location, orientation, and projection from
 //which the scene can be rendered.
@@ -50,7 +50,7 @@ private:
 
 //CameraComponents are an easy way to use a camera as a component
 //on a game object.
-class CameraComponent : public GameComponent
+class CameraComponent : public EntityComponent
 {
 public:
 	//The camera's transform is initialized to 0 (null) because
@@ -64,7 +64,7 @@ public:
 	inline Matrix4f GetViewProjection() const { return m_camera.GetViewProjection(); }
 	
 	inline void SetProjection(const Matrix4f& projection) { m_camera.SetProjection(projection); }
-	virtual void SetParent(GameObject* parent);
+	virtual void SetParent(Entity* parent);
 protected:
 private:
 	Camera m_camera; //The camera that's being used like a component.

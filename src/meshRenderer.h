@@ -17,10 +17,10 @@
 #ifndef MESHRENDERER_H_INCLUDED
 #define MESHRENDERER_H_INCLUDED
 
-#include "gameComponent.h"
+#include "entityComponent.h"
 #include "mesh.h"
 
-class MeshRenderer : public GameComponent
+class MeshRenderer : public EntityComponent
 {
 public:
 	MeshRenderer(const Mesh& mesh, const Material& material) :

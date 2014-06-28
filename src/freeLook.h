@@ -18,9 +18,9 @@
 #define FREELOOK_H
 
 #include "math3d.h"
-#include "gameComponent.h"
+#include "entityComponent.h"
 
-class FreeLook : public GameComponent
+class FreeLook : public EntityComponent
 {
 public:
 	FreeLook(const Vector2f& windowCenter, float sensitivity = 0.5f, int unlockMouseKey = Input::KEY_ESCAPE) :

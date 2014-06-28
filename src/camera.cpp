@@ -39,9 +39,9 @@ void CameraComponent::AddToEngine(CoreEngine* engine) const
 	engine->GetRenderingEngine()->SetMainCamera(m_camera);
 }
 
-void CameraComponent::SetParent(GameObject* parent)
+void CameraComponent::SetParent(Entity* parent)
 {
-	GameComponent::SetParent(parent);
+	EntityComponent::SetParent(parent);
 	
 	//The camera's transform is initialized here because this is the first point where
 	//there is a parent object with a transform.

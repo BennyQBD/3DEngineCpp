@@ -24,7 +24,7 @@
 #include "transform.h"
 #include "camera.h"
 #include "lighting.h"
-#include "gameObject.h"
+#include "entity.h"
 #include "meshRenderer.h"
 #include "window.h"
 #include "coreEngine.h"
