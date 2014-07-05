@@ -206,12 +206,11 @@ Variables:
 			
 		Reasoning: Pointers are more clear if thought of as a type.
 		           
-	-'const' should be used whenever and wherever possible, except where otherwise noted. 'const' variables
-	 should be written in all caps, with underscores separating words.
-		Use this:   const float START_VAL = 0.37f;
+	-'const' should be used whenever and wherever possible, except where otherwise noted.
+		Use this:   const float startVal = 0.37f;
 		Instead of: float startVal = 0.37f;
 		
-		Reasoning: Clear indicator that value should not be changed. Useful for both preventing bugs
+		Reasoning: Clear indicator that value should not need to be changed. Useful for both preventing bugs
 		           and enabling compiler optimizations.
 	
 	
@@ -563,11 +562,6 @@ Enums:
 			START_LOC3,
 			START_SIZE
 		};
-	
-	-If an enum is associated with a particular class or namespace, it should be placed
-	 in that particular class or namespace. However, it should not have a unique namespace
-	 created just to "name" the enum.
-	 	Reasoning: To be added
 	 
 		
 Defines/Macros:
