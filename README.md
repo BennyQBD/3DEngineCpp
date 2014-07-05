@@ -45,7 +45,7 @@ brew install cmake glew sdl2 assimp
 - If this fails for any reason, try using the Manual Build Instructions below.
 
 ###Windows###
-- Make sure CMake has been installed, and added to the system PATH.
+- Make sure CMake is both installed and added to the system PATH.
 - Run "Windows-GenVisualStudioProject.bat" If this fails for any reason, try using the Manual Build Instructions below.
 - Go to the build folder, and open 3DEngineCpp.sln with Visual Studio 2012 or newer (For older versions of Visual Studio, use manual build instructions)
 - Right click on the 3DEngineCpp project, and select "Set as start up project"
@@ -53,7 +53,7 @@ brew install cmake glew sdl2 assimp
 
 ##Manual Build Instructions##
 ###Linux/Unix###
-Open a Terminal and run:
+- Open a Terminal and run:
 ```Shell
 # install dependencies
 cd build
@@ -62,7 +62,7 @@ make
 ```
 
 ###Mac OSX###
-Open a Terminal and run:
+- Open a Terminal and run:
 ```Shell
 # install dependencies
 cd build
@@ -71,10 +71,10 @@ make
 ```
 
 ###Windows/MinGW###
-Open a Terminal and run:
+- Make sure CMake is both installed and added to the system PATH.
+- Open a Terminal and run:
 ```Shell
 # install dependencies
-# Make sure CMake is added to the system PATH
 # Install GLEW in %PROGRAMFILES%/GLEW or SET %GLEW_ROOT_DIR% to where GLEW is on your machine (Example: D:\PATH_TO_GLEW)
 # Install SDL2 in %PROGRAMFILES%/SDL2 or SET %SDL2_ROOT_DIR% to where SDL2 is on your machine (Example: D:\PATH_TO_SDL2)
 # Install ASSIMP in %PROGRAMFILES%/ASSIMP or SET %ASSIMP_ROOT_DIR% to where ASSIMP is on your machine (Example: D:\PATH_TO_ASSIMP)
