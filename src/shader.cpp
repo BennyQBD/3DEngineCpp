@@ -119,8 +119,7 @@ ShaderData::ShaderData(const std::string& fileName)
 	
 	CompileShader();
 	
-	AddShaderUniforms(vertexShaderText);
-	AddShaderUniforms(fragmentShaderText);
+	AddShaderUniforms(shaderText);
 }
 
 ShaderData::~ShaderData()
