@@ -114,7 +114,7 @@ ShaderData::ShaderData(const std::string& fileName)
     AddVertexShader(vertexShaderText);
 	AddFragmentShader(fragmentShaderText);
 	
-	std::string attributeKeyword = s_supportedOpenGLLevel < 320 ? "attribute" : "in";
+	std::string attributeKeyword = "attribute";
 	AddAllAttributes(vertexShaderText, attributeKeyword);
 	
 	CompileShader();
@@ -351,13 +351,15 @@ void ShaderData::AddAllAttributes(const std::string& vertexShaderText, const std
 	size_t attributeLocation = vertexShaderText.find(attributeKeyword);
 	while(attributeLocation != std::string::npos)
 	{
-		bool isCommented = false;
-		size_t lastLineEnd = vertexShaderText.rfind(";", attributeLocation);
+ 		bool isCommented = false;
+		size_t lastLineEnd = vertexShaderText.rfind("\n", attributeLocation);
 		
 		if(lastLineEnd != std::string::npos)
 		{
 			std::string potentialCommentSection = vertexShaderText.substr(lastLineEnd,attributeLocation - lastLineEnd);
-			isCommented = potentialCommentSection.find("//") != std::string::npos;
+			
+			//Potential false positives are both in comments, and in macros.
+			isCommented = potentialCommentSection.find("//") != std::string::npos || potentialCommentSection.find("#") != std::string::npos;
 		}
 		
 		if(!isCommented)
@@ -369,8 +371,8 @@ void ShaderData::AddAllAttributes(const std::string& vertexShaderText, const std
 			
 			begin = attributeLine.find(" ");
 			std::string attributeName = attributeLine.substr(begin + 1);
-			
-			glBindAttribLocation(m_program, currentAttribLocation, attributeName.c_str());//SetAttribLocation(attributeName, currentAttribLocation);
+				
+			glBindAttribLocation(m_program, currentAttribLocation, attributeName.c_str());
 			currentAttribLocation++;
 		}
 		attributeLocation = vertexShaderText.find(attributeKeyword, attributeLocation + attributeKeyword.length());
@@ -387,7 +389,7 @@ void ShaderData::AddShaderUniforms(const std::string& shaderText)
 	while(uniformLocation != std::string::npos)
 	{
 		bool isCommented = false;
-		size_t lastLineEnd = shaderText.rfind(";", uniformLocation);
+		size_t lastLineEnd = shaderText.rfind("\n", uniformLocation);
 		
 		if(lastLineEnd != std::string::npos)
 		{

@@ -22,6 +22,7 @@
 	
 	#if defined(VS_BUILD)
 		#define varying out
+		#define attribute in
 	#elif defined(FS_BUILD)
 		#define varying in
 	#endif
