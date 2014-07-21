@@ -209,7 +209,8 @@ MeshData::MeshData(const IndexedModel& model) :
 }
 
 MeshData::~MeshData() 
-{ 
+{	
+	glDeleteBuffers(NUM_BUFFERS, m_vertexArrayBuffers);
 	glDeleteVertexArrays(1, &m_vertexArrayObject);
 }
 
