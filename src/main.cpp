@@ -76,16 +76,36 @@ void TestGame::Init(const Window& window)
 		->AddComponent(new MeshRenderer(Mesh("square"), Material("bricks2"))));
 }
 
+#include "boundingSphere.h"
+#include <iostream>
+
 int main()
 {
-	TestGame game;
-	Window window(800, 600, "3D Game Engine");
-	RenderingEngine renderer(window);
+	BoundingSphere sphere1(Vector3f(0.0f, 0.0f, 0.0f), 1.0f);
+	BoundingSphere sphere2(Vector3f(0.0f, 3.0f, 0.0f), 1.0f);
+	BoundingSphere sphere3(Vector3f(0.0f, 0.0f, 2.0f), 1.0f);
+	BoundingSphere sphere4(Vector3f(1.0f, 0.0f, 0.0f), 1.0f);
 	
-	//window.SetFullScreen(true);
+	IntersectData sphere1IntersectSphere2 = sphere1.IntersectBoundingSphere(sphere2);
+	IntersectData sphere1IntersectSphere3 = sphere1.IntersectBoundingSphere(sphere3);
+	IntersectData sphere1IntersectSphere4 = sphere1.IntersectBoundingSphere(sphere4);
 	
-	CoreEngine engine(60, &window, &renderer, &game);
-	engine.Start();
+	std::cout << "Sphere1 intersect Sphere2: " << sphere1IntersectSphere2.GetDoesIntersect() 
+	          << ", Distance: "                << sphere1IntersectSphere2.GetDistance() << std::endl;
+	std::cout << "Sphere1 intersect Sphere3: " << sphere1IntersectSphere3.GetDoesIntersect() 
+	          << ", Distance: "                << sphere1IntersectSphere3.GetDistance() << std::endl;
+	std::cout << "Sphere1 intersect Sphere4: " << sphere1IntersectSphere4.GetDoesIntersect() 
+	          << ", Distance: "                << sphere1IntersectSphere4.GetDistance() << std::endl;
+
+
+//	TestGame game;
+//	Window window(800, 600, "3D Game Engine");
+//	RenderingEngine renderer(window);
+//	
+//	//window.SetFullScreen(true);
+//	
+//	CoreEngine engine(60, &window, &renderer, &game);
+//	engine.Start();
 	
 	//window.SetFullScreen(false);
 
