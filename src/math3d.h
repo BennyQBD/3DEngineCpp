@@ -57,6 +57,17 @@ public:
 		return result;
 	}
 	
+	inline Vector<T,D> Max(const Vector<T,D>& r) const
+	{
+		Vector<T,D> result;
+		for(unsigned int i = 0; i < D; i++)
+		{
+			result[i] = values[i] > r[i] ? values[i] : r[i];
+		}
+
+		return result;
+	}
+
 	inline T Max() const
 	{
 		T maxVal = (*this)[0];
