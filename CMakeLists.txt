@@ -16,6 +16,9 @@
 # We need features that are 2.6 >= dependent
 cmake_minimum_required(VERSION 2.6)
 
+# Name the project
+project(3DEngineCpp)
+
 # Load OpenGL info
 find_package(OpenGL REQUIRED)
 
