@@ -15,5 +15,5 @@
 
 # Add projects
 add_subdirectory(render)
-#add_subdirectory(physics)
+add_subdirectory(physics)
 
