@@ -13,23 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# We need features that are 2.6 >= dependent
-cmake_minimum_required(VERSION 2.6)
-
-# Name the project
-project(3DEngineCpp)
-
-# Load OpenGL info
-find_package(OpenGL REQUIRED)
-
-# Load extra library
-INCLUDE(${CMAKE_SOURCE_DIR}/cmake/FindGLEW.cmake)
-INCLUDE(${CMAKE_SOURCE_DIR}/cmake/FindSDL2.cmake)
-INCLUDE(${CMAKE_SOURCE_DIR}/cmake/FindASSIMP.cmake)
-
-# Add Engine library
-add_subdirectory(engine)
-
-# Add Executables
-add_subdirectory(app)
+# Add projects
+add_subdirectory(render)
+add_subdirectory(physics)
 
