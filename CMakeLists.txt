@@ -47,10 +47,10 @@ add_definitions( -O2 )
 endif ( CMAKE_BUILD_TYPE STREQUAL "Release" )
 
 # Lets LOAD app our headers!
-file(GLOB HDRS ${3DEngineCpp_SOURCE_DIR}/src/*.h)
+file(GLOB_RECURSE HDRS ${3DEngineCpp_SOURCE_DIR}/src/*.h)
 
 # Lets LOAD app our sources!
-file(GLOB SRCS
+file(GLOB_RECURSE SRCS
 	${3DEngineCpp_SOURCE_DIR}/src/*.cpp
 	${3DEngineCpp_SOURCE_DIR}/src/*.c
 )

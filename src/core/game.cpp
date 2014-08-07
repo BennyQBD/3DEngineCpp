@@ -14,23 +14,27 @@
  * limitations under the License.
  */
 
-#ifndef __3DENGINE_H_INCLUDED
-#define __3DENGINE_H_INCLUDED
+#include "game.h"
 
-//This header is just a convinient way to include all necessary files to use the engine.
+#include "../rendering/renderingEngine.h"
 
-#include "rendering/mesh.h"
-#include "rendering/shader.h"
-#include "core/transform.h"
-#include "rendering/camera.h"
-#include "rendering/lighting.h"
-#include "core/entity.h"
-#include "components/meshRenderer.h"
-#include "rendering/window.h"
-#include "core/coreEngine.h"
-#include "core/game.h"
+#include <iostream>
 
-//SDL2 defines a main macro, which can prevent certain compilers from finding the main function.
-#undef main
+void Game::ProcessInput(const Input& input, float delta)
+{
+	m_inputTimer.StartInvocation();
+	m_root.ProcessInputAll(input, delta);
+	m_inputTimer.StopInvocation();
+}
 
-#endif // 3DENGINE_H_INCLUDED
+void Game::Update(float delta)
+{
+	m_updateTimer.StartInvocation();
+	m_root.UpdateAll(delta);
+	m_updateTimer.StopInvocation();
+}
+
+void Game::Render(RenderingEngine* renderingEngine)
+{
+	renderingEngine->Render(m_root);
+}
