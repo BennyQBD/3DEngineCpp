@@ -15,6 +15,8 @@
  */
 
 #include "3DEngine.h"
+#include "testing.h"
+
 #include "components/freeLook.h"
 #include "components/freeMove.h"
 
@@ -70,19 +72,19 @@ void TestGame::Init(const Window& window)
 				->AddComponent(new FreeMove(10.0f)))));
 	
 	AddToScene((new Entity(Vector3f(24,-12,5), Quaternion(Vector3f(0,1,0), ToRadians(30.0f))))
-		->AddComponent(new MeshRenderer(Mesh("cube.obj"), Material("bricks2"))));
+		->AddComponent(new MeshRenderer(Mesh("sphere.obj"), Material("bricks"))));
 		
 	AddToScene((new Entity(Vector3f(0,0,7), Quaternion(), 1.0f))
 		->AddComponent(new MeshRenderer(Mesh("square"), Material("bricks2"))));
 }
 
 #include <iostream>
-#include "testing.h"
+#include "physics/physicsObject.h"
 
 int main()
 {
 	Testing::RunAllTests();
-	
+
 	TestGame game;
 	Window window(800, 600, "3D Game Engine");
 	RenderingEngine renderer(window);
