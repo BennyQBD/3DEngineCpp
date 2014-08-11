@@ -19,6 +19,8 @@
 
 #include "components/freeLook.h"
 #include "components/freeMove.h"
+#include "components/physicsEngineComponent.h"
+#include "components/physicsObjectComponent.h"
 
 class TestGame : public Game
 {
@@ -34,11 +36,10 @@ private:
 
 void TestGame::Init(const Window& window)
 {
-	Material bricks("bricks", Texture("bricks.jpg"), 0.0f, 0, Texture("bricks_normal.jpg"), Texture("bricks_disp.png"), 0.03f, -0.5f);
-	Material bricks2("bricks2", Texture("bricks2.jpg"), 0.0f, 0, Texture("bricks2_normal.png"), Texture("bricks2_disp.jpg"), 0.04f, -1.0f);
-	
-	//Material skin("humanFace", Texture("human.jpg"), 0.0f, 0, Texture("human_normal_inv.jpg"));
-	//Material skin("humanFace", Texture("human.jpg"), 0.08f, 8, Texture("human_normal_inv.jpg"));
+	Material bricks("bricks", Texture("bricks.jpg"), 0.0f, 0, 
+			Texture("bricks_normal.jpg"), Texture("bricks_disp.png"), 0.03f, -0.5f);
+	Material bricks2("bricks2", Texture("bricks2.jpg"), 0.0f, 0, 
+			Texture("bricks2_normal.png"), Texture("bricks2_disp.jpg"), 0.04f, -1.0f);
 
 	IndexedModel square;
 	{
@@ -50,14 +51,14 @@ void TestGame::Init(const Window& window)
 	}
 	Mesh customMesh("square", square.Finalize());
 	
-	AddToScene((new Entity(Vector3f(0, -1, 5), Quaternion(), 32.0f))
-		->AddComponent(new MeshRenderer(Mesh("terrain02.obj"), Material("bricks"))));
+//	AddToScene((new Entity(Vector3f(0, -1, 5), Quaternion(), 32.0f))
+//		->AddComponent(new MeshRenderer(Mesh("terrain02.obj"), Material("bricks"))));
 		
-	AddToScene((new Entity(Vector3f(7,0,7)))
-		->AddComponent(new PointLight(Vector3f(0,1,0), 0.4f, Attenuation(0,0,1))));
-	
-	AddToScene((new Entity(Vector3f(20,-11.0f,5), Quaternion(Vector3f(1,0,0), ToRadians(-60.0f)) * Quaternion(Vector3f(0,1,0), ToRadians(90.0f))))
-		->AddComponent(new SpotLight(Vector3f(0,1,1), 0.4f, Attenuation(0,0,0.02f), ToRadians(91.1f), 7, 1.0f, 0.5f)));
+//	AddToScene((new Entity(Vector3f(7,0,7)))
+//		->AddComponent(new PointLight(Vector3f(0,1,0), 0.4f, Attenuation(0,0,1))));
+//	
+//	AddToScene((new Entity(Vector3f(20,-11.0f,5), Quaternion(Vector3f(1,0,0), ToRadians(-60.0f)) * Quaternion(Vector3f(0,1,0), ToRadians(90.0f))))
+//		->AddComponent(new SpotLight(Vector3f(0,1,1), 0.4f, Attenuation(0,0,0.02f), ToRadians(91.1f), 7, 1.0f, 0.5f)));
 	
 	AddToScene((new Entity(Vector3f(), Quaternion(Vector3f(1,0,0), ToRadians(-45))))
 		->AddComponent(new DirectionalLight(Vector3f(1,1,1), 0.4f, 10, 80.0f, 1.0f)));
@@ -71,15 +72,41 @@ void TestGame::Init(const Window& window)
 				->AddComponent(new FreeLook(window.GetCenter()))
 				->AddComponent(new FreeMove(10.0f)))));
 	
-	AddToScene((new Entity(Vector3f(24,-12,5), Quaternion(Vector3f(0,1,0), ToRadians(30.0f))))
-		->AddComponent(new MeshRenderer(Mesh("sphere.obj"), Material("bricks"))));
+//	AddToScene((new Entity(Vector3f(24,-12,5), Quaternion(Vector3f(0,1,0), ToRadians(30.0f))))
+//		->AddComponent(new MeshRenderer(Mesh("sphere.obj"), Material("bricks"))));
 		
-	AddToScene((new Entity(Vector3f(0,0,7), Quaternion(), 1.0f))
-		->AddComponent(new MeshRenderer(Mesh("square"), Material("bricks2"))));
+//	AddToScene((new Entity(Vector3f(0,0,7), Quaternion(), 1.0f))
+//		->AddComponent(new MeshRenderer(Mesh("square"), Material("bricks2"))));
+
+
+	//TODO: Temporary Physics Engine Code!
+	PhysicsEngine physicsEngine;
+	
+	physicsEngine.AddObject(PhysicsObject(
+			Vector3f(0.0f, 0.0f, 0.0f), Vector3f(1.0f, 1.0f, 0.0f)));
+
+	physicsEngine.AddObject(PhysicsObject(
+			Vector3f(20.0f, 30.0f, -9.0f), Vector3f(-0.8f, -0.9f, 0.7f))); 
+
+
+	PhysicsEngineComponent* physicsEngineComponent 
+		= new PhysicsEngineComponent(physicsEngine);
+
+	for(unsigned int i = 0; 
+		i < physicsEngineComponent->GetPhysicsEngine().GetNumObjects(); 
+		i++)
+	{
+		AddToScene((new Entity())
+			->AddComponent(new PhysicsObjectComponent(
+					&physicsEngineComponent->GetPhysicsEngine().GetObject(i)))
+			->AddComponent(new MeshRenderer(Mesh("sphere.obj"), Material("bricks"))));
+	}
+
+	AddToScene((new Entity())
+		->AddComponent(physicsEngineComponent));
 }
 
 #include <iostream>
-#include "physics/physicsObject.h"
 
 int main()
 {
