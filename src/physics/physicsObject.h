@@ -22,6 +22,7 @@
 #define PHYSICS_OBJECT_INCLUDED_H
 
 #include "../core/math3d.h"
+#include "boundingSphere.h"
 
 /**
  * The PhysicsObject class represents an object that can be used in a physics
@@ -35,11 +36,13 @@ public:
 	 * 
 	 * @param position Where this object is in 3D space.
 	 * @param velocity How fast this object is moving and in what direction.
+	 * @param radius   The radius of the object; TODO: This is temporary!
 	 */
-	PhysicsObject(const Vector3f& position, const Vector3f& velocity) :
+	PhysicsObject(const Vector3f& position, const Vector3f& velocity, float radius) :
 		m_position(position),
-		m_velocity(velocity) {}
-
+		m_velocity(velocity),
+		m_radius(radius) {}
+	
 	/**
 	 * Calculate this object's new location and properties after delta seconds
 	 *
@@ -51,13 +54,30 @@ public:
 	inline const Vector3f& GetPosition() const { return m_position; }
 	/** Basic getter */
 	inline const Vector3f& GetVelocity() const { return m_velocity; }
+	/** Basic getter */
+	inline float GetRadius() const { return m_radius; }
 
+	/** 
+	 * Returns a bounding sphere around this object; 
+	 * TODO: This is termporary! 
+	 */
+	inline BoundingSphere GetBoundingSphere() const
+	{
+		return BoundingSphere(m_position, m_radius);
+	}
+
+	/** Basic setter */
+	inline void SetVelocity(const Vector3f& velocity) { m_velocity = velocity; }
+
+	/** Performs a Unit Test of this class */
 	static void Test();
 private:
 	/** Where this object is in 3D space. */
 	Vector3f m_position;
 	/** How fast this object is moving and in what direction */
 	Vector3f m_velocity;
+	/** The radius of this object; TODO: this is temporary! */
+	float    m_radius;
 };
 
 #endif

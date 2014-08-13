@@ -49,6 +49,12 @@ public:
 	 */
 	void Simulate(float delta);
 
+	/** 
+	 * Finds all objects that have collided since the last step and updates
+	 * them to adjust for the collision.
+	 */
+	void HandleCollisions();
+
 	//TODO: Temporary Getters
 	inline const PhysicsObject& GetObject(unsigned int index) const 
 	{ 

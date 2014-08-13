@@ -9,7 +9,7 @@ void PhysicsObject::Integrate(float delta)
 
 void PhysicsObject::Test()
 {
-	PhysicsObject test(Vector3f(0.0f, 1.0f, 0.0f), Vector3f(1.0f, 2.0f, 3.0f));
+	PhysicsObject test(Vector3f(0.0f, 1.0f, 0.0f), Vector3f(1.0f, 2.0f, 3.0f), 1.0f);
 
 	test.Integrate(20.0f);
 
