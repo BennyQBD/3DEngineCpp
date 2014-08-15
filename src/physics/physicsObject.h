@@ -41,8 +41,9 @@ public:
 	PhysicsObject(const Vector3f& position, const Vector3f& velocity, float radius) :
 		m_position(position),
 		m_velocity(velocity),
-		m_radius(radius) {}
-	
+		m_radius(radius),
+		m_boundingSphere(position, radius) {}
+
 	/**
 	 * Calculate this object's new location and properties after delta seconds
 	 *
@@ -61,9 +62,10 @@ public:
 	 * Returns a bounding sphere around this object; 
 	 * TODO: This is termporary! 
 	 */
-	inline BoundingSphere GetBoundingSphere() const
+	inline const Collider& GetBoundingSphere() const
 	{
-		return BoundingSphere(m_position, m_radius);
+		m_boundingSphere = BoundingSphere(m_position, m_radius);
+		return m_boundingSphere;
 	}
 
 	/** Basic setter */
@@ -78,6 +80,9 @@ private:
 	Vector3f m_velocity;
 	/** The radius of this object; TODO: this is temporary! */
 	float    m_radius;
+
+	/** TODO: THIS is temporary! */
+	mutable BoundingSphere m_boundingSphere;
 };
 
 #endif

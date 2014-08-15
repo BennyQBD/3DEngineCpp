@@ -40,7 +40,7 @@ void PhysicsEngine::HandleCollisions()
 		for(unsigned int j = i + 1; j < m_objects.size(); j++)
 		{
 			IntersectData intersectData = 
-				m_objects[i].GetBoundingSphere().IntersectBoundingSphere(
+				m_objects[i].GetBoundingSphere().Intersect(
 					m_objects[j].GetBoundingSphere());
 
 			if(intersectData.GetDoesIntersect())

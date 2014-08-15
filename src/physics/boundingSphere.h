@@ -23,12 +23,13 @@
 
 #include "../core/math3d.h"
 #include "intersectData.h"
+#include "collider.h"
 
 /**
  * The BoundingSphere class represents an sphere that can be used as a
  * collider in a physics engine.
  */
-class BoundingSphere
+class BoundingSphere : public Collider
 {
 public:
 	/** 
@@ -38,6 +39,7 @@ public:
 	 * @param radius The distance from any point on the sphere to the center.
 	 */
 	BoundingSphere(const Vector3f& center, float radius) :
+		Collider(Collider::TYPE_SPHERE),
 		m_center(center),
 		m_radius(radius) {}
 
@@ -58,9 +60,9 @@ public:
 	static void Test();
 private:
 	/** The center point of the sphere */
-	const Vector3f m_center;
+	Vector3f m_center;
 	/** The distance from any point on the sphere to the center */
-	const float    m_radius;
+	float    m_radius;
 };
 
 #endif
