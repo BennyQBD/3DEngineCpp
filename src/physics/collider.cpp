@@ -18,3 +18,4 @@ IntersectData Collider::Intersect(const Collider& other) const
 	//Control should never reach this point
 	return IntersectData(false, 0);
 }
+

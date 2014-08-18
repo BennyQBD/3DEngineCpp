@@ -21,6 +21,7 @@
 #include "components/freeMove.h"
 #include "components/physicsEngineComponent.h"
 #include "components/physicsObjectComponent.h"
+#include "physics/boundingSphere.h"
 
 class TestGame : public Game
 {
@@ -83,10 +84,12 @@ void TestGame::Init(const Window& window)
 	PhysicsEngine physicsEngine;
 	
 	physicsEngine.AddObject(PhysicsObject(
-			Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f), 1.0f));
+			new BoundingSphere(Vector3f(0.0f, 0.0f, 0.0f), 1.0f),
+		   	Vector3f(0.0f, 0.0f, 1.0f)));
 
 	physicsEngine.AddObject(PhysicsObject(
-			Vector3f(0.0f, 0.0f, 10.0f), Vector3f(0.0f, 0.0f, -1.0f), 2.0f)); 
+			new BoundingSphere(Vector3f(0.0f, 0.0f, 10.0f), 1.0f),
+			Vector3f(0.0f, 0.0f, -1.0f))); 
 
 
 	PhysicsEngineComponent* physicsEngineComponent 
@@ -96,8 +99,9 @@ void TestGame::Init(const Window& window)
 		i < physicsEngineComponent->GetPhysicsEngine().GetNumObjects(); 
 		i++)
 	{
+		
 		AddToScene((new Entity(Vector3f(0,0,0), Quaternion(), 
-						physicsEngineComponent->GetPhysicsEngine().GetObject(i).GetRadius()))
+					1.0f))
 			->AddComponent(new PhysicsObjectComponent(
 					&physicsEngineComponent->GetPhysicsEngine().GetObject(i)))
 			->AddComponent(new MeshRenderer(Mesh("sphere.obj"), Material("bricks"))));

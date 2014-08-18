@@ -50,9 +50,9 @@ public:
 	 *                sphere.
 	 */
 	IntersectData IntersectBoundingSphere(const BoundingSphere& other) const;
+	virtual void Transform(const Vector3f& translation);
+	virtual Vector3f GetCenter() const { return m_center; }
 
-	/** Basic getter for the center */
-	inline const Vector3f& GetCenter() const { return m_center; }
 	/** Basic getter for the radius */
 	inline float GetRadius()           const { return m_radius; }
 
