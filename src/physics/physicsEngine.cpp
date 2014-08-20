@@ -45,8 +45,13 @@ void PhysicsEngine::HandleCollisions()
 
 			if(intersectData.GetDoesIntersect())
 			{
-				m_objects[i].SetVelocity(m_objects[i].GetVelocity() * -1);
-				m_objects[j].SetVelocity(m_objects[j].GetVelocity() * -1);
+				Vector3f direction = intersectData.GetDirection().Normalized();
+				Vector3f otherDirection = Vector3f(direction.Reflect(m_objects[i].GetVelocity().Normalized()));
+				m_objects[i].SetVelocity(
+						Vector3f(m_objects[i].GetVelocity().Reflect(otherDirection)));
+
+				m_objects[j].SetVelocity(
+						Vector3f(m_objects[j].GetVelocity().Reflect(direction)));
 			}
 		}
 	}

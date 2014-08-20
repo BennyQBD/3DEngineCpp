@@ -28,7 +28,9 @@ IntersectData BoundingSphere::IntersectBoundingSphere(const BoundingSphere& othe
 	//Therefore, by adding the radius of two spheres together, the result is
 	//the distance between the centers of the spheres when they are touching.
 	float radiusDistance = m_radius + other.GetRadius();
-	float centerDistance = (other.GetCenter() - m_center).Length();
+	Vector3f direction = (other.GetCenter() - m_center);
+	float centerDistance = direction.Length();
+	direction /= centerDistance;
 
 	//Since the radiusDistance is the distance bwteen the centers of the 
 	//spheres are when they're touching, you can subtract that from the
@@ -38,7 +40,7 @@ IntersectData BoundingSphere::IntersectBoundingSphere(const BoundingSphere& othe
 
 	//Spheres can only be intersecting if the distance between them is less
 	//than 0.
-	return IntersectData(distance < 0, distance);
+	return IntersectData(distance < 0, direction * distance);
 }
 
 void BoundingSphere::Transform(const Vector3f& translation)
@@ -64,7 +66,7 @@ void BoundingSphere::Test()
 	assert(sphere1IntersectSphere3.GetDistance()      == 0.0f);
 
 	assert(sphere1IntersectSphere4.GetDoesIntersect() == true);
-	assert(sphere1IntersectSphere4.GetDistance()      == -1.0f);
+	assert(sphere1IntersectSphere4.GetDistance()      == 1.0f);
 
 //	std::cout << "Sphere1 intersect Sphere2: " << sphere1IntersectSphere2.GetDoesIntersect() 
 //	          << ", Distance: "                << sphere1IntersectSphere2.GetDistance() << std::endl;
