@@ -26,14 +26,14 @@
 
 /**
  * The PhysicsObject class represents an object that can be used in a physics
- * engine. 
+ * engine.
  */
 class PhysicsObject
 {
 public:
-	/** 
+	/**
 	 * Creates a PhysicsObject in a usable state.
-	 * 
+	 *
 	 * @param collider A collider representing the shape and position of the
 	 *                   object. Should be in allocated memory.
 	 * @param velocity How fast this object is moving and in what direction.
@@ -45,7 +45,7 @@ public:
 		m_collider(collider) {}
 
 	PhysicsObject(const PhysicsObject& other);
-	PhysicsObject operator=(PhysicsObject other);
+	void operator=(PhysicsObject other);
 	virtual ~PhysicsObject();
 
 	/**
@@ -60,8 +60,8 @@ public:
 	/** Basic getter */
 	inline const Vector3f& GetVelocity() const { return m_velocity; }
 
-	/** 
-	 * Returns a collider in the position of this object, updating the 
+	/**
+	 * Returns a collider in the position of this object, updating the
 	 * collider's position if necessary.
 	 */
 	inline const Collider& GetCollider()
@@ -71,8 +71,8 @@ public:
 		//Update old position back to current position.
 		m_oldPosition = m_position;
 		//Move collider by distance moved.
-		m_collider->Transform(translation);	
-		
+		m_collider->Transform(translation);
+
 		return *m_collider;
 	}
 

@@ -4,7 +4,7 @@
 #include <cassert>
 #include <cstring>
 
-PhysicsObject::PhysicsObject(const PhysicsObject& other) : 
+PhysicsObject::PhysicsObject(const PhysicsObject& other) :
 	m_position(other.m_position),
 	m_oldPosition(other.m_oldPosition),
 	m_velocity(other.m_velocity),
@@ -13,7 +13,7 @@ PhysicsObject::PhysicsObject(const PhysicsObject& other) :
 	m_collider->AddReference();
 }
 
-PhysicsObject PhysicsObject::operator=(PhysicsObject other)
+void PhysicsObject::operator=(PhysicsObject other)
 {
 	//Implemented using the copy/swap idiom.
 	char* temp[sizeof(PhysicsObject)/sizeof(char)];
@@ -54,7 +54,7 @@ void PhysicsObject::Test()
 	assert(testVel.GetY() == 2.0f);
 	assert(testVel.GetZ() == 3.0f);
 
-	
+
 //	std::cout << "("<<testPos.GetX()<<", "<<testPos.GetY()<<", "
 //		<<testPos.GetZ()<<")"<<std::endl;
 //	std::cout << "("<<testVel.GetX()<<", "<<testVel.GetY()<<", "
