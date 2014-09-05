@@ -15,7 +15,7 @@
  */
 
 #include "coreEngine.h"
-#include "timing.h"
+#include "time.h"
 #include "../rendering/window.h"
 #include "input.h"
 #include "util.h"
@@ -33,7 +33,7 @@ CoreEngine::CoreEngine(double frameRate, Window* window, RenderingEngine* render
 	//We're telling the game about this engine so it can send the engine any information it needs
 	//to the various subsystems.
 	m_game->SetEngine(this);
-	
+
 	//Game is initialized here because this is the point where all rendering systems
 	//are initialized, and so creating meshes/textures/etc. will not fail due
 	//to missing context.
@@ -46,7 +46,7 @@ void CoreEngine::Start()
 	{
 		return;
 	}
-		
+
 	m_isRunning = true;
 
 	double lastTime = Time::GetTime(); //Current time at the start of the last frame
@@ -74,7 +74,7 @@ void CoreEngine::Start()
 		{
 			double totalTime = ((1000.0 * frameCounter)/((double)frames));
 			double totalMeasuredTime = 0.0;
-			
+
 			totalMeasuredTime += m_game->DisplayInputTime((double)frames);
 			totalMeasuredTime += m_game->DisplayUpdateTime((double)frames);
 			totalMeasuredTime += m_renderingEngine->DisplayRenderTime((double)frames);
@@ -82,7 +82,7 @@ void CoreEngine::Start()
 			totalMeasuredTime += windowUpdateTimer.DisplayAndReset("Window Update Time: ", (double)frames);
 			totalMeasuredTime += swapBufferTimer.DisplayAndReset("Buffer Swap Time: ", (double)frames);
 			totalMeasuredTime += m_renderingEngine->DisplayWindowSyncTime((double)frames);
-			
+
 			printf("Other Time:                             %f ms\n", (totalTime - totalMeasuredTime));
 			printf("Total Time:                             %f ms\n\n", totalTime);
 			frames = 0;
@@ -90,7 +90,7 @@ void CoreEngine::Start()
 		}
 
 		//The engine works on a fixed update system, where each update is 1/frameRate seconds of time.
-		//Because of this, there can be a situation where there is, for instance, a fixed update of 16ms, 
+		//Because of this, there can be a situation where there is, for instance, a fixed update of 16ms,
 		//but 20ms of actual time has passed. To ensure all time is accounted for, all passed time is
 		//stored in unprocessedTime, and then the engine processes as much time as it can. Any
 		//unaccounted time can then be processed later, since it will remain stored in unprocessedTime.
@@ -98,20 +98,20 @@ void CoreEngine::Start()
 		{
 			windowUpdateTimer.StartInvocation();
 			m_window->Update();
-			
+
 			if(m_window->IsCloseRequested())
 			{
 				Stop();
 			}
 			windowUpdateTimer.StopInvocation();
-			
+
 			//Input must be processed here because the window may have found new
 			//input events from the OS when it updated. Since inputs can trigger
-			//new game actions, the game also needs to be updated immediately 
+			//new game actions, the game also needs to be updated immediately
 			//afterwards.
 			m_game->ProcessInput(m_window->GetInput(), (float)m_frameTime);
 			m_game->Update((float)m_frameTime);
-			
+
 			//Since any updates can put onscreen objects in a new place, the flag
 			//must be set to rerender the scene.
 			render = true;
@@ -122,7 +122,7 @@ void CoreEngine::Start()
 		if(render)
 		{
 			m_game->Render(m_renderingEngine);
-			
+
 			//The newly rendered image will be in the window's backbuffer,
 			//so the buffers must be swapped to display the new image.
 			swapBufferTimer.StartInvocation();

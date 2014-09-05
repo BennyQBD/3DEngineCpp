@@ -15,7 +15,7 @@
  */
 
 #include "profiling.h"
-#include "timing.h"
+#include "time.h"
 #include <cassert>
 #include <iostream>
 
@@ -31,7 +31,7 @@ void ProfileTimer::StopInvocation()
 		std::cout << "Error: StopInvocation called without matching start invocation" << std::endl;
 		assert(m_startTime != 0);
 	}
-	
+
 	m_numInvocations++;
 	m_totalTime += (Time::GetTime() - m_startTime);
 	m_startTime = 0;
@@ -43,7 +43,7 @@ double ProfileTimer::GetTimeAndReset(double divisor)
 	double result = (m_totalTime == 0 && divisor == 0.0) ? 0.0 : (1000.0 * m_totalTime)/((double)divisor);
 	m_totalTime = 0.0;
 	m_numInvocations = 0;
-	
+
 	return result;
 }
 
@@ -54,7 +54,7 @@ double ProfileTimer::DisplayAndReset(const std::string& message, double divisor,
 	{
 		whiteSpace += " ";
 	}
-	
+
 	double time = GetTimeAndReset(divisor);
 	std::cout << message << whiteSpace << time << " ms" << std::endl;
 	return time;

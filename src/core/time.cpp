@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "timing.h"
+#include "time.h"
 #include <time.h>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(_WIN64) || defined(WIN64)
@@ -56,15 +56,15 @@ double Time::GetTime()
 			LARGE_INTEGER li;
 			if(!QueryPerformanceFrequency(&li))
 				std::cerr << "QueryPerformanceFrequency failed in timer initialization"  << std::endl;
-			
+
 			g_freq = double(li.QuadPart);
 			g_timerInitialized = true;
 		}
-	
+
 		LARGE_INTEGER li;
 		if(!QueryPerformanceCounter(&li))
 			std::cerr << "QueryPerformanceCounter failed in get time!" << std::endl;
-		
+
 		return double(li.QuadPart)/g_freq;
 	#endif
 
