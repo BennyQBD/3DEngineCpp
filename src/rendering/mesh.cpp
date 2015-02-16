@@ -16,6 +16,7 @@
 
 #include "mesh.h"
 
+#include "../core/util.h"
 #include "../core/profiling.h"
 
 #include <GL/glew.h>
@@ -256,7 +257,7 @@ Mesh::Mesh(const std::string& fileName) :
 	{
 		Assimp::Importer importer;
 		
-		const aiScene* scene = importer.ReadFile(("./res/models/" + fileName).c_str(), 
+		const aiScene* scene = importer.ReadFile((Util::ResourcePath() + "models/" + fileName).c_str(),
 		                                         aiProcess_Triangulate |
 		                                         aiProcess_GenSmoothNormals | 
 		                                         aiProcess_FlipUVs |
