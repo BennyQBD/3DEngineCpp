@@ -52,7 +52,7 @@ namespace Util
   /**
    * Initializes a directory for central resource managment.
    * Under Linux, the path will be /home/user/.local/share/{org}/{app}/
-   * Under Windows, the path will be SYSTEMDRIVE:\\Users\\user\\AppData\\Roaming\\{orf}\\{app}\\
+   * Under Windows, the path will be SYSTEMDRIVE:\\Users\\user\\AppData\\Roaming\\{org}\\{app}\\
    * Under Mac OS X, the path will be /Users/user/Library/Application Support/{app}/
    *
    * If you set app as an empty string "", than old folder structure will be used.
