@@ -16,6 +16,7 @@
 
 #include "texture.h"
 
+#include "../core/util.h"
 #include "../core/math3d.h"
 #include "../core/profiling.h"
 
@@ -177,7 +178,7 @@ Texture::Texture(const std::string& fileName, GLenum textureTarget, GLfloat filt
 	else
 	{
 		int x, y, bytesPerPixel;
-		unsigned char* data = stbi_load(("./res/textures/" + fileName).c_str(), &x, &y, &bytesPerPixel, 4);
+		unsigned char* data = stbi_load((Util::ResourcePath() + "textures/" + fileName).c_str(), &x, &y, &bytesPerPixel, 4);
 
 		if(data == NULL)
 		{

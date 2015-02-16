@@ -16,6 +16,7 @@
 
 #include "window.h"
 #include "../core/profiling.h"
+#include "../core/util.h"
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
@@ -57,6 +58,11 @@ Window::Window(int width, int height, const std::string& title) :
 	{
 		fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
 	}
+
+  Util::Init( "" );
+// Uses the relatice ./res/ folder as resource directory.
+// Use the following line to use the absolute path in your users local directory.
+//  Util::Init( title.c_str() );
 }
 
 Window::~Window()
