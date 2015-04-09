@@ -33,7 +33,7 @@ bool Transform::HasChanged()
 		return true;
 	}
 	
-	if(m_scale != m_scale)
+	if(m_scale != m_oldScale)
 	{
 		return true;
 	}
