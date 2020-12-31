@@ -86,7 +86,7 @@ cmake -G "Visual Studio 12" ../
 ```
 - Copy the DLLs in /lib/_bin/ to /build/Debug/ and /build/Release/
 - In Visual Studio, set the Startup project to 3DEngineCpp
-- Move the res folder into the build folder
+- Coppy the res folder into the /build/Debug/ and /build/Release/ folders
 - Run
 
 ##Additional Credits##
