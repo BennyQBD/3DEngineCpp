@@ -73,6 +73,7 @@ x64/
 *.pidb
 *.log
 *.scc
+*.jfm
 
 # Visual C++ cache files
 ipch/
@@ -81,6 +82,7 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+*.opendb
 
 # Visual Studio profiler
 *.psess
