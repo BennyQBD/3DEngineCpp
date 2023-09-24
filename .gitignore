@@ -81,6 +81,7 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+*.opendb
 
 # Visual Studio profiler
 *.psess
@@ -208,3 +209,5 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+*.jfm
